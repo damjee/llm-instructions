@@ -1,7 +1,6 @@
 # Clean Code Standards
 
-**Purpose:** Language-agnostic clean code principles for refactoring and code quality  
-**Audience:** AI agents performing code refactoring and review  
+**Purpose:** Language-agnostic clean code principles for writing and improving code  
 **Scope:** General principles applicable across programming languages  
 **Related Documents:** [Godot & GDScript Standards](./godot-gdscript-standards.md), [Testing Standards](./testing-standards.md)
 
@@ -9,37 +8,21 @@
 
 ---
 
-You are an expert code refactoring agent that improves code quality while preserving functionality. Your goal is to refactor code to follow clean code standards and best practices.
+## Core Qualities
 
-## Core Mission
-
-Refactor code to be:
+Code should be:
 - **Readable** - Clear intent through naming and structure
 - **Maintainable** - Easy to modify and extend
 - **Consistent** - Follows conventions consistently
-- **Functional** - Preserves all logic and behavior
 
-## Critical Rules
+## Focus Areas
 
-### Functional Preservation
-- **NEVER change logic or behavior**
-- **NEVER modify exported values or property defaults**
-- **ALWAYS preserve exact functionality**
-- Only improve structure, naming, and style
-
-### What You Refactor
 - Function structure (early returns, single responsibility)
 - Variable and function naming
 - Code organization and order
 - Formatting and whitespace
 - Type annotations
-- Comment removal (make code self-documenting instead)
-
-### What You DON'T Change
-- Logic or algorithms
-- Property defaults
-- Built-in method implementations
-- External interfaces or APIs
+- Self-documenting code over comments
 
 ---
 
@@ -65,14 +48,14 @@ Refactor code to be:
 ## Function Design
 
 ### Size and Complexity
-- **Target < 20 lines per function** (extract longer functions into smaller ones)
+- **Keep functions short** — if a function exceeds ~20 lines, consider whether it has distinct concerns worth extracting
 - **Single purpose per function**
 - **Single level of abstraction per function**
 - **Meaningful names over comments**
 
-### CRITICAL: Early Returns (No Deep Nesting)
+### Key Practice: Early Returns (No Deep Nesting)
 
-**ALWAYS use early returns to avoid nesting:**
+**Use early returns to avoid nesting:**
 
 ```python
 # ✅ EXCELLENT - Early returns
@@ -185,7 +168,7 @@ str_player_name
 
 ## Self-Documenting Code
 
-### CRITICAL: Code Clarity Over Comments
+### Key Practice: Code Clarity Over Comments
 
 **Code clarity through naming and structure, NOT comments:**
 
@@ -221,7 +204,7 @@ def calc(dmg):  # Calculate critical damage
 Convert nested if statements to early returns.
 
 ### Fix Long Functions
-Extract logical sections into separate functions (< 20 lines each).
+Extract distinct concerns into separate functions.
 
 ### Fix Magic Numbers
 Replace with named constants:
@@ -252,39 +235,6 @@ def process_user_input(input_event: InputEvent) -> None:
 
 ### Fix Comments
 Remove comments and make code self-documenting through better naming and structure.
-
----
-
-## Refactoring Workflow
-
-### Step 1: Analyze File
-Understand the current structure and identify issues.
-
-### Step 2: Identify Issues
-Check for violations:
-- [ ] Deep nesting (should use early returns)
-- [ ] Unclear or cryptic names
-- [ ] Hungarian notation in variable names
-- [ ] Comments that should be code
-- [ ] Functions > 20 lines
-- [ ] Magic numbers without named constants
-
-### Step 3: Plan Refactoring
-**Before making changes, mentally verify:**
-1. Will this preserve functionality?
-2. Am I only changing structure/naming/style?
-3. Are all interfaces unchanged?
-
-### Step 4: Apply Changes
-- Fix one category at a time (e.g., all type annotations first)
-- Make surgical, precise edits
-- Preserve logic exactly
-
-### Step 5: Verify
-After refactoring:
-- Ensure no logic changes
-- Verify all public interfaces preserved
-- Check behavior unchanged
 
 ---
 
@@ -387,11 +337,8 @@ def calculate_damage_after_armor_reduction(base_damage: int) -> int:
 
 ## Summary
 
-- **PRESERVE FUNCTIONALITY** - Never change logic
 - **EARLY RETURNS** - Eliminate nesting
 - **CLEAR NAMES** - Functions and variables reveal intent
 - **NO HUNGARIAN NOTATION** - Variable names describe purpose, not type
 - **SELF-DOCUMENTING** - Code clarity over comments
-- **< 20 LINES** - Keep functions small and focused
-
-You are a refactoring expert. Make code better without breaking anything.
+- **SMALL FUNCTIONS** - Keep functions focused on a single concern
