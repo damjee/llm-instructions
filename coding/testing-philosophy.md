@@ -1,30 +1,20 @@
-# Testing Standards: Contract-Driven Testing Doctrine
+# Testing Philosophy: Contract-Driven Testing
 
 **Purpose:** Testing philosophy and practices for maintaining code quality through refactor-safe tests  
-**Audience:** AI agents writing and evaluating tests  
-**Scope:** Testing strategy, test design, and testing anti-patterns  
+**Scope:** Testing strategy, test design, and quality principles  
 **Related Documents:** [Clean Code Standards](./clean-code-standards.md), [Godot & GDScript Standards](./godot-gdscript-standards.md)
 
----
-
-You are an expert contract-focused testing agent.  
-Your role is to generate and evaluate tests that enable safe refactoring while preserving intended behavior.
+> **Influences:** Kent Beck (*TDD by Example*), Martin Fowler (*Test Pyramid*), Robert C. Martin (*Clean Code*, Chapter 9: Unit Tests)
 
 ---
 
 ## Core Mission
 
 Tests exist to:
-- Enable refactoring with confidence
-- Protect public contracts
-- Validate observable behavior
-- Preserve intended invariants
-
-Tests do **not** exist to:
-- Validate private implementation details
-- Maximize coverage metrics
-- Mirror internal structure
-- Freeze incidental behavior
+- **Enable refactoring with confidence** — tests are the safety net for change (Beck, Martin)
+- **Protect public contracts** — validate what the code promises to callers
+- **Serve as living documentation** — executable specifications of behavior (Beck)
+- **Preserve intended invariants** — catch real regressions, not incidental changes
 
 **Golden Rule:** If a change preserves the public contract, tests should continue to pass.
 
@@ -32,23 +22,17 @@ Tests do **not** exist to:
 
 ## Primary Principle: Test the Contract
 
+> *"Test behavior, not implementation."* — Kent Beck
+
 Only public-facing interfaces and externally observable behavior are first-class test targets.
 
-A module's contract includes:
+A module's **contract** — what tests should validate:
 - Public functions and their return values
 - Public errors and exceptions
 - Publicly observable invariants
 - Side effects visible to callers
 
-A module's implementation details include:
-- Private variables and helpers
-- Internal state representation
-- Call order and interaction counts
-- Implementation algorithms
-
-**Private variables, helpers, and internal state are implementation details and must remain disposable.**
-
-If a private value changes but produces the same observable result, the test must pass.
+**Implementation details** — private variables, helpers, internal state, call order, and interaction counts — are disposable. If a private value changes but produces the same observable result, the test must pass.
 
 ---
 
@@ -56,21 +40,15 @@ If a private value changes but produces the same observable result, the test mus
 
 Tests describe **what must be true**, not **how it is achieved**.
 
-### Acceptable Test Targets
+### Focus On
 
-✅ Testing return values  
-✅ Testing error conditions  
-✅ Testing domain invariants  
-✅ Testing observable state transitions  
-✅ Testing side effects visible to the caller
+✅ Return values and outputs  
+✅ Error conditions and exceptions  
+✅ Domain invariants  
+✅ Observable state transitions  
+✅ Side effects visible to the caller
 
-### Unacceptable Test Targets
-
-❌ Testing call order  
-❌ Testing interaction counts  
-❌ Testing private helpers  
-❌ Testing internal variables  
-❌ Testing formatting unless formatting is part of the contract
+Avoid coupling tests to call order, interaction counts, private helpers, internal variables, or formatting (unless formatting is part of the contract).
 
 **Example:**
 
@@ -124,10 +102,10 @@ The test name tells you **what broke**.
 
 Assertions explain **why** the invariant failed.
 
-Multiple assertions are preferred when they clarify failure details.
+Multiple assertions per test are acceptable when they provide diagnostic detail for the same behavior. This trades off against Uncle Bob's "one assert per test" principle (which optimizes for pinpointing exact failures). Use judgment — favor diagnostic clarity when a single behavior has multiple observable aspects.
 
 ```python
-# ✅ GOOD - Multiple assertions provide diagnostic detail
+# ✅ GOOD - Multiple assertions provide diagnostic detail for one behavior
 def test_calculate_final_score():
     player = Player(base_score=100, bonus=50, multiplier=2)
     
@@ -137,7 +115,7 @@ def test_calculate_final_score():
     assert score == 300, f"Expected 300, got {score}"
     assert score == (100 + 50) * 2, "Formula: (base + bonus) * multiplier"
 
-# ⚠️ ACCEPTABLE - Single assertion if failure is obvious
+# ✅ ALSO GOOD - Single assertion when failure is self-evident
 def test_calculate_damage_returns_integer():
     damage = calculate_damage(attacker, defender)
     assert isinstance(damage, int)
@@ -150,10 +128,9 @@ The assertions are the diagnostics.
 
 ## Determinism First
 
-Core modules should prefer functional principles:
-- Same input → same output
-- Side effects minimized
-- Errors returned explicitly
+> *Aligns with the F.I.R.S.T. principle of **Repeatable** tests (Martin) — tests should produce the same results every time, in any environment.*
+
+Testable code favors functional principles: same input → same output, side effects minimized, errors returned explicitly. Difficulty testing often reveals design issues (Beck, Fowler) — testability is a design signal, not just a testing concern.
 
 Tests should focus on return values and explicit errors whenever possible.
 
@@ -188,18 +165,16 @@ class Combat:
 
 ---
 
-## Dependency Injection vs Mocking
+## Dependency Management in Tests
 
-### Mocking Policy
+### Prefer Real Behavior Over Mocks
 
-**Mocking is strongly discouraged** because it:
-1. Disconnects tests from reality
-2. Encourages brittle interaction-based assertions
-3. Shapes architecture around test convenience
-4. Produces false confidence
+> *"Mocks couple tests to implementation."* — Martin Fowler, *Mocks Aren't Stubs*
+
+Use **fakes** (lightweight implementations that simulate real behavior) over **mocks** (interaction-recording stubs). Fakes keep tests grounded in reality and resilient to refactoring; mocks tend to produce brittle, interaction-based assertions that break when implementation changes.
 
 ```python
-# ❌ BAD - Mock-heavy test
+# ⚠️ FRAGILE - Mock-based test coupled to implementation
 def test_process_payment_with_mocks():
     payment_gateway = Mock()
     payment_gateway.charge.return_value = {"status": "success"}
@@ -207,12 +182,12 @@ def test_process_payment_with_mocks():
     processor = PaymentProcessor(payment_gateway)
     result = processor.process_payment(100)
     
-    payment_gateway.charge.assert_called_once_with(100)  # Brittle!
+    payment_gateway.charge.assert_called_once_with(100)  # Breaks on refactor
     assert result["status"] == "success"
 
-# ✅ GOOD - Real behavior with controlled input
+# ✅ GOOD - Fake simulates real behavior
 def test_process_payment_returns_success():
-    payment_gateway = FakePaymentGateway()  # Fake, not mock
+    payment_gateway = FakePaymentGateway()
     processor = PaymentProcessor(payment_gateway)
     
     result = processor.process_payment(100)
@@ -260,18 +235,20 @@ def test_timer_calculates_elapsed_time():
 
 ## Integration Testing Strategy
 
+> *Fowler's Test Pyramid: many unit tests at the base, fewer integration tests in the middle, minimal E2E tests at the top.*
+
+**Core business logic should be unit-test dominant.** Push tests as low in the stack as practical without losing essential validation.
+
 Integration tests should be:
-- **Few** - Only where truly necessary
-- **Focused** - Test specific boundaries
-- **Boundary-level** - Test adapters and interfaces
+- **Few** — only where truly necessary
+- **Focused** — test specific boundaries
+- **Boundary-level** — test adapters and interfaces
 
 They validate:
 - Adapters (HTTP, database, file system)
 - Couplers (service-to-service communication)
 - External resource interfaces
 - Device or persistence boundaries
-
-**Core business logic should remain unit-test dominant.**
 
 Integration tests validate the boundary contract only. They do not replace unit tests.
 
@@ -298,32 +275,19 @@ def test_calculate_user_reputation():
 
 ---
 
-## Complexity and Architectural Signals
+## Testability as a Design Signal
 
-If a module becomes:
-- Branch-heavy
-- Edge-case heavy
-- Math-heavy
-- Difficult to reason about
+> *"Good design makes testing easier; difficult testing reveals design issues."* — Beck, Fowler
 
-**The solution is architectural clarity, not internal testing.**
-
-Refactor into smaller modules with clearer public contracts.
-
-There is no universal rule for where to split — this is engineering judgment. Testing should follow architecture, not dictate it.
+If a module is difficult to test (branch-heavy, edge-case heavy, hard to reason about), that's an architectural signal. Testing should follow architecture, not dictate it — but persistent testing difficulty suggests the module needs clearer boundaries and smaller public contracts.
 
 ---
 
 ## Snapshot / Golden Test Policy
 
-**Golden snapshots are discouraged.**
+**Prefer explicit assertions that reveal intent** over golden snapshots. Snapshots can hide what's actually being validated and encourage passive approval rather than deliberate verification.
 
-They:
-- Hide intent
-- Obscure invariants
-- Encourage passive approval rather than deliberate validation
-
-Tests must express intent clearly.
+When the contract involves structured output, assert on the specific elements that matter.
 
 ```python
 # ❌ BAD - Snapshot hides what's being tested
@@ -345,28 +309,17 @@ def test_render_user_profile_includes_name():
 
 ## Coverage Policy
 
-**Coverage metrics are not a quality signal.**
+**Focus on contract protection, not coverage percentages.**
 
-- High coverage does not imply correctness
-- Low coverage does not imply poor design
-
-Coverage may serve as a weak smoke signal but must never drive design decisions.
-
-**Focus on:** Are the contracts protected?  
-**Ignore:** Did we hit X% coverage?
+Coverage metrics can serve as a weak smoke signal, but high coverage does not imply correctness and low coverage does not imply poor design. The real question is: *are the contracts protected?*
 
 ---
 
 ## Flaky Tests
 
-**Zero tolerance.**
+> *Aligns with F.I.R.S.T. principles: **Independent** and **Repeatable** (Martin) — tests must not depend on each other and must produce consistent results.*
 
-A flaky test:
-- Prevents confident refactoring
-- Reduces trust in the test suite
-- Undermines the purpose of testing
-
-**Flaky tests must be fixed or removed immediately.**
+**Flaky tests must be fixed or removed immediately.** A flaky test prevents confident refactoring, reduces trust in the test suite, and undermines the purpose of testing.
 
 Common causes:
 - Timing dependencies
@@ -379,16 +332,12 @@ Common causes:
 
 ## Property-Based Testing
 
-**Avoided.**
+**Use sparingly.** While invariant-driven testing aligns philosophically with contract testing, prefer explicit test cases for clarity. Property-based testing adds machinery that can obscure intent.
 
-While invariant-driven testing aligns philosophically, additional machinery and abstraction are not preferred.
-
-Tests should remain explicit and clear.
-
-If you find yourself thinking "I need property-based testing," consider:
-1. Is the invariant clear enough to state explicitly?
-2. Can I write 3-5 explicit test cases that cover the critical scenarios?
-3. Would property-based testing add real value or just complexity?
+Consider property-based testing when:
+1. The invariant is well-defined but the input space is large
+2. Explicit test cases can't adequately cover boundary conditions
+3. The additional abstraction provides real value over 3-5 explicit cases
 
 ---
 
@@ -417,16 +366,12 @@ def test_get_active_users():
 
 ## DRY in Tests
 
-**Repetition is acceptable.**
+> *Test code deserves the same quality as production code (Martin), but test readability often takes priority over eliminating repetition (Beck).*
 
-Do not abstract tests prematurely.
-
-Only refactor duplicated test logic after it meaningfully repeats (Rule of Three applies).
-
-**Clarity over cleverness.**
+**Favor clarity over abstraction in tests.** Repetition is acceptable when it makes each test self-contained and easy to diagnose. Apply the Rule of Three — only extract shared test logic after it meaningfully repeats three times.
 
 ```python
-# ✅ GOOD - Explicit, clear, slightly repetitive
+# ✅ GOOD - Explicit, clear, each test tells its own story
 def test_add_returns_sum_of_two_positives():
     assert add(2, 3) == 5
 
@@ -436,37 +381,38 @@ def test_add_returns_sum_of_two_negatives():
 def test_add_returns_sum_of_positive_and_negative():
     assert add(2, -3) == -1
 
-# ⚠️ RISKY - DRY but less clear
+# ✅ ALSO GOOD - Parametrize when inputs vary but the behavior is identical
+# Tradeoff: more concise, but failure messages are less descriptive
 @pytest.mark.parametrize("a,b,expected", [
     (2, 3, 5),
     (-2, -3, -5),
     (2, -3, -1),
 ])
 def test_add(a, b, expected):
-    assert add(a, b) == expected  # Less clear what broke
+    assert add(a, b) == expected
 ```
 
 ---
 
-## What This Testing Doctrine Rejects
+## Principles at a Glance
 
-In priority order:
+In priority order, this philosophy values:
 
-1. **Coupling tests to implementation** - Tests break when refactoring preserves behavior
-2. **Fragile tests** - Tests require updates for non-breaking changes
-3. **Maintenance-heavy structures** - Complex test frameworks and abstractions
-4. **Redundant testing of trivial glue** - Testing getters, setters, simple pass-throughs
-5. **False confidence via metrics or mocks** - High coverage with low actual protection
+1. **Contract fidelity** — tests validate what the code promises, not how it works
+2. **Refactor resilience** — tests survive implementation changes that preserve behavior
+3. **Simplicity** — minimal test infrastructure, clear assertions, no unnecessary abstractions
+4. **Intentional coverage** — focused testing of meaningful contracts over trivial pass-throughs
+5. **Grounded confidence** — trust built through real behavior, not mocks or metrics
 
 ---
 
-## Summary Doctrine
+## Summary
 
-✅ **Tests protect contracts**  
-✅ **Internals are disposable**  
-✅ **Intent matters more than mechanics**  
-✅ **Determinism enables refactoring**  
-✅ **Architecture drives testability**  
+✅ **Tests protect contracts** (Beck: test behavior, not implementation)  
+✅ **Internals are disposable** (refactor-safe by design)  
+✅ **Intent matters more than mechanics** (what, not how)  
+✅ **Determinism enables refactoring** (F.I.R.S.T.: Repeatable)  
+✅ **Testability is a design signal** (Beck, Fowler)  
 ✅ **Confidence is the metric — not coverage**
 
 ---
@@ -552,4 +498,9 @@ def test_user_service_returns_user_by_id():
 
 ---
 
-You are a testing expert. Write tests that enable fearless refactoring.
+## References
+
+- Kent Beck, *Test-Driven Development: By Example*
+- Martin Fowler, *Test Pyramid* (martinfowler.com/bliki/TestPyramid.html)
+- Martin Fowler, *Mocks Aren't Stubs* (martinfowler.com/articles/mocksArentStubs.html)
+- Robert C. Martin, *Clean Code* (Chapter 9: Unit Tests)

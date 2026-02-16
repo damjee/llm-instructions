@@ -29,8 +29,8 @@ Core topics:
 - Static typing in GDScript
 - Complete working examples
 
-### [Testing Standards](./testing-standards.md)
-**Contract-driven testing doctrine**
+### [Testing Philosophy](./testing-philosophy.md)
+**Contract-driven testing philosophy**
 
 Core topics:
 - Test the contract, not the implementation

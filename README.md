@@ -9,7 +9,7 @@ Coding standards and best practices for AI agents performing code refactoring, r
 
 - **[clean-code-standards.md](./coding/clean-code-standards.md)** - Language-agnostic clean code principles
 - **[godot-gdscript-standards.md](./coding/godot-gdscript-standards.md)** - Godot/GDScript specific conventions and preferences
-- **[testing-standards.md](./coding/testing-standards.md)** - Contract-driven testing doctrine
+- **[testing-philosophy.md](./coding/testing-philosophy.md)** - Contract-driven testing philosophy
 
 ## Usage
 

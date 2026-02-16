@@ -3,7 +3,7 @@
 **Purpose:** Godot-specific coding conventions and GDScript style guide  
 **Audience:** AI agents working with GDScript and Godot Engine projects  
 **Scope:** Godot Engine and GDScript language-specific practices  
-**Related Documents:** [Clean Code Standards](./clean-code-standards.md), [Testing Standards](./testing-standards.md)
+**Related Documents:** [Clean Code Standards](./clean-code-standards.md), [Testing Philosophy](./testing-philosophy.md)
 
 ---
 

@@ -2,7 +2,7 @@
 
 **Purpose:** Language-agnostic clean code principles for writing and improving code  
 **Scope:** General principles applicable across programming languages  
-**Related Documents:** [Godot & GDScript Standards](./godot-gdscript-standards.md), [Testing Standards](./testing-standards.md)
+**Related Documents:** [Godot & GDScript Standards](./godot-gdscript-standards.md), [Testing Philosophy](./testing-philosophy.md)
 
 > **Note:** Examples use Python for illustration; apply equivalent patterns in your target language.
 
