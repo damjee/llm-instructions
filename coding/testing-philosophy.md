@@ -419,10 +419,3 @@ def test_user_service_returns_user_by_id():
 ```
 
 ---
-
-## References
-
-- Kent Beck, *Test-Driven Development: By Example*
-- Martin Fowler, *Test Pyramid* (martinfowler.com/bliki/TestPyramid.html)
-- Martin Fowler, *Mocks Aren't Stubs* (martinfowler.com/articles/mocksArentStubs.html)
-- Robert C. Martin, *Clean Code* (Chapter 9: Unit Tests)
