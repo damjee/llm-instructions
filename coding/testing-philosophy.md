@@ -1,32 +1,37 @@
-# Testing Philosophy: Contract-Driven Testing
+# Testing Philosophy: Behavior-Focused Testing
 
 **Purpose:** Testing philosophy and practices for maintaining code quality through refactor-safe tests  
 **Scope:** Testing strategy, test design, and quality principles  
 **Related Documents:** [Clean Code Standards](./clean-code-standards.md), [Godot & GDScript Standards](./godot-gdscript-standards.md)
-
-> **Influences:** Kent Beck (*TDD by Example*), Martin Fowler (*Test Pyramid*), Robert C. Martin (*Clean Code*, Chapter 9: Unit Tests)
 
 ---
 
 ## Core Mission
 
 Tests exist to:
-- **Enable refactoring with confidence** — tests are the safety net for change (Beck, Martin)
-- **Protect public contracts** — validate what the code promises to callers
-- **Serve as living documentation** — executable specifications of behavior (Beck)
+- **Enable refactoring with confidence** — tests are the safety net for change
+- **Protect public behavior** — validate what the code promises to callers
+- **Serve as living documentation** — executable specifications of behavior
 - **Preserve intended invariants** — catch real regressions, not incidental changes
 
-**Golden Rule:** If a change preserves the public contract, tests should continue to pass.
+**Golden Rule:** If a change preserves the public behavior, tests should continue to pass.
+
+### F.I.R.S.T. Principles
+
+All tests should be:
+- **Fast** — run quickly to encourage frequent execution
+- **Independent** — no test depends on another test's outcome or order
+- **Repeatable** — produce the same results every time, in any environment
+- **Self-validating** — pass or fail with no manual interpretation needed
+- **Timely** — written close to the code they validate
 
 ---
 
-## Primary Principle: Test the Contract
-
-> *"Test behavior, not implementation."* — Kent Beck
+## Test Behavior, Not Implementation
 
 Only public-facing interfaces and externally observable behavior are first-class test targets.
 
-A module's **contract** — what tests should validate:
+What tests should validate:
 - Public functions and their return values
 - Public errors and exceptions
 - Publicly observable invariants
@@ -102,7 +107,7 @@ The test name tells you **what broke**.
 
 Assertions explain **why** the invariant failed.
 
-Multiple assertions per test are acceptable when they provide diagnostic detail for the same behavior. This trades off against Uncle Bob's "one assert per test" principle (which optimizes for pinpointing exact failures). Use judgment — favor diagnostic clarity when a single behavior has multiple observable aspects.
+Multiple assertions per test are acceptable when they provide diagnostic detail for the same behavior. Use judgment — favor diagnostic clarity when a single behavior has multiple observable aspects.
 
 ```python
 # ✅ GOOD - Multiple assertions provide diagnostic detail for one behavior
@@ -128,9 +133,9 @@ The assertions are the diagnostics.
 
 ## Determinism First
 
-> *Aligns with the F.I.R.S.T. principle of **Repeatable** tests (Martin) — tests should produce the same results every time, in any environment.*
+Tests should produce the same results every time, in any environment.
 
-Testable code favors functional principles: same input → same output, side effects minimized, errors returned explicitly. Difficulty testing often reveals design issues (Beck, Fowler) — testability is a design signal, not just a testing concern.
+Testable code favors functional principles: same input → same output, side effects minimized, errors returned explicitly. Difficulty testing often reveals design issues — testability is a design signal, not just a testing concern.
 
 Tests should focus on return values and explicit errors whenever possible.
 
@@ -169,8 +174,6 @@ class Combat:
 
 ### Prefer Real Behavior Over Mocks
 
-> *"Mocks couple tests to implementation."* — Martin Fowler, *Mocks Aren't Stubs*
-
 Use **fakes** (lightweight implementations that simulate real behavior) over **mocks** (interaction-recording stubs). Fakes keep tests grounded in reality and resilient to refactoring; mocks tend to produce brittle, interaction-based assertions that break when implementation changes.
 
 ```python
@@ -196,46 +199,9 @@ def test_process_payment_returns_success():
     assert result.amount == 100
 ```
 
-### Dependency Injection Policy
-
-**Dependency injection is acceptable** when it:
-- Controls randomness
-- Controls time
-- Controls external resource boundaries
-- Enables deterministic behavior
-
-Injected dependencies must **simulate real behavior**, not fabricate unrealistic interaction scripts.
-
-```python
-# ✅ GOOD - Inject time source for determinism
-class Timer:
-    def __init__(self, time_source: Callable[[], float] = time.time):
-        self.time_source = time_source
-        self.start_time = None
-    
-    def start(self) -> None:
-        self.start_time = self.time_source()
-    
-    def elapsed(self) -> float:
-        return self.time_source() - self.start_time
-
-def test_timer_calculates_elapsed_time():
-    fake_time = 0.0
-    def get_time() -> float:
-        return fake_time
-    
-    timer = Timer(time_source=get_time)
-    timer.start()
-    
-    fake_time = 5.0
-    assert timer.elapsed() == 5.0
-```
-
 ---
 
 ## Integration Testing Strategy
-
-> *Fowler's Test Pyramid: many unit tests at the base, fewer integration tests in the middle, minimal E2E tests at the top.*
 
 **Core business logic should be unit-test dominant.** Push tests as low in the stack as practical without losing essential validation.
 
@@ -277,9 +243,7 @@ def test_calculate_user_reputation():
 
 ## Testability as a Design Signal
 
-> *"Good design makes testing easier; difficult testing reveals design issues."* — Beck, Fowler
-
-If a module is difficult to test (branch-heavy, edge-case heavy, hard to reason about), that's an architectural signal. Testing should follow architecture, not dictate it — but persistent testing difficulty suggests the module needs clearer boundaries and smaller public contracts.
+If a module is difficult to test (branch-heavy, edge-case heavy, hard to reason about), that's an architectural signal. Testing should follow architecture, not dictate it — but persistent testing difficulty suggests the module needs clearer boundaries and smaller public surfaces.
 
 ---
 
@@ -316,8 +280,6 @@ Coverage metrics can serve as a weak smoke signal, but high coverage does not im
 ---
 
 ## Flaky Tests
-
-> *Aligns with F.I.R.S.T. principles: **Independent** and **Repeatable** (Martin) — tests must not depend on each other and must produce consistent results.*
 
 **Flaky tests must be fixed or removed immediately.** A flaky test prevents confident refactoring, reduces trust in the test suite, and undermines the purpose of testing.
 
@@ -366,8 +328,6 @@ def test_get_active_users():
 
 ## DRY in Tests
 
-> *Test code deserves the same quality as production code (Martin), but test readability often takes priority over eliminating repetition (Beck).*
-
 **Favor clarity over abstraction in tests.** Repetition is acceptable when it makes each test self-contained and easy to diagnose. Apply the Rule of Three — only extract shared test logic after it meaningfully repeats three times.
 
 ```python
@@ -408,11 +368,11 @@ In priority order, this philosophy values:
 
 ## Summary
 
-✅ **Tests protect contracts** (Beck: test behavior, not implementation)  
+✅ **Tests protect behavior** (not implementation)  
 ✅ **Internals are disposable** (refactor-safe by design)  
 ✅ **Intent matters more than mechanics** (what, not how)  
 ✅ **Determinism enables refactoring** (F.I.R.S.T.: Repeatable)  
-✅ **Testability is a design signal** (Beck, Fowler)  
+✅ **Testability is a design signal**  
 ✅ **Confidence is the metric — not coverage**
 
 ---
