@@ -1,45 +1,41 @@
-# Feedback: testing-philosophy.md
+# Feedback on testing-philosophy.md
 
-## Issues Identified
+## Overlap: Determinism First vs Testability as a Design Signal
 
-### 1. Too Many External References
-- Document contains numerous references to external authors (Kent Beck, Martin Fowler, Robert C. Martin/Uncle Bob), book titles, and quotes
-- These citations add potential distraction for LLMs
-- Should remove all: author names, book titles, inline citations, blockquote attributions, and References section
-- Keep the philosophical content but strip the attribution layer
+**Issue**: This paragraph from "Determinism First" overlaps with the "Testability as a Design Signal" section:
 
-### 2. Document Structure Inconsistency
-- Current structure doesn't match clean-code-standards.md format
-- Should restructure to follow the pattern: Core Qualities → Focus Areas → Principles
-- This creates consistency across documentation
+> "Testable code favors functional principles: same input → same output, side effects minimized, errors returned explicitly. Difficulty testing often reveals design issues — testability is a design signal, not just a testing concern."
 
-### 3. F.I.R.S.T. Principles Not Prominent
-- F.I.R.S.T. principles are currently buried in the document (lines 131, 320)
-- Should be elevated to the Principles subsection in the restructured opening
-- F.I.R.S.T. = Fast, Independent, Repeatable, Self-validating, Timely
-- This is an established testing principle that should be clearly stated upfront
+**Testability as a Design Signal** section already covers:
+- If a module is difficult to test, that's an architectural signal
+- Testing should follow architecture, but persistent testing difficulty suggests the module needs clearer boundaries
 
-### 4. Section Naming Could Be Clearer
-- "Primary Principle: Test the Contract" section should be renamed to "Test Behavior, Not Implementation"
-- This embodies the principle directly without needing the Kent Beck quote
-- More direct and action-oriented
+### Recommendation:
 
-### 5. Out-of-Scope Content
-- "Dependency Injection Policy" section (lines 199-232) is about code architecture, not testing philosophy
-- Should be removed as it doesn't fit the document's scope
-- Testing philosophy should focus on test design and strategy, not implementation patterns
+Move this paragraph into the "Testability as a Design Signal" section. The ideas about:
+- Difficulty testing revealing design issues
+- Testability being a design signal, not just a testing concern
+- Favoring functional principles as a solution
 
-## Proposed Changes
+...all belong together under the design signal concept, not split between two sections.
 
-1. Restructure opening to match clean-code-standards.md:
-   - Core Qualities (refactor-safe, contract-focused, deterministic)
-   - Focus Areas (public contracts, observable behavior, test structure, mock usage)
-   - Principles (F.I.R.S.T. + Golden Rule about contract preservation)
+---
 
-2. Remove all external references throughout document
+## Document Real Estate: Edge Case Sections Taking Too Much Space
 
-3. Rename "Primary Principle: Test the Contract" → "Test Behavior, Not Implementation"
+**Issue**: These sections cover edge cases but occupy significant document real estate:
 
-4. Remove "Dependency Injection Policy" section
+- Snapshot / Golden Test Policy
+- Coverage Policy  
+- Flaky Tests
+- Property-Based Testing
+- Data Structures and Contract Alignment
 
-5. Ensure document flows logically after all changes
+**Concern**: The amount of space these sections take will over-influence the model, giving these edge cases disproportionate weight compared to core principles.
+
+### Recommendation:
+
+Condense these into a single section (e.g., "Testing Practices & Edge Cases" or "Additional Testing Guidance") to:
+- Reduce their prominence in the document
+- Keep the focus on core principles
+- Still provide guidance for these situations without over-emphasizing them
