@@ -135,9 +135,7 @@ The assertions are the diagnostics.
 
 Tests should produce the same results every time, in any environment.
 
-Testable code favors functional principles: same input → same output, side effects minimized, errors returned explicitly. Difficulty testing often reveals design issues — testability is a design signal, not just a testing concern.
-
-Tests should focus on return values and explicit errors whenever possible.
+Testable code favors functional principles: same input → same output, side effects minimized, errors returned explicitly. Tests should focus on return values and explicit errors whenever possible.
 
 ```python
 # ✅ EXCELLENT - Deterministic, functional
@@ -243,43 +241,23 @@ def test_calculate_user_reputation():
 
 ## Testability as a Design Signal
 
-If a module is difficult to test (branch-heavy, edge-case heavy, hard to reason about), that's an architectural signal. Testing should follow architecture, not dictate it — but persistent testing difficulty suggests the module needs clearer boundaries and smaller public surfaces.
+If a module is difficult to test (branch-heavy, edge-case heavy, hard to reason about), that's an architectural signal — testability is a design signal, not just a testing concern. Testing should follow architecture, not dictate it — but persistent testing difficulty suggests the module needs clearer boundaries and smaller public surfaces.
 
 ---
 
-## Snapshot / Golden Test Policy
+## Additional Testing Guidance
 
-**Prefer explicit assertions that reveal intent** over golden snapshots. Snapshots can hide what's actually being validated and encourage passive approval rather than deliberate verification.
+### Snapshot / Golden Test Policy
 
-When the contract involves structured output, assert on the specific elements that matter.
+**Prefer explicit assertions that reveal intent** over golden snapshots. Snapshots can hide what's actually being validated and encourage passive approval rather than deliberate verification. When the contract involves structured output, assert on the specific elements that matter rather than comparing against a stored snapshot.
 
-```python
-# ❌ BAD - Snapshot hides what's being tested
-def test_render_user_profile():
-    user = User(name="Alice")
-    html = render_user_profile(user)
-    assert html == load_snapshot("user_profile.html")
-
-# ✅ GOOD - Explicit assertions reveal intent
-def test_render_user_profile_includes_name():
-    user = User(name="Alice")
-    html = render_user_profile(user)
-    
-    assert "<h1>Alice</h1>" in html
-    assert 'class="user-profile"' in html
-```
-
----
-
-## Coverage Policy
+### Coverage Policy
 
 **Focus on contract protection, not coverage percentages.**
 
 Coverage metrics can serve as a weak smoke signal, but high coverage does not imply correctness and low coverage does not imply poor design. The real question is: *are the contracts protected?*
 
----
-
-## Flaky Tests
+### Flaky Tests
 
 **Flaky tests must be fixed or removed immediately.** A flaky test prevents confident refactoring, reduces trust in the test suite, and undermines the purpose of testing.
 
@@ -290,9 +268,7 @@ Common causes:
 - Test order dependencies
 - Insufficient cleanup between tests
 
----
-
-## Property-Based Testing
+### Property-Based Testing
 
 **Use sparingly.** While invariant-driven testing aligns philosophically with contract testing, prefer explicit test cases for clarity. Property-based testing adds machinery that can obscure intent.
 
@@ -301,9 +277,7 @@ Consider property-based testing when:
 2. Explicit test cases can't adequately cover boundary conditions
 3. The additional abstraction provides real value over 3-5 explicit cases
 
----
-
-## Data Structures and Contract Alignment
+### Data Structures and Contract Alignment
 
 **If order is not part of a contract:**
 - Tests must not enforce order
@@ -311,18 +285,6 @@ Consider property-based testing when:
 - Or normalization should occur before assertion
 
 Tests must not accidentally define a contract that the API did not intend to define.
-
-```python
-# ❌ BAD - Tests enforce order when API doesn't guarantee it
-def test_get_active_users():
-    users = get_active_users()
-    assert users == ["Alice", "Bob", "Charlie"]  # What if order changes?
-
-# ✅ GOOD - Tests ignore order since API doesn't guarantee it
-def test_get_active_users():
-    users = get_active_users()
-    assert set(users) == {"Alice", "Bob", "Charlie"}
-```
 
 ---
 
