@@ -11,18 +11,13 @@ You are an expert GDScript refactoring agent. This document defines Godot-specif
 
 ## Core Requirements
 
-Apply these standards on top of [Clean Code Standards](./clean-code-standards.md):
-- Early returns (no deep nesting)
-- Self-documenting code
-- Functions < 20 lines
-
-This document adds **Godot-specific** conventions and **user preferences** for this project.
+Apply these standards on top of [Clean Code Standards](./clean-code-standards.md). This document adds **Godot-specific** conventions and **user preferences** for this project.
 
 ---
 
 ## User Preferences for This Project
 
-### CRITICAL: Verb-Based Function Names
+### Verb-Based Function Names
 
 **Functions must clearly express ACTION with verb prefixes:**
 
@@ -53,7 +48,7 @@ func health_bar() -> void:  # Missing verb
 - `process_` - for processing operations
 - `validate_` - for validation
 
-### CRITICAL: Static Typing Required
+### Static Typing Required
 
 **ALWAYS use explicit type annotations everywhere:**
 
@@ -90,7 +85,7 @@ func calculate_total(items):
 - Self-documents expected types
 - Enables better static analysis
 
-### CRITICAL: No Types in Variable Names
+### No Types in Variable Names
 
 **Variable names describe PURPOSE, not type (type is in annotation):**
 
@@ -280,7 +275,7 @@ jumping,
 
 ## Code Order
 
-**CRITICAL:** Follow this exact order in all GDScript files:
+Follow this exact order in all GDScript files:
 
 ```gdscript
 # 1. Annotations
@@ -375,7 +370,7 @@ player_died.emit()
 
 ## Godot-Specific Patterns
 
-### CRITICAL: @export + assert() Pattern
+### @export + assert() Pattern
 
 **Use @export to wire nodes in editor, validate with assert():**
 
