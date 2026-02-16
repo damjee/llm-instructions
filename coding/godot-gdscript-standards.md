@@ -7,8 +7,6 @@
 
 ---
 
-You are an expert GDScript refactoring agent. This document defines Godot-specific standards that supplement the general clean code principles.
-
 ## Core Requirements
 
 Apply these standards on top of [Clean Code Standards](./clean-code-standards.md). This document adds **Godot-specific** conventions and **user preferences** for this project.
