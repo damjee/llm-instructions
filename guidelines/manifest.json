@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "entrypoint": "guidelines/README.md",
+  "guidance_strategy": "Load only the minimum required guides for the current task.",
+  "ignore_paths": [
+    "coding/"
+  ],
+  "default_load_order": [
+    "guidelines/clean-code-standards.md",
+    "guidelines/testing-philosophy.md",
+    "guidelines/languages/godot/gdscript-standards.md"
+  ],
+  "documents": [
+    {
+      "id": "clean-code-standards",
+      "path": "guidelines/clean-code-standards.md",
+      "category": "general",
+      "priority": 1,
+      "purpose": "Language-agnostic clean code guidance for any code task.",
+      "when_to_load": [
+        "Implementing code",
+        "Refactoring code",
+        "Reviewing code",
+        "Fixing bugs",
+        "Designing APIs or abstractions"
+      ],
+      "load_after": [],
+      "skip_if": [
+        "The task does not involve source code or code quality"
+      ],
+      "typical_tasks": [
+        "new feature work",
+        "bug fixes",
+        "refactors",
+        "code review"
+      ]
+    },
+    {
+      "id": "testing-philosophy",
+      "path": "guidelines/testing-philosophy.md",
+      "category": "general",
+      "priority": 2,
+      "purpose": "Behavior-focused testing guidance for refactor-safe tests.",
+      "when_to_load": [
+        "Writing tests",
+        "Fixing failing tests",
+        "Reviewing test quality",
+        "Improving testability",
+        "Evaluating regression safety"
+      ],
+      "load_after": [
+        "guidelines/clean-code-standards.md"
+      ],
+      "skip_if": [
+        "No tests are involved and the task does not affect testability"
+      ],
+      "typical_tasks": [
+        "test creation",
+        "test refactors",
+        "test debugging",
+        "test strategy"
+      ]
+    },
+    {
+      "id": "godot-gdscript-standards",
+      "path": "guidelines/languages/godot/gdscript-standards.md",
+      "category": "language-specific",
+      "priority": 3,
+      "language": "godot/gdscript",
+      "purpose": "Godot Engine and GDScript-specific conventions layered on top of the general guides.",
+      "when_to_load": [
+        "The repository uses Godot",
+        "The task edits GDScript",
+        "The task reviews Godot architecture or node patterns"
+      ],
+      "load_after": [
+        "guidelines/clean-code-standards.md"
+      ],
+      "skip_if": [
+        "The task is language-agnostic",
+        "The task does not involve Godot or GDScript"
+      ],
+      "typical_tasks": [
+        "GDScript implementation",
+        "Godot code review",
+        "node wiring refactors",
+        "signal usage review"
+      ]
+    }
+  ],
+  "recipes": [
+    {
+      "id": "generic-code-change",
+      "load": [
+        "guidelines/clean-code-standards.md"
+      ]
+    },
+    {
+      "id": "test-work",
+      "load": [
+        "guidelines/clean-code-standards.md",
+        "guidelines/testing-philosophy.md"
+      ]
+    },
+    {
+      "id": "godot-code-work",
+      "load": [
+        "guidelines/clean-code-standards.md",
+        "guidelines/languages/godot/gdscript-standards.md"
+      ]
+    },
+    {
+      "id": "godot-code-with-tests",
+      "load": [
+        "guidelines/clean-code-standards.md",
+        "guidelines/testing-philosophy.md",
+        "guidelines/languages/godot/gdscript-standards.md"
+      ]
+    }
+  ]
+}

@@ -3,13 +3,17 @@
 **Purpose:** Godot-specific coding conventions and GDScript style guide  
 **Audience:** AI agents working with GDScript and Godot Engine projects  
 **Scope:** Godot Engine and GDScript language-specific practices  
-**Related Documents:** [Clean Code Standards](./clean-code-standards.md), [Testing Philosophy](./testing-philosophy.md)
+**Related Documents:** [Clean Code Standards](../../clean-code-standards.md), [Testing Philosophy](../../testing-philosophy.md)
+**When to Load:** Load when the repository or task uses Godot Engine or GDScript.  
+**Load Order:** Load after Clean Code Standards; also load Testing Philosophy if tests or testability are in scope.  
+**Skip If:** The task is language-agnostic or the project is not Godot/GDScript.  
+**Typical Tasks:** Implement gameplay code, refactor GDScript, review Godot conventions, validate node and signal patterns.
 
 ---
 
 ## Core Requirements
 
-Apply these standards on top of [Clean Code Standards](./clean-code-standards.md). This document adds **Godot-specific** conventions and **user preferences** for this project.
+Apply these standards on top of [Clean Code Standards](../../clean-code-standards.md). This document adds **Godot-specific** conventions and **user preferences** for this project.
 
 ---
 
@@ -656,4 +660,4 @@ return Vector2(input_x, input_y).normalized()
 - **PAST TENSE SIGNALS** - `health_changed` not `health_change`
 - **TRAILING COMMAS** - In multi-line arrays/enums/dicts
 
-These standards work together with [Clean Code Standards](./clean-code-standards.md) to create maintainable GDScript code.
+These standards work together with [Clean Code Standards](../../clean-code-standards.md) to create maintainable GDScript code.

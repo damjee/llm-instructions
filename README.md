@@ -4,12 +4,14 @@ A collection of instruction documents for AI agents and language models.
 
 ## Structure
 
-### [coding/](./coding/)
-Coding standards and best practices for AI agents performing code refactoring, review, and generation.
+### [guidelines/](./guidelines/)
+Core guidance documents for code quality and testing. If you are an AI agent, start with [`guidelines/README.md`](./guidelines/README.md) and load only the files it recommends.
 
-- **[clean-code-standards.md](./coding/clean-code-standards.md)** - Language-agnostic clean code principles
-- **[godot-gdscript-standards.md](./coding/godot-gdscript-standards.md)** - Godot/GDScript specific conventions and preferences
-- **[testing-philosophy.md](./coding/testing-philosophy.md)** - Contract-driven testing philosophy
+- **[README.md](./guidelines/README.md)** - Task router with minimal load recipes and file selection rules
+- **[manifest.json](./guidelines/manifest.json)** - Machine-readable guide index with load and skip metadata
+- **[clean-code-standards.md](./guidelines/clean-code-standards.md)** - Language-agnostic clean code principles
+- **[testing-philosophy.md](./guidelines/testing-philosophy.md)** - Contract-driven testing philosophy
+- **[languages/godot/gdscript-standards.md](./guidelines/languages/godot/gdscript-standards.md)** - Godot/GDScript-specific conventions and preferences
 
 ## Usage
 
@@ -18,6 +20,8 @@ These documents are designed to be:
 - **Reference material** - For human developers
 - **Prompt templates** - For code generation tasks
 - **Style guides** - For team consistency
+
+For LLMs, load [`guidelines/README.md`](./guidelines/README.md) first, then follow its routing rules instead of loading every file in the repository.
 
 ## Philosophy
 

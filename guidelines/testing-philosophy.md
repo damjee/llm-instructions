@@ -2,7 +2,11 @@
 
 **Purpose:** Testing philosophy and practices for maintaining code quality through refactor-safe tests  
 **Scope:** Testing strategy, test design, and quality principles  
-**Related Documents:** [Clean Code Standards](./clean-code-standards.md), [Godot & GDScript Standards](./godot-gdscript-standards.md)
+**Related Documents:** [Clean Code Standards](./clean-code-standards.md), [Godot & GDScript Standards](./languages/godot/gdscript-standards.md)
+**When to Load:** Load when writing, changing, debugging, or evaluating tests, or when testability is part of the task.  
+**Load Order:** Load after Clean Code Standards; use alongside language-specific guidance when relevant.  
+**Skip If:** No tests are involved and the task does not affect test behavior or testability.  
+**Typical Tasks:** Add tests, fix failing tests, review test quality, improve testability, define testing strategy.
 
 ---
 
