@@ -203,27 +203,36 @@ If duplication keeps the setup understandable, accept the duplication. If extrac
 
 ## Dependency Management in Tests
 
-### Prefer Real Behavior Over Mocks
+### Prefer Stub-Oriented Tests Over Mock-Oriented Tests
 
-Use **fakes** (lightweight implementations that simulate real behavior) over **mocks** (interaction-recording stubs). Fakes keep tests grounded in reality and resilient to refactoring; mocks tend to produce brittle, interaction-based assertions that break when implementation changes.
+When a collaborator only exists to help the test reach a scenario, prefer the **stub side** of the test-double family over the **mock side**.
 
-### Know Your Test Doubles
+Stub-oriented tests keep assertions focused on outputs and observable state. Mock-oriented tests pull the test toward interaction checking and become brittle when implementation changes but public behavior does not.
 
-Use the lightest kind of test double that expresses the behavior you care about.
+### Test Doubles: What Is What
 
-- **Dummy** — placeholder value required to satisfy a signature, but not used by the test
-- **Stub** — collaborator that returns canned data to drive the system under test
-- **Spy** — collaborator that records what happened so the test can inspect it afterward
-- **Mock** — collaborator configured with interaction expectations that the test verifies
-- **Fake** — lightweight working implementation with realistic behavior, but simplified internals
+**Test double** is the umbrella term for any substitute used in place of a real collaborator.
 
-The important distinction is not the library name, but the role the collaborator plays in the test:
+The useful split is:
 
-- Use **stubs** to provide inputs or query responses to the system under test.
-- Use **mocks** or **spies** only when the outgoing interaction is itself part of the contract.
-- Prefer **fakes** when a realistic, low-friction implementation keeps the test grounded without needing a real external dependency.
+#### Stub Family — doubles that supply data or behavior
 
-If a test only needs canned data, do not also assert interactions. That turns a stub-backed test into an unnecessarily brittle mock-style test.
+- **Dummy** — placeholder value required by a signature, but not used by the test
+- **Stub** — returns canned answers so the system under test can execute a scenario
+- **Fake** — a richer kind of stub with working but simplified behavior, such as an in-memory repository
+
+Use stub-family doubles when the collaborator provides **indirect input** into the scenario.
+
+#### Mock Family — doubles that observe or verify interactions
+
+- **Spy** — records what happened so the test can inspect it afterward
+- **Mock** — adds explicit expectations about which interactions must occur
+
+Use mock-family doubles only when the outgoing interaction is itself part of the contract.
+
+The category is determined by the role the double plays in the test, not by the class name provided by a library.
+
+If a test only needs canned data, do not also assert interactions. That turns a stub-based test into an unnecessarily brittle mock-style test.
 
 ```python
 # ✅ GOOD - Stub supplies data; the assertion stays on behavior
@@ -235,26 +244,25 @@ def test_price_conversion_uses_exchange_rate_from_provider():
 
     assert total == Money.usd(12)
 
-# ⚠️ FRAGILE - Mock-based test coupled to implementation
-def test_payment_processor_calls_the_gateway_once():
-    payment_gateway = Mock()
-    payment_gateway.charge.return_value = {"status": "success"}
+# ✅ ALSO GOOD - Fake is a richer kind of stub
+def test_existing_user_is_returned_from_in_memory_repository():
+    repo = InMemoryUserRepository()
+    repo.add(User(id=1, name="Alice"))
 
-    sut = PaymentProcessor(payment_gateway)
-    result = sut.process_payment(100)
+    sut = UserService(repo)
+    user = sut.get_user(user_id=1)
 
-    payment_gateway.charge.assert_called_once_with(100)  # Breaks on refactor
-    assert result["status"] == "success"
+    assert user.id == 1
+    assert user.name == "Alice"
 
-# ✅ GOOD - Fake simulates real behavior
-def test_successful_payment_returns_success_status():
-    payment_gateway = FakePaymentGateway()
-    sut = PaymentProcessor(payment_gateway)
+# ⚠️ USE ONLY WHEN THE INTERACTION IS THE CONTRACT
+def test_welcome_email_is_sent_after_registration():
+    email_sender = Mock()
+    sut = RegistrationService(email_sender)
 
-    result = sut.process_payment(100)
+    sut.register("alice@example.com")
 
-    assert result.status == PaymentStatus.SUCCESS
-    assert result.amount == 100
+    email_sender.send_welcome_email.assert_called_once_with("alice@example.com")
 ```
 
 ---
@@ -456,7 +464,7 @@ In priority order, this philosophy values:
 2. **Refactor resilience** — tests survive implementation changes that preserve behavior
 3. **Scenario clarity** — names, AAA structure, and assertions make the behavior obvious
 4. **Visible setup** — the relevant state and collaborators are easy to see
-5. **Lightweight doubles** — prefer real collaborators, fakes, and stubs over interaction-heavy mocks
+5. **Stub-oriented tests** — prefer stub-family doubles over interaction-heavy mock-family doubles
 6. **Intentional coverage** — meaningful contracts matter more than raw percentages
 7. **Grounded confidence** — trust built through real behavior, not mocks or metrics
 
@@ -468,7 +476,7 @@ In priority order, this philosophy values:
 ✅ **Names describe scenarios in plain English**  
 ✅ **AAA and single-behavior tests keep intent clear**  
 ✅ **Setup should stay visible and deterministic**  
-✅ **Use the lightest double that tells the truth**  
+✅ **Prefer stub-family doubles unless interactions are the contract**  
 ✅ **Prefer output/state assertions over interaction-heavy tests**  
 ✅ **Confidence is the metric — not coverage**
 
