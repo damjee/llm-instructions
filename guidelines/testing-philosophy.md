@@ -93,7 +93,7 @@ Use the lowest-brittleness style that still validates the contract.
 
 - Prefer explicit assertions over snapshot or golden-style approval tests.
 - Treat coverage as a weak smoke signal, not a success metric.
-- Fix or remove flaky tests immediately.
+- Treat flaky tests as determinism bugs: identify the unstable dependency and make the test repeatable.
 - Use property-based testing sparingly, only when invariants are clear and the additional machinery is justified.
 - Do not assert ordering unless ordering is part of the contract.
 
@@ -110,7 +110,7 @@ Before finishing test work, verify:
 - Is the scenario name clear and behavior-focused?
 - Is the setup visible, local, and deterministic?
 - Are the assertions validating outputs, observable state, or genuine contract-level interactions?
-- Are doubles being used only where they clarify the contract?
+- Are doubles being used only where necessary, with stubs and fakes preferred over mocks?
 - Are integration tests limited to real boundaries?
 
 ## Summary
@@ -118,6 +118,6 @@ Before finishing test work, verify:
 - Test contracts, not implementation details.
 - Keep tests deterministic, focused, and easy to read.
 - Prefer output and state assertions over interaction-heavy tests.
-- Keep setup visible and use doubles deliberately.
+- Keep setup visible; prefer stubs and fakes over mocks.
 - Use integration tests sparingly at boundaries.
 - Measure success by confidence in behavior, not by test volume or coverage numbers.
