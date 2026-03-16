@@ -43,46 +43,30 @@ What tests should validate:
 
 **Implementation details** — private variables, helpers, internal state, call order, and interaction counts — are disposable. If a private value changes but produces the same observable result, the test must pass.
 
----
-
-## Intent Over Implementation
-
-Tests describe **what must be true**, not **how it is achieved**.
-
-### Focus On
-
-✅ Return values and outputs  
-✅ Error conditions and exceptions  
-✅ Domain invariants  
-✅ Observable state transitions  
-✅ Side effects visible to the caller
-
-Avoid coupling tests to call order, interaction counts, private helpers, internal variables, or formatting (unless formatting is part of the contract).
-
 **Example:**
 
 ```python
 # ✅ GOOD - Tests the contract
-def test_calculate_damage_returns_zero_when_attacker_is_dead():
+def test_dead_attacker_deals_no_damage():
     attacker = Unit(health=0)
     defender = Unit(health=100)
-    
+
     damage = calculate_damage(attacker, defender)
-    
+
     assert damage == 0
 
 # ✅ GOOD - Tests error conditions
-def test_calculate_damage_raises_when_units_are_none():
+def test_missing_units_raise_value_error():
     with pytest.raises(ValueError):
         calculate_damage(None, None)
 
 # ❌ BAD - Tests implementation details
-def test_calculate_damage_calls_is_alive_twice():
+def test_damage_calculation_checks_liveness_twice():
     attacker = Mock()
     defender = Mock()
-    
+
     calculate_damage(attacker, defender)
-    
+
     assert attacker.is_alive.call_count == 1  # Brittle!
 ```
 
@@ -90,47 +74,71 @@ def test_calculate_damage_calls_is_alive_twice():
 
 ## Test Structure Philosophy
 
+### Use AAA as the Default Shape
+
+Arrange → Act → Assert.
+
+- **Arrange** — prepare inputs, dependencies, and relevant state
+- **Act** — execute the behavior being tested
+- **Assert** — verify the outcome
+
+Keep those sections visually distinct with blank lines or brief comments.
+
+The **Act** section should usually be a single logical action. Multiple state-changing steps often mean the test is protecting more than one behavior.
+
+A single test should protect a **single unit of behavior**. Multiple assertions are fine when they diagnose different aspects of that one behavior.
+
 ### Test Names Communicate WHAT
 
-Test names explain the invariant being protected.
+Test names should explain the scenario in plain English.
 
-**Preferred pattern:**
-```
-test_<function>_<invariant>_<condition>
-```
+Guidelines:
+- Write the name as if you are describing the scenario to someone who knows the problem domain but not the implementation.
+- Focus on behavior and outcome, not method names or internal mechanics.
+- Use underscores when your framework expects identifier-like names or when they improve readability.
+- Utility or helper code can use method-oriented names when that is genuinely the clearest behavior label.
 
 **Examples:**
-- `test_calculate_damage_returns_zero_when_attacker_is_dead`
-- `test_spawn_enemy_fails_when_spawn_points_full`
-- `test_heal_cannot_exceed_max_health`
-- `test_is_player_ready_returns_false_when_on_cooldown`
+- `test_dead_attacker_deals_no_damage`
+- `test_spawn_fails_when_all_spawn_points_are_full`
+- `test_healing_never_pushes_health_above_maximum`
+- `test_player_on_cooldown_is_not_ready`
 
-The test name tells you **what broke**.
+The test name should tell you **what broke**, not which function happened to be called.
+
+### Keep the System Under Test Obvious
+
+Dependencies and the primary subject should be easy to spot.
+
+- Prefer domain names when they make the scenario clearer.
+- When a neutral placeholder helps separate the main object from its collaborators, `sut` is an acceptable name for the system under test.
+- Avoid hiding key setup in distant helpers, constructors, or global fixtures.
 
 ### Assertions Communicate WHY
 
 Assertions explain **why** the invariant failed.
 
-Multiple assertions per test are acceptable when they provide diagnostic detail for the same behavior. Use judgment — favor diagnostic clarity when a single behavior has multiple observable aspects.
+Multiple assertions per test are acceptable when they provide diagnostic detail for the same behavior. Use judgment — favor diagnostic clarity when a single behavior has multiple observable aspects, but recognize that too many assertions can indicate a missing abstraction.
 
 ```python
-# ✅ GOOD - Multiple assertions provide diagnostic detail for one behavior
-def test_calculate_final_score():
+# ✅ GOOD - Multiple assertions diagnose one behavior
+def test_bonus_and_multiplier_are_applied_to_final_score():
     player = Player(base_score=100, bonus=50, multiplier=2)
-    
+
     score = calculate_final_score(player)
-    
+
     assert score > 0, "Score must be positive"
     assert score == 300, f"Expected 300, got {score}"
     assert score == (100 + 50) * 2, "Formula: (base + bonus) * multiplier"
 
 # ✅ ALSO GOOD - Single assertion when failure is self-evident
-def test_calculate_damage_returns_integer():
+def test_damage_is_returned_as_an_integer():
     damage = calculate_damage(attacker, defender)
+
     assert isinstance(damage, int)
 ```
 
-The test is the headline.  
+The test name is the headline.  
 The assertions are the diagnostics.
 
 ---
@@ -141,6 +149,8 @@ Tests should produce the same results every time, in any environment.
 
 Testable code favors functional principles: same input → same output, side effects minimized, errors returned explicitly. Tests should focus on return values and explicit errors whenever possible.
 
+Branching logic inside tests is a smell. If a test needs `if` statements to decide what it expects, the scenario is probably too broad or the assertion is too indirect.
+
 ```python
 # ✅ EXCELLENT - Deterministic, functional
 def calculate_damage(attacker: Unit, defender: Unit) -> int:
@@ -150,25 +160,36 @@ def calculate_damage(attacker: Unit, defender: Unit) -> int:
         return 0
     return max(0, attacker.attack - defender.defense)
 
-def test_calculate_damage_with_dead_attacker():
+
+def test_dead_attacker_produces_zero_damage():
     attacker = Unit(health=0, attack=50)
     defender = Unit(health=100, defense=10)
-    
+
     damage = calculate_damage(attacker, defender)
-    
+
     assert damage == 0
 
 # ⚠️ HARDER TO TEST - Stateful, side effects
 class Combat:
     def __init__(self):
         self.last_damage = 0
-    
+
     def process_attack(self, attacker: Unit, defender: Unit) -> None:
         if attacker.is_alive and defender.is_alive:
             damage = max(0, attacker.attack - defender.defense)
             defender.health -= damage
             self.last_damage = damage
 ```
+
+---
+
+## Setup and Fixture Design
+
+Keep setup visible and local to the scenario.
+
+Prefer small factory/helper methods over constructor-level setup, broad `setUp` / `before_each` hooks, or shared fixtures that hide why the test exists. Reuse is valuable only when it removes noise **without** obscuring the relevant differences between scenarios.
+
+If duplication keeps the setup understandable, accept the duplication. If extraction makes the setup clearer, extract it.
 
 ---
 
@@ -180,23 +201,23 @@ Use **fakes** (lightweight implementations that simulate real behavior) over **m
 
 ```python
 # ⚠️ FRAGILE - Mock-based test coupled to implementation
-def test_process_payment_with_mocks():
+def test_payment_processor_calls_the_gateway_once():
     payment_gateway = Mock()
     payment_gateway.charge.return_value = {"status": "success"}
-    
-    processor = PaymentProcessor(payment_gateway)
-    result = processor.process_payment(100)
-    
+
+    sut = PaymentProcessor(payment_gateway)
+    result = sut.process_payment(100)
+
     payment_gateway.charge.assert_called_once_with(100)  # Breaks on refactor
     assert result["status"] == "success"
 
 # ✅ GOOD - Fake simulates real behavior
-def test_process_payment_returns_success():
+def test_successful_payment_returns_success_status():
     payment_gateway = FakePaymentGateway()
-    processor = PaymentProcessor(payment_gateway)
-    
-    result = processor.process_payment(100)
-    
+    sut = PaymentProcessor(payment_gateway)
+
+    result = sut.process_payment(100)
+
     assert result.status == PaymentStatus.SUCCESS
     assert result.amount == 100
 ```
@@ -222,22 +243,22 @@ Integration tests validate the boundary contract only. They do not replace unit 
 
 ```python
 # ✅ GOOD - Integration test for database adapter
-def test_user_repository_saves_and_retrieves_user():
+def test_saved_user_can_be_loaded_by_email():
     repo = UserRepository(database_url="sqlite:///:memory:")
     user = User(name="Alice", email="alice@example.com")
-    
+
     repo.save(user)
     retrieved = repo.find_by_email("alice@example.com")
-    
+
     assert retrieved.name == "Alice"
     assert retrieved.email == "alice@example.com"
 
 # ✅ GOOD - Unit test for business logic
-def test_calculate_user_reputation():
+def test_reputation_counts_posts_and_votes():
     user = User(posts=10, upvotes=50, downvotes=5)
-    
+
     reputation = calculate_reputation(user)
-    
+
     assert reputation == 55  # posts * 1 + upvotes * 1 - downvotes * 1
 ```
 
@@ -246,6 +267,34 @@ def test_calculate_user_reputation():
 ## Testability as a Design Signal
 
 If a module is difficult to test (branch-heavy, edge-case heavy, hard to reason about), that's an architectural signal — testability is a design signal, not just a testing concern. Testing should follow architecture, not dictate it — but persistent testing difficulty suggests the module needs clearer boundaries and smaller public surfaces.
+
+---
+
+## Anti-Patterns to Avoid
+
+### Multiple AAA Sections
+
+Avoid multiple Arrange / Act / Assert cycles in the same test. If a second act/assert pair is required, that usually means you are verifying a second behavior and should split the test.
+
+### Conditional Logic in Tests
+
+Avoid `if` statements and branchy expectation logic inside tests. Tests should remain deterministic and explicit about which scenario they cover.
+
+### Rigid Naming Conventions
+
+Avoid formulaic naming schemes such as `[MethodUnderTest]_[Scenario]_[ExpectedResult]` when they pull attention toward implementation details instead of behavior. Prefer names that read like scenarios.
+
+### High Coupling Between Tests
+
+A change in one test should not affect another. Coupling tests through shared mutable setup, test order, or hidden dependencies violates independence.
+
+### Hidden Setup in Constructors or Shared Hooks
+
+Initializing fixtures in constructors or broad setup hooks can hide context, increase coupling, and reduce readability. Prefer small factory/helper methods when you need reusable setup.
+
+### Overusing Parameterized Tests
+
+Parameterized tests reduce duplication, but they also make individual scenarios less explicit. Use them when the behavior is truly identical across cases; keep high-signal scenarios as named tests.
 
 ---
 
@@ -278,7 +327,7 @@ Common causes:
 
 Consider property-based testing when:
 1. The invariant is well-defined but the input space is large
-2. Explicit test cases can't adequately cover boundary conditions
+2. Explicit test cases cannot adequately cover boundary conditions
 3. The additional abstraction provides real value over 3-5 explicit cases
 
 ### Data Structures and Contract Alignment
@@ -294,27 +343,29 @@ Tests must not accidentally define a contract that the API did not intend to def
 
 ## DRY in Tests
 
-**Favor clarity over abstraction in tests.** Repetition is acceptable when it makes each test self-contained and easy to diagnose. Apply the Rule of Three — only extract shared test logic after it meaningfully repeats three times.
+**Favor clarity over abstraction in tests.** Repetition is acceptable when it keeps each test self-contained, the setup visible, and the scenario easy to diagnose. Apply the Rule of Three before extracting shared logic, and prefer small factory/helper methods over hidden constructor or framework-level setup.
 
 ```python
 # ✅ GOOD - Explicit, clear, each test tells its own story
-def test_add_returns_sum_of_two_positives():
+def test_two_positive_numbers_add_to_their_sum():
     assert add(2, 3) == 5
 
-def test_add_returns_sum_of_two_negatives():
+
+def test_two_negative_numbers_add_to_their_sum():
     assert add(-2, -3) == -5
 
-def test_add_returns_sum_of_positive_and_negative():
+
+def test_positive_and_negative_numbers_add_correctly():
     assert add(2, -3) == -1
 
 # ✅ ALSO GOOD - Parametrize when inputs vary but the behavior is identical
-# Tradeoff: more concise, but failure messages are less descriptive
+# Tradeoff: more concise, but individual scenario names are less descriptive
 @pytest.mark.parametrize("a,b,expected", [
     (2, 3, 5),
     (-2, -3, -5),
     (2, -3, -1),
 ])
-def test_add(a, b, expected):
+def test_simple_addition_cases_return_expected_sums(a, b, expected):
     assert add(a, b) == expected
 ```
 
@@ -326,19 +377,19 @@ In priority order, this philosophy values:
 
 1. **Contract fidelity** — tests validate what the code promises, not how it works
 2. **Refactor resilience** — tests survive implementation changes that preserve behavior
-3. **Simplicity** — minimal test infrastructure, clear assertions, no unnecessary abstractions
-4. **Intentional coverage** — focused testing of meaningful contracts over trivial pass-throughs
-5. **Grounded confidence** — trust built through real behavior, not mocks or metrics
+3. **Scenario clarity** — names, AAA structure, and assertions make the behavior obvious
+4. **Visible setup** — the relevant state and collaborators are easy to see
+5. **Intentional coverage** — meaningful contracts matter more than raw percentages
+6. **Grounded confidence** — trust built through real behavior, not mocks or metrics
 
 ---
 
 ## Summary
 
 ✅ **Tests protect behavior** (not implementation)  
-✅ **Internals are disposable** (refactor-safe by design)  
-✅ **Intent matters more than mechanics** (what, not how)  
-✅ **Determinism enables refactoring** (F.I.R.S.T.: Repeatable)  
-✅ **Testability is a design signal**  
+✅ **Names describe scenarios in plain English**  
+✅ **AAA and single-behavior tests keep intent clear**  
+✅ **Setup should stay visible and deterministic**  
 ✅ **Confidence is the metric — not coverage**
 
 ---
@@ -359,42 +410,45 @@ def calculate_damage(attacker: Unit, defender: Unit) -> int:
         return 0
     if defender.is_invulnerable:
         return 0
-    
+
     base_damage = attacker.attack_power
     defense = defender.defense
     return max(0, base_damage - defense)
 
 # Test: test_damage_calculator.py
-def test_calculate_damage_returns_zero_when_attacker_is_dead():
+def test_dead_attacker_deals_no_damage():
     attacker = Unit(health=0, attack_power=50, defense=10)
     defender = Unit(health=100, attack_power=30, defense=5)
-    
+
     damage = calculate_damage(attacker, defender)
-    
+
     assert damage == 0
 
-def test_calculate_damage_returns_zero_when_defender_is_dead():
+
+def test_dead_defender_takes_no_damage():
     attacker = Unit(health=100, attack_power=50, defense=10)
     defender = Unit(health=0, attack_power=30, defense=5)
-    
+
     damage = calculate_damage(attacker, defender)
-    
+
     assert damage == 0
 
-def test_calculate_damage_calculates_correctly():
+
+def test_attack_power_over_defense_sets_damage():
     attacker = Unit(health=100, attack_power=50, defense=10)
     defender = Unit(health=100, attack_power=30, defense=5)
-    
+
     damage = calculate_damage(attacker, defender)
-    
+
     assert damage == 45  # 50 attack - 5 defense
 
-def test_calculate_damage_cannot_be_negative():
+
+def test_damage_never_goes_below_zero():
     attacker = Unit(health=100, attack_power=10, defense=0)
     defender = Unit(health=100, attack_power=30, defense=50)
-    
+
     damage = calculate_damage(attacker, defender)
-    
+
     assert damage == 0  # max(0, 10 - 50) = 0
 ```
 
@@ -404,20 +458,20 @@ def test_calculate_damage_cannot_be_negative():
 # ❌ BAD - Tests internal implementation
 def test_user_service_calls_repository_once():
     repo = Mock()
-    service = UserService(repo)
-    
-    service.get_user(user_id=1)
-    
+    sut = UserService(repo)
+
+    sut.get_user(user_id=1)
+
     repo.find_by_id.assert_called_once_with(1)  # Brittle!
 
 # ✅ GOOD - Tests observable behavior
-def test_user_service_returns_user_by_id():
+def test_existing_user_is_returned_by_id():
     repo = FakeUserRepository()
     repo.add_user(User(id=1, name="Alice"))
-    service = UserService(repo)
-    
-    user = service.get_user(user_id=1)
-    
+    sut = UserService(repo)
+
+    user = sut.get_user(user_id=1)
+
     assert user.id == 1
     assert user.name == "Alice"
 ```
