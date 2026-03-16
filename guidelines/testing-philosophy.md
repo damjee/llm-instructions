@@ -98,6 +98,14 @@ Guidelines:
 - Use underscores when your framework expects identifier-like names or when they improve readability.
 - Utility or helper code can use method-oriented names when that is genuinely the clearest behavior label.
 
+#### Rigid Naming Is an Anti-Pattern
+
+Avoid formulaic patterns such as `[MethodUnderTest]_[Scenario]_[ExpectedResult]`.
+
+Those templates look organized, but they nudge the author toward implementation-first thinking. They often produce names that read like technical bookkeeping instead of executable specifications.
+
+Prefer scenario names that still make sense even if the implementation is refactored behind the same public behavior.
+
 **Examples:**
 - `test_dead_attacker_deals_no_damage`
 - `test_spawn_fails_when_all_spawn_points_are_full`
@@ -199,7 +207,34 @@ If duplication keeps the setup understandable, accept the duplication. If extrac
 
 Use **fakes** (lightweight implementations that simulate real behavior) over **mocks** (interaction-recording stubs). Fakes keep tests grounded in reality and resilient to refactoring; mocks tend to produce brittle, interaction-based assertions that break when implementation changes.
 
+### Know Your Test Doubles
+
+Use the lightest kind of test double that expresses the behavior you care about.
+
+- **Dummy** — placeholder value required to satisfy a signature, but not used by the test
+- **Stub** — collaborator that returns canned data to drive the system under test
+- **Spy** — collaborator that records what happened so the test can inspect it afterward
+- **Mock** — collaborator configured with interaction expectations that the test verifies
+- **Fake** — lightweight working implementation with realistic behavior, but simplified internals
+
+The important distinction is not the library name, but the role the collaborator plays in the test:
+
+- Use **stubs** to provide inputs or query responses to the system under test.
+- Use **mocks** or **spies** only when the outgoing interaction is itself part of the contract.
+- Prefer **fakes** when a realistic, low-friction implementation keeps the test grounded without needing a real external dependency.
+
+If a test only needs canned data, do not also assert interactions. That turns a stub-backed test into an unnecessarily brittle mock-style test.
+
 ```python
+# ✅ GOOD - Stub supplies data; the assertion stays on behavior
+def test_price_conversion_uses_exchange_rate_from_provider():
+    rate_provider = StubExchangeRateProvider(rate=1.2)
+    sut = PricingService(rate_provider)
+
+    total = sut.convert_to_usd(Money.eur(10))
+
+    assert total == Money.usd(12)
+
 # ⚠️ FRAGILE - Mock-based test coupled to implementation
 def test_payment_processor_calls_the_gateway_once():
     payment_gateway = Mock()
@@ -221,6 +256,46 @@ def test_successful_payment_returns_success_status():
     assert result.status == PaymentStatus.SUCCESS
     assert result.amount == 100
 ```
+
+---
+
+## Testing Styles
+
+Three testing styles show up repeatedly. They are not equally desirable for every problem.
+
+### Output-Based Testing
+
+Assert on the return value or produced output of the behavior under test.
+
+- Best fit for pure logic and calculations
+- Usually the most refactor-safe style
+- Preferred whenever the behavior can be expressed as input → output
+
+### State-Based Testing
+
+Assert on an observable state change after the behavior runs.
+
+- Useful when state changes are part of the public contract
+- Strong when the resulting state is easy for callers to observe
+- Often a good fit for aggregates, entities, and persistence-facing boundaries
+
+### Communication-Based Testing
+
+Assert that the system under test sent specific commands to collaborators.
+
+- Useful only when the interaction itself is the behavior being promised
+- Common at boundaries such as email delivery, message publication, or job dispatch
+- Usually the most brittle style because it couples tests to wiring and call structure
+
+### Preferred Default
+
+Prefer styles in this order:
+
+1. **Output-based**
+2. **State-based**
+3. **Communication-based**
+
+This guide leans toward **classical / sociable** testing by default: real collaborators where practical, output/state assertions where possible, and limited use of communication-heavy mockist tests. Solitary tests are still valid when isolation clarifies the contract, but they should not become the default reflex.
 
 ---
 
@@ -280,9 +355,11 @@ Avoid multiple Arrange / Act / Assert cycles in the same test. If a second act/a
 
 Avoid `if` statements and branchy expectation logic inside tests. Tests should remain deterministic and explicit about which scenario they cover.
 
-### Rigid Naming Conventions
+### Rigid Naming Anti-Pattern
 
-Avoid formulaic naming schemes such as `[MethodUnderTest]_[Scenario]_[ExpectedResult]` when they pull attention toward implementation details instead of behavior. Prefer names that read like scenarios.
+Avoid formulaic naming schemes such as `[MethodUnderTest]_[Scenario]_[ExpectedResult]`.
+
+These conventions create the illusion of clarity while teaching the author to describe mechanics instead of behavior. Prefer names that read like scenarios and still make sense after refactoring.
 
 ### High Coupling Between Tests
 
@@ -379,8 +456,9 @@ In priority order, this philosophy values:
 2. **Refactor resilience** — tests survive implementation changes that preserve behavior
 3. **Scenario clarity** — names, AAA structure, and assertions make the behavior obvious
 4. **Visible setup** — the relevant state and collaborators are easy to see
-5. **Intentional coverage** — meaningful contracts matter more than raw percentages
-6. **Grounded confidence** — trust built through real behavior, not mocks or metrics
+5. **Lightweight doubles** — prefer real collaborators, fakes, and stubs over interaction-heavy mocks
+6. **Intentional coverage** — meaningful contracts matter more than raw percentages
+7. **Grounded confidence** — trust built through real behavior, not mocks or metrics
 
 ---
 
@@ -390,6 +468,8 @@ In priority order, this philosophy values:
 ✅ **Names describe scenarios in plain English**  
 ✅ **AAA and single-behavior tests keep intent clear**  
 ✅ **Setup should stay visible and deterministic**  
+✅ **Use the lightest double that tells the truth**  
+✅ **Prefer output/state assertions over interaction-heavy tests**  
 ✅ **Confidence is the metric — not coverage**
 
 ---
