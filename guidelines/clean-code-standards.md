@@ -2,7 +2,6 @@
 
 **Purpose:** Language-agnostic clean code rules for writing and improving code  
 **Scope:** General principles that should apply across programming languages and projects  
-**Related Documents:** [Godot & GDScript Standards](./languages/godot/gdscript-standards.md), [Testing Philosophy](./testing-philosophy.md)
 **When to Load:** Load for any task that changes, reviews, or designs source code.  
 **Load Order:** Load this first; it is the baseline for all other guides.  
 **Skip If:** The task is unrelated to code changes or code quality.  

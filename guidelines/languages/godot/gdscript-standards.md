@@ -3,7 +3,6 @@
 **Purpose:** Godot-specific coding conventions and GDScript style guide  
 **Audience:** AI agents working with GDScript and Godot Engine projects  
 **Scope:** Godot Engine and GDScript language-specific practices  
-**Related Documents:** [Clean Code Standards](../../clean-code-standards.md), [Testing Philosophy](../../testing-philosophy.md)
 **When to Load:** Load when the repository or task uses Godot Engine or GDScript.  
 **Load Order:** Load after Clean Code Standards; also load Testing Philosophy if tests or testability are in scope.  
 **Skip If:** The task is language-agnostic or the project is not Godot/GDScript.  
