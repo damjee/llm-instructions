@@ -33,8 +33,9 @@ Produce code that is readable, maintainable, consistent, and safe to change.
 - Split validation, orchestration, transformation, and I/O when they compete for attention.
 - If a function grows beyond roughly 20 lines, check whether distinct concerns should be extracted.
 
+**Good**
+
 ```python
-# Good: validation, transformation, and persistence are separated.
 def create_player(request):
     validate_create_player_request(request)
 
@@ -50,9 +51,11 @@ def validate_create_player_request(request):
 
 def build_player_from_request(request):
     return Player(name=request.name, class_name=request.class_name)
+```
 
+**Bad**
 
-# Bad: one function mixes validation, mapping, persistence, and response shaping.
+```python
 def create_player(request):
     if not request.name:
         raise ValueError("name is required")
@@ -75,8 +78,9 @@ def create_player(request):
 - Prefer early returns over nested conditionals.
 - Do not carry placeholder variables only to return them later.
 
+**Good**
+
 ```python
-# Good: edge cases are handled first and the main path stays flat.
 def calculate_damage(attacker, defender):
     if not attacker.is_alive():
         return 0
@@ -91,9 +95,11 @@ def calculate_damage(attacker, defender):
         return 0
 
     return max(0, attacker.attack_power - defender.defense)
+```
 
+**Bad**
 
-# Bad: deep nesting hides the happy path and adds placeholder state.
+```python
 def calculate_damage(attacker, defender):
     damage = 0
     if attacker.is_alive():
@@ -112,8 +118,9 @@ def calculate_damage(attacker, defender):
 - Name booleans as predicates such as `is_ready`, `has_permission`, or `can_retry`.
 - Name collections in plural form.
 
+**Good**
+
 ```python
-# Good: names tell the reader what the code means.
 def calculate_total_score(items):
     total_score = 0
     for item in items:
@@ -123,9 +130,11 @@ def calculate_total_score(items):
 
 is_retry_allowed = True
 active_players = []
+```
 
+**Bad**
 
-# Bad: names hide intent and force the reader to infer meaning.
+```python
 def score(xs):
     total = 0
     for x in xs:
@@ -143,17 +152,20 @@ arr = []
 - Do not use Hungarian notation or type prefixes or suffixes.
 - When the language supports typing, express type information in annotations or declarations.
 
+**Good**
+
 ```python
-# Good: names express purpose and types live in annotations.
 def find_player_by_id(player_id: str) -> Player | None:
     return player_repository.find(player_id)
 
 
 player_name: str = "Avery"
 enemy_count: int = 3
+```
 
+**Bad**
 
-# Bad: names repeat type details instead of intent.
+```python
 def find_player_by_id(str_player_id):
     return player_repository.find(str_player_id)
 
@@ -170,8 +182,9 @@ int_enemy_count = 3
 - Do not use comments to compensate for unclear code.
 - Reserve comments for public API docs or unavoidable external constraints.
 
+**Good**
+
 ```python
-# Good: naming and constants explain the rule without comments.
 CRITICAL_HEALTH_THRESHOLD = 25
 CRITICAL_DAMAGE_MULTIPLIER = 2.0
 
@@ -182,9 +195,11 @@ def is_player_in_critical_condition(current_health):
 
 def calculate_critical_hit_damage(base_damage):
     return int(base_damage * CRITICAL_DAMAGE_MULTIPLIER)
+```
 
+**Bad**
 
-# Bad: comments are carrying the meaning that the code should express directly.
+```python
 def check(hp):  # Check whether the player is in danger
     return hp <= 25
 
@@ -200,8 +215,9 @@ def calc(dmg):  # Double damage for critical hits
 - Keep public entrypoints easy to find and private helpers secondary.
 - Avoid unnecessary indirection.
 
+**Good**
+
 ```python
-# Good: public entrypoint first, helpers below, related behavior kept together.
 class ScoreService:
     def calculate_total_score(self, items):
         validated_items = self._filter_scored_items(items)
@@ -212,9 +228,11 @@ class ScoreService:
 
     def _sum_scores(self, items):
         return sum(item.value for item in items)
+```
 
+**Bad**
 
-# Bad: unrelated ordering makes the flow harder to find and follow.
+```python
 class ScoreService:
     def _sum_scores(self, items):
         return sum(item.value for item in items)
@@ -233,8 +251,9 @@ Use these transformations when cleaning existing code:
 
 ### Replace nested conditionals with guard clauses
 
+**Before**
+
 ```python
-# Before
 def process_attack(attacker, target):
     damage = 0
     if attacker is not None:
@@ -244,9 +263,11 @@ def process_attack(attacker, target):
                     damage = attacker.attack_power - target.defense
                     target.current_health -= damage
     return damage
+```
 
+**After**
 
-# After
+```python
 def calculate_and_apply_damage(attacker, target):
     if attacker is None:
         return 0
@@ -267,15 +288,18 @@ def calculate_and_apply_damage(attacker, target):
 
 ### Replace vague names with intent-revealing names
 
+**Before**
+
 ```python
-# Before
 def proc(x):
     if x.ok:
         return x.val
     return 0
+```
 
+**After**
 
-# After
+```python
 def calculate_processed_value(task_result):
     if not task_result.is_successful:
         return 0
@@ -285,13 +309,16 @@ def calculate_processed_value(task_result):
 
 ### Replace magic numbers with named constants
 
+**Before**
+
 ```python
-# Before
 def can_build_structure(gold, wood):
     return gold >= 100 and wood >= 50
+```
 
+**After**
 
-# After
+```python
 REQUIRED_GOLD_TO_BUILD = 100
 REQUIRED_WOOD_TO_BUILD = 50
 
@@ -305,8 +332,9 @@ def can_build_structure(gold, wood):
 
 ### Replace comment-driven code with named steps
 
+**Before**
+
 ```python
-# Before
 def handle_checkout(cart):
     # Validate the cart before charging the user
     if not cart.items:
@@ -319,9 +347,11 @@ def handle_checkout(cart):
 
     # Charge the customer
     payment_gateway.charge(cart.user_id, total)
+```
 
+**After**
 
-# After
+```python
 def handle_checkout(cart):
     validate_cart(cart)
     total = calculate_checkout_total(cart)
