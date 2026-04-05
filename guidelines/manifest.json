@@ -62,6 +62,84 @@
       ]
     },
     {
+      "id": "python-standards",
+      "path": "guidelines/languages/python/python-standards.md",
+      "category": "language-specific",
+      "priority": 3,
+      "language": "python",
+      "purpose": "Python-specific conventions layered on top of the general guides.",
+      "when_to_load": [
+        "The repository uses Python",
+        "The task edits Python",
+        "The task reviews Python style or typing"
+      ],
+      "load_after": [
+        "guidelines/clean-code-standards.md"
+      ],
+      "skip_if": [
+        "The task is language-agnostic",
+        "The task does not involve Python"
+      ],
+      "typical_tasks": [
+        "Python implementation",
+        "Python refactors",
+        "type hint improvements",
+        "Python code review"
+      ]
+    },
+    {
+      "id": "javascript-standards",
+      "path": "guidelines/languages/javascript/javascript-standards.md",
+      "category": "language-specific",
+      "priority": 3,
+      "language": "javascript",
+      "purpose": "JavaScript-specific conventions layered on top of the general guides.",
+      "when_to_load": [
+        "The repository uses JavaScript",
+        "The task edits JavaScript",
+        "The task reviews JavaScript style or async flow"
+      ],
+      "load_after": [
+        "guidelines/clean-code-standards.md"
+      ],
+      "skip_if": [
+        "The task is language-agnostic",
+        "The task does not involve JavaScript"
+      ],
+      "typical_tasks": [
+        "JavaScript implementation",
+        "JavaScript refactors",
+        "async flow cleanup",
+        "JavaScript code review"
+      ]
+    },
+    {
+      "id": "typescript-standards",
+      "path": "guidelines/languages/typescript/typescript-standards.md",
+      "category": "language-specific",
+      "priority": 3,
+      "language": "typescript",
+      "purpose": "TypeScript-specific conventions layered on top of the general guides.",
+      "when_to_load": [
+        "The repository uses TypeScript",
+        "The task edits TypeScript",
+        "The task reviews TypeScript typing or API design"
+      ],
+      "load_after": [
+        "guidelines/clean-code-standards.md"
+      ],
+      "skip_if": [
+        "The task is language-agnostic",
+        "The task does not involve TypeScript"
+      ],
+      "typical_tasks": [
+        "TypeScript implementation",
+        "type safety improvements",
+        "typed API review",
+        "TypeScript refactors"
+      ]
+    },
+    {
       "id": "godot-gdscript-standards",
       "path": "guidelines/languages/godot/gdscript-standards.md",
       "category": "language-specific",
@@ -100,6 +178,51 @@
       "load": [
         "guidelines/clean-code-standards.md",
         "guidelines/testing-philosophy.md"
+      ]
+    },
+    {
+      "id": "python-code-work",
+      "load": [
+        "guidelines/clean-code-standards.md",
+        "guidelines/languages/python/python-standards.md"
+      ]
+    },
+    {
+      "id": "python-code-with-tests",
+      "load": [
+        "guidelines/clean-code-standards.md",
+        "guidelines/testing-philosophy.md",
+        "guidelines/languages/python/python-standards.md"
+      ]
+    },
+    {
+      "id": "javascript-code-work",
+      "load": [
+        "guidelines/clean-code-standards.md",
+        "guidelines/languages/javascript/javascript-standards.md"
+      ]
+    },
+    {
+      "id": "javascript-code-with-tests",
+      "load": [
+        "guidelines/clean-code-standards.md",
+        "guidelines/testing-philosophy.md",
+        "guidelines/languages/javascript/javascript-standards.md"
+      ]
+    },
+    {
+      "id": "typescript-code-work",
+      "load": [
+        "guidelines/clean-code-standards.md",
+        "guidelines/languages/typescript/typescript-standards.md"
+      ]
+    },
+    {
+      "id": "typescript-code-with-tests",
+      "load": [
+        "guidelines/clean-code-standards.md",
+        "guidelines/testing-philosophy.md",
+        "guidelines/languages/typescript/typescript-standards.md"
       ]
     },
     {

@@ -14,6 +14,12 @@ If you are an LLM or automation agent, start here. Do not load every guide by de
 | --- | --- |
 | Generic implementation, refactor, or review | `clean-code-standards.md` |
 | Test creation, test fixes, or test strategy | `clean-code-standards.md`, `testing-philosophy.md` |
+| Python implementation or review | `clean-code-standards.md`, `languages/python/python-standards.md` |
+| Python work with tests | `clean-code-standards.md`, `testing-philosophy.md`, `languages/python/python-standards.md` |
+| JavaScript implementation or review | `clean-code-standards.md`, `languages/javascript/javascript-standards.md` |
+| JavaScript work with tests | `clean-code-standards.md`, `testing-philosophy.md`, `languages/javascript/javascript-standards.md` |
+| TypeScript implementation or review | `clean-code-standards.md`, `languages/typescript/typescript-standards.md` |
+| TypeScript work with tests | `clean-code-standards.md`, `testing-philosophy.md`, `languages/typescript/typescript-standards.md` |
 | Godot/GDScript implementation or review | `clean-code-standards.md`, `languages/godot/gdscript-standards.md` |
 | Godot/GDScript work with tests | `clean-code-standards.md`, `testing-philosophy.md`, `languages/godot/gdscript-standards.md` |
 | Repository routing only | This file, then `manifest.json` if structured metadata is needed |
@@ -37,6 +43,15 @@ Baseline guidance for code structure, naming, clarity, and refactoring.
 
 ### [`testing-philosophy.md`](./testing-philosophy.md)
 Behavior-focused testing guidance for refactor-safe tests and test design.
+
+### [`languages/python/python-standards.md`](./languages/python/python-standards.md)
+Python conventions that refine the general guidance for Python repositories and tasks.
+
+### [`languages/javascript/javascript-standards.md`](./languages/javascript/javascript-standards.md)
+JavaScript conventions that refine the general guidance for browser and Node.js code.
+
+### [`languages/typescript/typescript-standards.md`](./languages/typescript/typescript-standards.md)
+TypeScript conventions that refine the general guidance for typed JavaScript codebases.
 
 ### [`languages/godot/gdscript-standards.md`](./languages/godot/gdscript-standards.md)
 Godot and GDScript conventions that refine the general guidance for that stack.

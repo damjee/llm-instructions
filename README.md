@@ -11,6 +11,9 @@ Core guidance documents for code quality and testing. If you are an AI agent, st
 - **[manifest.json](./guidelines/manifest.json)** - Machine-readable guide index with load and skip metadata
 - **[clean-code-standards.md](./guidelines/clean-code-standards.md)** - Language-agnostic clean code principles
 - **[testing-philosophy.md](./guidelines/testing-philosophy.md)** - Contract-driven testing philosophy
+- **[languages/python/python-standards.md](./guidelines/languages/python/python-standards.md)** - Python-specific conventions and starter preferences
+- **[languages/javascript/javascript-standards.md](./guidelines/languages/javascript/javascript-standards.md)** - JavaScript-specific conventions and starter preferences
+- **[languages/typescript/typescript-standards.md](./guidelines/languages/typescript/typescript-standards.md)** - TypeScript-specific conventions and starter preferences
 - **[languages/godot/gdscript-standards.md](./guidelines/languages/godot/gdscript-standards.md)** - Godot/GDScript-specific conventions and preferences
 
 ## Usage
