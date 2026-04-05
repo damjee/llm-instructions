@@ -126,6 +126,8 @@ def test_apply_heal_100_95_20():
 - Prefer small factory or helper functions over broad shared setup.
 - Avoid hiding scenario-defining state in constructors, `setUp`, `before_each`, or global fixtures.
 - Accept some duplication when it keeps the scenario obvious.
+- The system under test does not need a domain-specific variable name in every case.
+- When a neutral placeholder keeps the main subject clear and separates it from collaborators, `sut` is a good name.
 
 **✅ Good**
 
@@ -136,6 +138,20 @@ def test_overdue_invoice_is_marked_past_due():
     invoice.mark_past_due_if_needed(today=date(2026, 4, 5))
 
     assert invoice.status == InvoiceStatus.PAST_DUE
+```
+
+**✅ Also good when `sut` keeps the main subject obvious**
+
+```python
+def test_registered_user_receives_welcome_message():
+    email_sender = FakeEmailSender()
+    sut = RegistrationService(email_sender=email_sender)
+
+    sut.register_user("alice@example.com")
+
+    assert email_sender.sent_messages == [
+        EmailMessage(to="alice@example.com", subject="Welcome")
+    ]
 ```
 
 **❌ Bad**
