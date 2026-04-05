@@ -33,7 +33,7 @@ Produce code that is readable, maintainable, consistent, and safe to change.
 - Split validation, orchestration, transformation, and I/O when they compete for attention.
 - If a function grows beyond roughly 20 lines, check whether distinct concerns should be extracted.
 
-**Good**
+**✅ Good**
 
 ```python
 def create_player(request):
@@ -53,7 +53,7 @@ def build_player_from_request(request):
     return Player(name=request.name, class_name=request.class_name)
 ```
 
-**Bad**
+**❌ Bad**
 
 ```python
 def create_player(request):
@@ -78,7 +78,7 @@ def create_player(request):
 - Prefer early returns over nested conditionals.
 - Do not carry placeholder variables only to return them later.
 
-**Good**
+**✅ Good**
 
 ```python
 def calculate_damage(attacker, defender):
@@ -97,7 +97,7 @@ def calculate_damage(attacker, defender):
     return max(0, attacker.attack_power - defender.defense)
 ```
 
-**Bad**
+**❌ Bad**
 
 ```python
 def calculate_damage(attacker, defender):
@@ -118,7 +118,7 @@ def calculate_damage(attacker, defender):
 - Name booleans as predicates such as `is_ready`, `has_permission`, or `can_retry`.
 - Name collections in plural form.
 
-**Good**
+**✅ Good**
 
 ```python
 def calculate_total_score(items):
@@ -132,7 +132,7 @@ is_retry_allowed = True
 active_players = []
 ```
 
-**Bad**
+**❌ Bad**
 
 ```python
 def score(xs):
@@ -152,7 +152,7 @@ arr = []
 - Do not use Hungarian notation or type prefixes or suffixes.
 - When the language supports typing, express type information in annotations or declarations.
 
-**Good**
+**✅ Good**
 
 ```python
 def find_player_by_id(player_id: str) -> Player | None:
@@ -163,7 +163,7 @@ player_name: str = "Avery"
 enemy_count: int = 3
 ```
 
-**Bad**
+**❌ Bad**
 
 ```python
 def find_player_by_id(str_player_id):
@@ -182,7 +182,7 @@ int_enemy_count = 3
 - Do not use comments to compensate for unclear code.
 - Reserve comments for public API docs or unavoidable external constraints.
 
-**Good**
+**✅ Good**
 
 ```python
 CRITICAL_HEALTH_THRESHOLD = 25
@@ -197,7 +197,7 @@ def calculate_critical_hit_damage(base_damage):
     return int(base_damage * CRITICAL_DAMAGE_MULTIPLIER)
 ```
 
-**Bad**
+**❌ Bad**
 
 ```python
 def check(hp):  # Check whether the player is in danger
@@ -215,7 +215,7 @@ def calc(dmg):  # Double damage for critical hits
 - Keep public entrypoints easy to find and private helpers secondary.
 - Avoid unnecessary indirection.
 
-**Good**
+**✅ Good**
 
 ```python
 class ScoreService:
@@ -230,7 +230,7 @@ class ScoreService:
         return sum(item.value for item in items)
 ```
 
-**Bad**
+**❌ Bad**
 
 ```python
 class ScoreService:
@@ -251,7 +251,7 @@ Use these transformations when cleaning existing code:
 
 ### Replace nested conditionals with guard clauses
 
-**Before**
+**⬅️ Before**
 
 ```python
 def process_attack(attacker, target):
@@ -265,7 +265,7 @@ def process_attack(attacker, target):
     return damage
 ```
 
-**After**
+**➡️ After**
 
 ```python
 def calculate_and_apply_damage(attacker, target):
@@ -288,7 +288,7 @@ def calculate_and_apply_damage(attacker, target):
 
 ### Replace vague names with intent-revealing names
 
-**Before**
+**⬅️ Before**
 
 ```python
 def proc(x):
@@ -297,7 +297,7 @@ def proc(x):
     return 0
 ```
 
-**After**
+**➡️ After**
 
 ```python
 def calculate_processed_value(task_result):
@@ -309,14 +309,14 @@ def calculate_processed_value(task_result):
 
 ### Replace magic numbers with named constants
 
-**Before**
+**⬅️ Before**
 
 ```python
 def can_build_structure(gold, wood):
     return gold >= 100 and wood >= 50
 ```
 
-**After**
+**➡️ After**
 
 ```python
 REQUIRED_GOLD_TO_BUILD = 100
@@ -332,7 +332,7 @@ def can_build_structure(gold, wood):
 
 ### Replace comment-driven code with named steps
 
-**Before**
+**⬅️ Before**
 
 ```python
 def handle_checkout(cart):
@@ -349,7 +349,7 @@ def handle_checkout(cart):
     payment_gateway.charge(cart.user_id, total)
 ```
 
-**After**
+**➡️ After**
 
 ```python
 def handle_checkout(cart):
