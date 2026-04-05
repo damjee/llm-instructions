@@ -208,9 +208,9 @@ Use the lowest-brittleness style that still validates the contract.
 ```python
 def test_price_conversion_uses_exchange_rate():
     rate_provider = StubExchangeRateProvider(rate=1.2)
-    pricing_service = PricingService(rate_provider)
+    sut = PricingService(rate_provider)
 
-    total = pricing_service.convert_to_usd(Money.eur(10))
+    total = sut.convert_to_usd(Money.eur(10))
 
     assert total == Money.usd(12)
 ```
@@ -220,9 +220,9 @@ def test_price_conversion_uses_exchange_rate():
 ```python
 def test_welcome_email_is_sent_after_registration():
     email_sender = SpyEmailSender()
-    service = RegistrationService(email_sender=email_sender)
+    sut = RegistrationService(email_sender=email_sender)
 
-    service.register_user("alice@example.com")
+    sut.register_user("alice@example.com")
 
     assert email_sender.sent_messages == [
         EmailMessage(
@@ -244,9 +244,9 @@ def test_welcome_email_is_sent_after_registration():
 ```python
 def test_successful_payment_returns_success_status():
     payment_gateway = FakePaymentGateway()
-    processor = PaymentProcessor(payment_gateway)
+    sut = PaymentProcessor(payment_gateway)
 
-    result = processor.process_payment(100)
+    result = sut.process_payment(100)
 
     assert result.status == PaymentStatus.SUCCESS
     assert result.amount == 100
@@ -259,8 +259,8 @@ def test_payment_processor_calls_gateway_once():
     payment_gateway = Mock()
     payment_gateway.charge.return_value = {"status": "success", "amount": 100}
 
-    processor = PaymentProcessor(payment_gateway)
-    result = processor.process_payment(100)
+    sut = PaymentProcessor(payment_gateway)
+    result = sut.process_payment(100)
 
     payment_gateway.charge.assert_called_once_with(100)
     assert result["status"] == "success"
@@ -290,9 +290,9 @@ def test_saved_user_can_be_loaded_by_email():
 
 ```python
 def test_reputation_rules_through_http_and_database():
-    api = TestApiServer()
+    sut = TestApiServer()
 
-    response = api.post("/users/reputation/recalculate", json={"user_id": 1})
+    response = sut.post("/users/reputation/recalculate", json={"user_id": 1})
 
     assert response.status_code == 200
     assert response.json["reputation"] == 55
@@ -372,9 +372,9 @@ Use these transformations when improving tests:
 ```python
 def test_user_service_calls_repository_once():
     repository = Mock()
-    service = UserService(repository)
+    sut = UserService(repository)
 
-    service.get_user(user_id=1)
+    sut.get_user(user_id=1)
 
     repository.find_by_id.assert_called_once_with(1)
 ```
@@ -385,9 +385,9 @@ def test_user_service_calls_repository_once():
 def test_user_service_returns_user_by_id():
     repository = FakeUserRepository()
     repository.add(User(id=1, name="Alice"))
-    service = UserService(repository)
+    sut = UserService(repository)
 
-    user = service.get_user(user_id=1)
+    user = sut.get_user(user_id=1)
 
     assert user.id == 1
     assert user.name == "Alice"
@@ -439,11 +439,11 @@ def test_get_active_users():
 
 ```python
 def test_session_expires_after_timeout():
-    session = Session(timeout_seconds=300)
+    sut = Session(timeout_seconds=300)
 
     time.sleep(301)
 
-    assert session.is_expired() is True
+    assert sut.is_expired() is True
 ```
 
 **➡️ After**
@@ -451,11 +451,11 @@ def test_session_expires_after_timeout():
 ```python
 def test_session_expires_after_timeout():
     clock = FakeClock(now=datetime(2026, 4, 5, 12, 0, 0))
-    session = Session(timeout_seconds=300, clock=clock)
+    sut = Session(timeout_seconds=300, clock=clock)
 
     clock.advance(seconds=301)
 
-    assert session.is_expired() is True
+    assert sut.is_expired() is True
 ```
 
 ## Testability Is a Design Signal
