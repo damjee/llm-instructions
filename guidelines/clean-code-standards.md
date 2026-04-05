@@ -2,10 +2,13 @@
 
 **Purpose:** Language-agnostic clean code rules for writing and improving code  
 **Scope:** General principles that should apply across programming languages and projects  
+**Related Documents:** [Godot & GDScript Standards](./languages/godot/gdscript-standards.md), [Testing Philosophy](./testing-philosophy.md)  
 **When to Load:** Load for any task that changes, reviews, or designs source code.  
 **Load Order:** Load this first; it is the baseline for all other guides.  
 **Skip If:** The task is unrelated to code changes or code quality.  
 **Typical Tasks:** New implementation, refactoring, code review, bug fixing, API design.
+
+> **Note:** Examples use Python for illustration; apply the same patterns in the target language.
 
 ---
 
@@ -30,12 +33,76 @@ Produce code that is readable, maintainable, consistent, and safe to change.
 - Split validation, orchestration, transformation, and I/O when they compete for attention.
 - If a function grows beyond roughly 20 lines, check whether distinct concerns should be extracted.
 
+```python
+# Good: validation, transformation, and persistence are separated.
+def create_player(request):
+    validate_create_player_request(request)
+
+    player = build_player_from_request(request)
+    player_repository.save(player)
+    return player
+
+
+def validate_create_player_request(request):
+    if not request.name:
+        raise ValueError("name is required")
+
+
+def build_player_from_request(request):
+    return Player(name=request.name, class_name=request.class_name)
+
+
+# Bad: one function mixes validation, mapping, persistence, and response shaping.
+def create_player(request):
+    if not request.name:
+        raise ValueError("name is required")
+
+    player = Player()
+    player.name = request.name
+    player.class_name = request.class_name
+    player_repository.save(player)
+
+    return {
+        "name": player.name,
+        "class_name": player.class_name,
+    }
+```
+
 ### 2. Use guard clauses instead of deep nesting
 
 - Check invalid or edge cases first.
 - Keep the happy path at the lowest indentation level.
 - Prefer early returns over nested conditionals.
 - Do not carry placeholder variables only to return them later.
+
+```python
+# Good: edge cases are handled first and the main path stays flat.
+def calculate_damage(attacker, defender):
+    if not attacker.is_alive():
+        return 0
+
+    if not defender.is_alive():
+        return 0
+
+    if attacker.is_stunned():
+        return 0
+
+    if defender.is_invulnerable():
+        return 0
+
+    return max(0, attacker.attack_power - defender.defense)
+
+
+# Bad: deep nesting hides the happy path and adds placeholder state.
+def calculate_damage(attacker, defender):
+    damage = 0
+    if attacker.is_alive():
+        if defender.is_alive():
+            if not attacker.is_stunned():
+                if not defender.is_invulnerable():
+                    damage = max(0, attacker.attack_power - defender.defense)
+    return damage
+```
 
 ### 3. Make names reveal intent
 
@@ -45,11 +112,55 @@ Produce code that is readable, maintainable, consistent, and safe to change.
 - Name booleans as predicates such as `is_ready`, `has_permission`, or `can_retry`.
 - Name collections in plural form.
 
+```python
+# Good: names tell the reader what the code means.
+def calculate_total_score(items):
+    total_score = 0
+    for item in items:
+        total_score += item.value
+    return total_score
+
+
+is_retry_allowed = True
+active_players = []
+
+
+# Bad: names hide intent and force the reader to infer meaning.
+def score(xs):
+    total = 0
+    for x in xs:
+        total += x.val
+    return total
+
+
+flag = True
+arr = []
+```
+
 ### 4. Put type information in the type system
 
 - Names describe purpose, not representation.
-- Do not use Hungarian notation or type prefixes/suffixes.
+- Do not use Hungarian notation or type prefixes or suffixes.
 - When the language supports typing, express type information in annotations or declarations.
+
+```python
+# Good: names express purpose and types live in annotations.
+def find_player_by_id(player_id: str) -> Player | None:
+    return player_repository.find(player_id)
+
+
+player_name: str = "Avery"
+enemy_count: int = 3
+
+
+# Bad: names repeat type details instead of intent.
+def find_player_by_id(str_player_id):
+    return player_repository.find(str_player_id)
+
+
+str_player_name = "Avery"
+int_enemy_count = 3
+```
 
 ### 5. Prefer self-documenting code over explanatory comments
 
@@ -59,12 +170,177 @@ Produce code that is readable, maintainable, consistent, and safe to change.
 - Do not use comments to compensate for unclear code.
 - Reserve comments for public API docs or unavoidable external constraints.
 
+```python
+# Good: naming and constants explain the rule without comments.
+CRITICAL_HEALTH_THRESHOLD = 25
+CRITICAL_DAMAGE_MULTIPLIER = 2.0
+
+
+def is_player_in_critical_condition(current_health):
+    return current_health <= CRITICAL_HEALTH_THRESHOLD
+
+
+def calculate_critical_hit_damage(base_damage):
+    return int(base_damage * CRITICAL_DAMAGE_MULTIPLIER)
+
+
+# Bad: comments are carrying the meaning that the code should express directly.
+def check(hp):  # Check whether the player is in danger
+    return hp <= 25
+
+
+def calc(dmg):  # Double damage for critical hits
+    return int(dmg * 2.0)
+```
+
 ### 6. Keep structure predictable
 
 - Group related behavior together.
 - Use consistent ordering and formatting within the project or language style guide.
 - Keep public entrypoints easy to find and private helpers secondary.
 - Avoid unnecessary indirection.
+
+```python
+# Good: public entrypoint first, helpers below, related behavior kept together.
+class ScoreService:
+    def calculate_total_score(self, items):
+        validated_items = self._filter_scored_items(items)
+        return self._sum_scores(validated_items)
+
+    def _filter_scored_items(self, items):
+        return [item for item in items if item.is_scored]
+
+    def _sum_scores(self, items):
+        return sum(item.value for item in items)
+
+
+# Bad: unrelated ordering makes the flow harder to find and follow.
+class ScoreService:
+    def _sum_scores(self, items):
+        return sum(item.value for item in items)
+
+    def calculate_total_score(self, items):
+        validated_items = self._filter_scored_items(items)
+        return self._sum_scores(validated_items)
+
+    def _filter_scored_items(self, items):
+        return [item for item in items if item.is_scored]
+```
+
+## Refactoring Patterns
+
+Use these transformations when cleaning existing code:
+
+### Replace nested conditionals with guard clauses
+
+```python
+# Before
+def process_attack(attacker, target):
+    damage = 0
+    if attacker is not None:
+        if target is not None:
+            if attacker.is_alive:
+                if not attacker.is_stunned:
+                    damage = attacker.attack_power - target.defense
+                    target.current_health -= damage
+    return damage
+
+
+# After
+def calculate_and_apply_damage(attacker, target):
+    if attacker is None:
+        return 0
+
+    if target is None:
+        return 0
+
+    if not attacker.is_alive:
+        return 0
+
+    if attacker.is_stunned:
+        return 0
+
+    damage = attacker.attack_power - target.defense
+    target.current_health -= damage
+    return damage
+```
+
+### Replace vague names with intent-revealing names
+
+```python
+# Before
+def proc(x):
+    if x.ok:
+        return x.val
+    return 0
+
+
+# After
+def calculate_processed_value(task_result):
+    if not task_result.is_successful:
+        return 0
+
+    return task_result.value
+```
+
+### Replace magic numbers with named constants
+
+```python
+# Before
+def can_build_structure(gold, wood):
+    return gold >= 100 and wood >= 50
+
+
+# After
+REQUIRED_GOLD_TO_BUILD = 100
+REQUIRED_WOOD_TO_BUILD = 50
+
+
+def can_build_structure(gold, wood):
+    return (
+        gold >= REQUIRED_GOLD_TO_BUILD
+        and wood >= REQUIRED_WOOD_TO_BUILD
+    )
+```
+
+### Replace comment-driven code with named steps
+
+```python
+# Before
+def handle_checkout(cart):
+    # Validate the cart before charging the user
+    if not cart.items:
+        raise ValueError("cart cannot be empty")
+
+    # Apply tax and discount rules
+    total = cart.subtotal * 1.08
+    if cart.has_discount:
+        total -= 10
+
+    # Charge the customer
+    payment_gateway.charge(cart.user_id, total)
+
+
+# After
+def handle_checkout(cart):
+    validate_cart(cart)
+    total = calculate_checkout_total(cart)
+    payment_gateway.charge(cart.user_id, total)
+
+
+def validate_cart(cart):
+    if not cart.items:
+        raise ValueError("cart cannot be empty")
+
+
+def calculate_checkout_total(cart):
+    subtotal_with_tax = cart.subtotal * 1.08
+
+    if not cart.has_discount:
+        return subtotal_with_tax
+
+    return subtotal_with_tax - 10
+```
 
 ## Design Heuristics
 
