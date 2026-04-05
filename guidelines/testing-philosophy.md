@@ -102,22 +102,22 @@ def test_checkout_flow():
 
 ```python
 def test_healing_never_pushes_health_above_maximum():
-    player = Player(current_health=95, maximum_health=100)
+    sut = Player(current_health=95, maximum_health=100)
 
-    player.heal(20)
+    sut.heal(20)
 
-    assert player.current_health == 100
+    assert sut.current_health == 100
 ```
 
 **❌ Bad**
 
 ```python
 def test_apply_heal_100_95_20():
-    player = Player(current_health=95, maximum_health=100)
+    sut = Player(current_health=95, maximum_health=100)
 
-    player.heal(20)
+    sut.heal(20)
 
-    assert player.current_health == 100
+    assert sut.current_health == 100
 ```
 
 ### 4. Keep setup visible and local
@@ -126,6 +126,7 @@ def test_apply_heal_100_95_20():
 - Prefer small factory or helper functions over broad shared setup.
 - Avoid hiding scenario-defining state in constructors, `setUp`, `before_each`, or global fixtures.
 - Accept some duplication when it keeps the scenario obvious.
+- Make the system under test obvious in the setup whenever the example is not centered on a pure function.
 - The system under test does not need a domain-specific variable name in every case.
 - When a neutral placeholder keeps the main subject clear and separates it from collaborators, `sut` is a good name.
 
@@ -133,11 +134,11 @@ def test_apply_heal_100_95_20():
 
 ```python
 def test_overdue_invoice_is_marked_past_due():
-    invoice = Invoice(total=100, due_date=date(2026, 4, 1), paid=False)
+    sut = Invoice(total=100, due_date=date(2026, 4, 1), paid=False)
 
-    invoice.mark_past_due_if_needed(today=date(2026, 4, 5))
+    sut.mark_past_due_if_needed(today=date(2026, 4, 5))
 
-    assert invoice.status == InvoiceStatus.PAST_DUE
+    assert sut.status == InvoiceStatus.PAST_DUE
 ```
 
 **✅ Also good when `sut` keeps the main subject obvious**
@@ -158,11 +159,11 @@ def test_registered_user_receives_welcome_message():
 
 ```python
 def test_overdue_invoice_is_marked_past_due():
-    invoice = make_default_invoice()
+    sut = make_default_invoice()
 
-    invoice.mark_past_due_if_needed(today=test_clock.today())
+    sut.mark_past_due_if_needed(today=test_clock.today())
 
-    assert invoice.status == InvoiceStatus.PAST_DUE
+    assert sut.status == InvoiceStatus.PAST_DUE
 ```
 
 ### 5. Favor determinism
@@ -177,22 +178,22 @@ def test_overdue_invoice_is_marked_past_due():
 ```python
 def test_token_expires_after_five_minutes():
     clock = FakeClock(now=datetime(2026, 4, 5, 12, 0, 0))
-    token = SessionToken(created_at=clock.now())
+    sut = SessionToken(created_at=clock.now())
 
     clock.advance(minutes=6)
 
-    assert token.is_expired(now=clock.now()) is True
+    assert sut.is_expired(now=clock.now()) is True
 ```
 
 **❌ Bad**
 
 ```python
 def test_token_eventually_expires():
-    token = SessionToken(created_at=datetime.utcnow())
+    sut = SessionToken(created_at=datetime.utcnow())
 
     time.sleep(301)
 
-    assert token.is_expired(now=datetime.utcnow()) is True
+    assert sut.is_expired(now=datetime.utcnow()) is True
 ```
 
 ### 6. Prefer assertions in this order
@@ -276,11 +277,11 @@ def test_payment_processor_calls_gateway_once():
 
 ```python
 def test_saved_user_can_be_loaded_by_email():
-    repository = UserRepository(database_url="sqlite:///:memory:")
+    sut = UserRepository(database_url="sqlite:///:memory:")
     user = User(name="Alice", email="alice@example.com")
 
-    repository.save(user)
-    loaded_user = repository.find_by_email("alice@example.com")
+    sut.save(user)
+    loaded_user = sut.find_by_email("alice@example.com")
 
     assert loaded_user.name == "Alice"
     assert loaded_user.email == "alice@example.com"
@@ -399,18 +400,18 @@ def test_user_service_returns_user_by_id():
 
 ```python
 def test_player_on_cooldown_is_not_ready():
-    player = make_default_player()
+    sut = make_default_player()
 
-    assert player.is_ready_to_attack() is False
+    assert sut.is_ready_to_attack() is False
 ```
 
 **➡️ After**
 
 ```python
 def test_player_on_cooldown_is_not_ready():
-    player = Player(has_weapon=True, mana=10, cooldown_seconds=3)
+    sut = Player(has_weapon=True, mana=10, cooldown_seconds=3)
 
-    assert player.is_ready_to_attack() is False
+    assert sut.is_ready_to_attack() is False
 ```
 
 ### Replace brittle ordering assertions when order is not the contract
