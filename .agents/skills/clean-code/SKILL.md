@@ -32,7 +32,7 @@ Do not apply clean code until you have a working solution.
 3. Prefer guard clauses over nesting
 4. Prefer passing dependencies as arguments over direct references
 5. Use inheritance to enforce an interface; do not use it just to avoid code duplication
-6. Prefer deterministic functions, with explicit side effects
+6. Prefer deterministic functions with explicit side effects
 
 ### Naming Guidelines
 
