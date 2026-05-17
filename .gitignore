@@ -5,3 +5,5 @@ skills-lock.json
 .agents/skills/*
 !.agents/skills/testing-and-tdd/
 !.agents/skills/testing-and-tdd/**
+!.agents/skills/clean-code/
+!.agents/skills/clean-code/**
