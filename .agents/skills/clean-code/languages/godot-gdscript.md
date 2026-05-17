@@ -41,18 +41,15 @@ func _ready() -> void:
 
 ## Avoid
 
-- Avoid string-based node access:
+- Avoid string-based node access
+- Avoid deep node hierarchies in code
 
 ```gdscript
-# BAD - fragile to scene reorganization
-get_node("UI/HealthBar").value = health
-```
+# BAD - fragile reference
+var weapon = get_node("Player/WeaponSlot/Weapon")
 
-- Avoid deep node hierarchies in code:
-
-```gdscript
-# BAD - fragile runtime dependency on scene tree organization
-var weapon = $Player/Body/RightHand/WeaponSlot/Weapon
+# BAD - fragile reference
+var weapon = $Player/WeaponSlot/Weapon
 
 # GOOD - direct reference
 @export var weapon: Weapon
