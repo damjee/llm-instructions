@@ -45,8 +45,7 @@ func _ready() -> void:
 
 ```gdscript
 # BAD - fragile to scene reorganization
-func _ready() -> void:
-	get_node("UI/HealthBar").value = health
+get_node("UI/HealthBar").value = health
 ```
 
 - Avoid deep node hierarchies in code:
@@ -57,9 +56,6 @@ var weapon = $Player/Body/RightHand/WeaponSlot/Weapon
 
 # GOOD - direct reference
 @export var weapon: Weapon
-
-func _ready() -> void:
-	assert(weapon != null, "weapon must be set in editor")
 ```
 
 ## Code Order
