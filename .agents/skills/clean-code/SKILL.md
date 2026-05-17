@@ -36,10 +36,10 @@ Do not apply clean code until you have a working solution.
 
 ### Naming Guidelines
 
-1. Ensure names reveal intent
+1. Ensure names reveal intent, not implementation
 2. Verb-based names for behavior, nouns for data, booleans as predicates such as isReady, or canRetry
 3. Name collections in plural form
-4. Avoid abbreviations not in the domain glossary.
+4. Avoid abbreviations not in the domain glossary
 5. Avoid type encoding in names
 6. Prefer self-documenting code over comments
 7. Use named constants over magic numbers
