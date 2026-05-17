@@ -11,7 +11,7 @@ description: Baseline clean-code guidance for refactoring, bug fixes, and code r
 
 **Clean code** is easy to read, understand, and modify.
 
-**Dirty code** is difficult to change without touching multiple units.
+**Dirty code** requires unrelated changes across multiple units.
 
 See [languages/](./languages/) for language-specific style guides.
 
