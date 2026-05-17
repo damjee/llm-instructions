@@ -7,9 +7,7 @@ description: Baseline clean-code guidance for refactoring, bug fixes, and code r
 
 ## Philosophy
 
-**Core Principle**: Code should be easy to read, easy to change, and consistent within a project.
-
-**Clean code** is code that applies the above principles.
+**Clean Code**: Id code that is easy to read, easy to change, and consistent within a project.
 
 See [languages/](./languages/) for language-specific style guides.
 
