@@ -27,11 +27,12 @@ Do not apply clean code until you have a working solution.
 
 ### Structural Guidelines
 
-1. Each unit should have only one reason to change
-2. Keep one level of abstraction per function
-3. If a function grows beyond roughly 20 lines, review
-4. Prefer guard clases over nesting
-5. Prefer structure Public API → Private API → Helpers
+1. Prefer structure Public API → Private API → Helpers
+2. Code units should have a clear and narrow responsibility
+3. Prefer guard clauses over nesting
+4. Prefer passing dependencies as arguments over creating or calling them
+5. Use inheritance to enforce an interface; do not use it just to avoid code duplication
+6. Prefer deterministic functions free from side effects
 
 ### Naming Guidelines
 
@@ -42,3 +43,11 @@ Do not apply clean code until you have a working solution.
 5. Avoid type encoding in names
 6. Prefer self-documenting code over comments
 7. Use named constants over magic numbers
+
+## Code Smells Requiring Review
+
+- [ ] Function beyond 20 lines
+
+- [ ] Nesting beyond 3 indents
+
+- [ ] Comment is present
