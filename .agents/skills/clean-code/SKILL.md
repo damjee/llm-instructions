@@ -9,9 +9,7 @@ description: Baseline clean-code guidance for refactoring, bug fixes, and code r
 
 **Core Principle**: Code should be easy to read, easy to change, and consistent within a project.
 
-**Clean code** is easy to read, understand, and modify.
-
-**Dirty code** requires unrelated changes across multiple units.
+**Clean code** is code that applies the above principles.
 
 See [languages/](./languages/) for language-specific style guides.
 
