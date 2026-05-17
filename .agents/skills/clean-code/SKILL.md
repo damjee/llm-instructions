@@ -27,10 +27,10 @@ Do not apply clean code until you have a working solution.
 
 ### Structural Guidelines
 
-1. Prefer structure Public API → Private API → Helpers
+1. Prefer code layout of Public API → Private API → Helpers
 2. Code units should have a clear and narrow responsibility
 3. Prefer guard clauses over nesting
-4. Prefer passing dependencies as arguments over creating or calling them
+4. Prefer passing dependencies as arguments over direct reference
 5. Use inheritance to enforce an interface; do not use it just to avoid code duplication
 6. Prefer deterministic functions free from side effects
 
@@ -47,7 +47,5 @@ Do not apply clean code until you have a working solution.
 ## Code Smells Requiring Review
 
 - [ ] Function beyond 20 lines
-
 - [ ] Nesting beyond 3 indents
-
 - [ ] Comment is present
