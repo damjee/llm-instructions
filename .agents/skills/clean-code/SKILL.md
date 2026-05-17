@@ -28,38 +28,22 @@ Do not apply clean code until you have a working solution.
 ### 1. Keep units small and focused
 
 - Give each function, method, and class one clear responsibility.
-- Keep one level of abstraction per function.
-- Split validation, orchestration, transformation, and I/O when they compete for attention.
+- Keep one level of abstraction per function
 - If a function grows beyond roughly 20 lines, check whether distinct concerns should be extracted.
 
 ### 2. Prefer guard clauses over nesting
 
-- Check invalid or edge cases first.
-- Keep the happy path at the lowest indentation level.
-- Prefer early returns over nested conditionals.
+- Prefer the happy path at the lowest indentation level.
 - Do not carry placeholder variables only to return them later.
 
 ### 3. Make names reveal intent
 
-- Use verb-based names for behavior.
-- Use descriptive nouns for data.
-- Avoid abbreviations unless they are in the domain glossary.
-- Name booleans as predicates such as is_ready, has_permission, or can_retry.
+- Verb-based names for behavior, nouns for data, booleans as predicates such as isReady, or canRetry.
 - Name collections in plural form.
+- Avoid abbreviations not in the domain glossary.
 
 ### 4. Avoid type encoding in names
-
-- Avoid Hungarian notation, type prefixes, and suffixes.
-- In languages with optional typing, use the type system.
-
-### 5. Prefer self-documenting code
-
-- Do not use comments to explain WHAT the code is doing.
-- Use naming so the code is self-explanatory.
-- Replace magic numbers with named constants.
-- Break complex logic into named steps.
-- Reserve comments for public API docs or unavoidable external constraints.
-
+### 5. Prefer self-documenting code over comments
 ### 6. Prefer consistent structure
 
 - Prefer the structure Public API → Private API → Helpers
