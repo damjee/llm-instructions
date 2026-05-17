@@ -36,3 +36,4 @@ Do not apply clean code until you have a working solution.
 9. Avoid type encoding in names
 10. Prefer self-documenting code over comments
 11. Prefer structure Public API → Private API → Helpers
+12. Use named constants over magic numbers
