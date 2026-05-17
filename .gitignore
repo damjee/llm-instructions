@@ -1,4 +1,5 @@
 /coding/
+skills-lock.json
 .agents/*
 !.agents/skills/
 .agents/skills/*
