@@ -25,15 +25,20 @@ Do not apply clean code until you have a working solution.
 
 ## Clean Code Guidelines
 
+### Structural Guidelines
+
 1. Each unit should have only one reason to change
 2. Keep one level of abstraction per function
 3. If a function grows beyond roughly 20 lines, review
 4. Prefer guard clases over nesting
-5. Ensure names reveal intent
-6. Verb-based names for behavior, nouns for data, booleans as predicates such as isReady, or canRetry.
-7. Name collections in plural form.
-8. Avoid abbreviations not in the domain glossary.
-9. Avoid type encoding in names
-10. Prefer self-documenting code over comments
-11. Prefer structure Public API → Private API → Helpers
-12. Use named constants over magic numbers
+5. Prefer structure Public API → Private API → Helpers
+
+### Naming Guidelines
+
+1. Ensure names reveal intent
+2. Verb-based names for behavior, nouns for data, booleans as predicates such as isReady, or canRetry
+3. Name collections in plural form
+4. Avoid abbreviations not in the domain glossary.
+5. Avoid type encoding in names
+6. Prefer self-documenting code over comments
+7. Use named constants over magic numbers
