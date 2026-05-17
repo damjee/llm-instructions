@@ -25,7 +25,7 @@ func _ready() -> void:
 - Use one statement per line.
 - Use one space around operators and after commas.
 - Use trailing commas in multi-line arrays, dictionaries, and enums.
-- Use `and`, `or`, and `not`, not `&&`, `||`, or `!`.
+- Prefer `and`, `or`, and `not`, over `&&`, `||`, or `!`.
 - Prefer double quotes unless single quotes reduce escaping.
 - Include leading and trailing zeros: `0.5`, not `.5`; `10.0`, not `10.`
 
