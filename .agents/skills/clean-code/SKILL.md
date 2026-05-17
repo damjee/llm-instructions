@@ -25,28 +25,14 @@ Do not apply clean code until you have a working solution.
 
 ## Clean Code Guidelines
 
-### 1. Keep units small and focused
-
-- Give each function, method, and class one clear responsibility.
-- Keep one level of abstraction per function
-- If a function grows beyond roughly 20 lines, check whether distinct concerns should be extracted.
-
-### 2. Prefer guard clauses over nesting
-
-- Prefer the happy path at the lowest indentation level.
-- Do not carry placeholder variables only to return them later.
-
-### 3. Make names reveal intent
-
-- Verb-based names for behavior, nouns for data, booleans as predicates such as isReady, or canRetry.
-- Name collections in plural form.
-- Avoid abbreviations not in the domain glossary.
-
-### 4. Avoid type encoding in names
-### 5. Prefer self-documenting code over comments
-### 6. Prefer consistent structure
-
-- Prefer the structure Public API → Private API → Helpers
-- Group related behavior together.
-- Avoid unnecessary indirection.
-- Use top-level abstractions when they clarify intent.
+1. Each unit should have only one reason to change
+2. Keep one level of abstraction per function
+3. If a function grows beyond roughly 20 lines, review
+4. Prefer guard clases over nesting
+5. Ensure names reveal intent
+6. Verb-based names for behavior, nouns for data, booleans as predicates such as isReady, or canRetry.
+7. Name collections in plural form.
+8. Avoid abbreviations not in the domain glossary.
+9. Avoid type encoding in names
+10. Prefer self-documenting code over comments
+11. Prefer structure Public API → Private API → Helpers
