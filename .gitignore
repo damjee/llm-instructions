@@ -1,1 +1,6 @@
 /coding/
+.agents/*
+!.agents/skills/
+.agents/skills/*
+!.agents/skills/testing-and-tdd/
+!.agents/skills/testing-and-tdd/**
