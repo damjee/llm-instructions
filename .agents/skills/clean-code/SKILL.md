@@ -1,6 +1,6 @@
 ---
 name: clean-code
-description: Baseline clean-code guidance for refactoring, bug fixes, and code review. Use when the user wants to refactor code, review code, requests "clean code", or requests SOLID.
+description: Baseline clean-code guidance for refactoring, bug fixes, and code review. Use when the user wants to refactor code, review code, requests "clean code" or SOLID.
 ---
 
 # Clean Code
