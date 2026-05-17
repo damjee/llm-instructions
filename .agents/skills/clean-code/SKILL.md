@@ -1,6 +1,6 @@
 ---
 name: clean-code
-description: Baseline clean-code guidance for refactoring, bug fixes, and code review. Use when the user wants to refactor code, review code, or requests "clean code" or SOLID.
+description: Baseline clean-code guidance for refactoring, bug fixes, and code review. Use when the user wants to refactor code, review code, or requests "clean code"/SOLID.
 ---
 
 # Clean Code
@@ -11,7 +11,7 @@ description: Baseline clean-code guidance for refactoring, bug fixes, and code r
 
 **Clean code** is easy to read, understand, and modify.
 
-**Bad code** has units that do not reveal intent, are difficult to understand without having to read deeply, and are difficult to change without touching other parts of the system.
+**Dirty code** is difficult to change without touching multiple units.
 
 See [languages/](./languages/) for language-specific style guides.
 
@@ -21,9 +21,7 @@ When exploring the codebase, use the project's domain glossary so that names and
 
 Prefer consistency with the existing codebase over introducing new patterns. When in doubt, ask the user.
 
-If the project has a TDD skill or workflow, follow it for implementation. Use clean code during refactoring.
-
-Do not apply clean code until you have a working solution. First make it work, then make it clean.
+Do not apply clean code until you have a working solution.
 
 ## Clean Code Guidelines
 
