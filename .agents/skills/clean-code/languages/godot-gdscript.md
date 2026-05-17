@@ -34,7 +34,7 @@ func _ready() -> void:
 - `PascalCase` for classes
 - `CONSTANT_CASE` for constants and enums
 - `snake_case` for files, functions, variables, and signals
-- `_private_name` for private functions and variables
+- `_` prefix for private functions and variables
 - Signal names use past tense.
 - Function names should be verb-based and describe the action they perform.
 - Boolean-returning functions should use predicate forms like `is_`, `has_`, and `can_`.
