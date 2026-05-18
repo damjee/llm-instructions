@@ -7,7 +7,7 @@ description: Baseline clean-code guidance for refactoring, bug fixes, and code r
 
 ## Philosophy
 
-**Clean Code**: Is code that is easy to read, easy to change, and consistent within a project.
+**Clean Code** is code that is easy to read, easy to change, and consistent within a project.
 
 See [languages/](./languages/) for language-specific style guides.
 
