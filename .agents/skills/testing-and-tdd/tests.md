@@ -21,6 +21,7 @@ Characteristics:
 - Use public API only
 - Survives internal refactors
 - Describes WHAT, not HOW
+- Happy path first then explicient failure reasons
 
 ## Bad Tests
 
