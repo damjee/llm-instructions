@@ -17,6 +17,8 @@ When exploring the codebase, use the project's domain glossary so that names and
 
 Prefer consistency with the existing codebase over introducing new patterns. When in doubt, ask the user.
 
+If refactoring a test file, use [Test Refactoring Workflow](./workflows/test-refactoring.md) in addition to these guidelines.
+
 Do not apply clean code until you have a working solution.
 
 ## Clean Code Guidelines
@@ -42,6 +44,7 @@ Do not apply clean code until you have a working solution.
 
 ## Code Smells Requiring Review
 
+- [ ] Code layout does not follow Public API → Private API → Helpers
 - [ ] Function beyond 20 lines
 - [ ] Nesting beyond 3 indents
 - [ ] Comment is present
