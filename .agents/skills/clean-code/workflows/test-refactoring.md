@@ -79,7 +79,7 @@ Identify any of the following smells in the test file. If one is present, fix it
 1. [ ] Test has excessive global variables
 2. [ ] Test has excessive helpers
 3. [ ] Conditional logic is present in the test or helpers
-4. [ ] Test uses higher-order test doulbles than necessary
+4. [ ] Test uses higher-order test doubles than necessary
 5. [ ] Test does not follow AAA pattern
 6. [ ] AAA sections are not visually distinct, such as blank lines present within a section or missing between sections
 7. [ ] Arrange, Act, or Assert sections contain code belonging to another section
