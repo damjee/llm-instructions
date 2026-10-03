@@ -17,8 +17,10 @@ description: Guidance for how user prefers test code layout, naming, and structu
 
 ### AAA Definitions
 
-**Arrange**: Should perform all test setup, but should not exercise the SUT or perform assertions. Doubling and SUT initialization should happen here.
+**Arrange**: Should perform all test setup, but should not exercise the SUT or perform assertions. Doubling and SUT initialization should happen here. Do not hide arrangement activity behind a test helper unless the user explicitly authorizes it. Instead work to make arrangement morr straightforward and readable. Ideally sut initializarion is the first line of arrange.
+
 **Act**: Should exercise one and only one logical action of the SUT. Ideally, should be a single line of code where the SUT makes a single method call and stores the result.
+
 **Assert**: Should contain all assertions required but no other logic, setup, or execution of the SUT.
 
 ## Guidelines
