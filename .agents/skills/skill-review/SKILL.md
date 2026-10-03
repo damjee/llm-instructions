@@ -5,29 +5,23 @@ description: Review agent skills for fidelity, high-impact wording, and executab
 
 # Skill Review
 
-## Procedure
+## Review Loop
 
-1. Locate the target skill; request its path or content if missing. Read it and references needed to understand its workflows. Identify triggers, outcomes, required behavior, and authorization boundaries. When reviewing a rewrite, compare it with the original when available.
-2. Apply every checklist item below. Ground each finding in a specific passage and its effect on execution.
-3. Propose the smallest correction that preserves intent, safety constraints, required formats, and exact tool or domain semantics. Resolve substantive ambiguity with the user before changing behavior.
-4. Walk through each applicable workflow using the proposed wording: verify inputs, branch selection, actions, and completion criteria. Label walkthroughs separately from executed tests.
-5. Return the review. Apply edits only when requested; after editing, repeat the checklist and run available skill validation.
+1. Read the skill and relevant references. Recover its purpose, decisions, constraints, and voice; compare the source or history when reviewing a rewrite.
+2. Find the leverage. Look for diffuse explanations, weak labels, flattened contrasts, and repeated ideas that a leading word could carry. Generate a few candidate concepts from the domain's vocabulary. Consider verbs, metaphors, contrasts, and diagnostic labels as well as technical terms.
+3. Test the candidates. What useful judgment does each word recruit? What would it accidentally add, lose, or obscure? Choose the strongest fit and place it where it steers a decision: a trigger, heading, rule, or completion criterion. Keep the qualifier that protects a real distinction. Prefer the author's and project's language; consult a primary source when an unfamiliar term's meaning matters. A familiar label earns its place through behavioral leverage, not prestige.
+4. Make the smallest useful revision. Preserve the meaning and force of independent checks, priorities, exceptions, permissions, and output contracts. Trust inferable intent; clarify only ambiguity that changes the outcome. Keep sound wording when no candidate improves it.
+5. Challenge the revision with a normal case, a near-miss, and a relevant exception. Check what it makes the agent do, including what its new concepts imply. Repair demonstrated drift, then stop when another pass offers no concrete gain. Distinguish walkthroughs from executed tests; run available validation after requested edits.
 
-## Review Checklist
+## Review Lenses
 
-- [ ] **Discovery:** The name and description identify the task and distinct invocation cases without attracting unrelated work.
-- [ ] **Procedure:** Each applicable workflow specifies ordered actions, decision conditions, necessary inputs, and an observable completion criterion. Missing inputs and foreseeable failures have a clear next step where needed.
-- [ ] **Precision:** Look for literal paraphrases that flatten established concepts, contrasts, or emphasis. Recover their force with high-impact words that steer judgment without changing meaning. Judge wording by its behavioral effect, not how exhaustively it spells things out. Clarify ambiguity when it changes behavior; otherwise trust the model to interpret it.
-- [ ] **Concision:** Each instruction changes a decision or action. Remove repetition, filler, stale guidance, and advice that adds no task-specific value. Judge brevity by preserved meaning, not a word quota.
-- [ ] **Positive framing:** Prefer desired actions where they communicate better. Preserve useful negative checks, diagnostic signals, and contrasts.
-- [ ] **Structure:** Use concise bullets or checklists for rules and numbered steps for procedures. Reserve prose for deliberately chosen philosophy, principles, or overview sections that improve judgment; omit them when they add no value.
-- [ ] **Self-containment:** Keep essential instructions directly in the skill. Retain references only when conditional detail or reusable resources justify them, with clear loading conditions and valid targets.
-- [ ] **Fidelity:** Preserve scope, priorities, approvals, exceptions, required output contracts, and meaningful distinctions. Keep the author’s voice and the granularity of independent checks. Compare meaning and behavioral effect with the original when available; keep sound wording unchanged unless a change offers a concrete benefit.
+- **Discovery:** Distinct invocation cases are easy to recognize without attracting unrelated work.
+- **Execution:** Required inputs, branches, actions, and completion criteria are usable. Give failures a next step where one is needed; do not turn principles into unnecessary recipes.
+- **Leading words:** Compact, established concepts recruit useful judgment. Strengthen bland wording as well as shortening long wording; one potent contrast may beat an exhaustive literal explanation.
+- **Economy:** Each instruction earns its place. Remove no-ops, duplication, stale guidance, and speculative rules; preserve necessary qualifications.
+- **Framing:** State the desired behavior when clearer. Keep useful code smells, negative checks, and contrasts.
+- **Hierarchy:** Use steps for sequence and a flat checklist for independent rules. Co-locate a concept's caveats; disclose conditional detail through a clear, valid pointer.
 
-## Review Output
+## Output
 
-- Verdict: ready, needs revision, or blocked by missing context.
-- Findings, ordered by execution impact: location → problem → consequence → precise replacement or deletion.
-- Validation: workflows checked, tests actually run, and remaining uncertainty.
-- If ready: say no changes are needed; omit empty findings and cosmetic rewrites.
-
+Give a verdict and impact-ordered findings: passage → behavioral weakness → precise replacement. For a proposed leading word, briefly explain its leverage and any necessary qualifier. Report validation and uncertainty. Apply edits only when requested. If the skill is already effective, say so rather than manufacture a rewrite.
