@@ -9,3 +9,11 @@ skills-lock.json
 !.agents/skills/clean-code/**
 !.agents/skills/test-refactoring/
 !.agents/skills/test-refactoring/**
+!.agents/skills/clean-code-javascript/
+!.agents/skills/clean-code-javascript/**
+!.agents/skills/clean-code-typescript/
+!.agents/skills/clean-code-typescript/**
+!.agents/skills/clean-code-python/
+!.agents/skills/clean-code-python/**
+!.agents/skills/clean-code-gdscript/
+!.agents/skills/clean-code-gdscript/**

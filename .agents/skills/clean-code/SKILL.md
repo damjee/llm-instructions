@@ -1,50 +1,51 @@
 ---
 name: clean-code
-description: Baseline clean-code guidance for refactoring, bug fixes, and code review. Use when the user wants to refactor code, review code, or requests "clean code" or SOLID.
+description: Apply core clean-code principles during refactoring, bug fixes, and code review. Use for clean-code or SOLID requests; combine with the accessory for each language being changed.
 ---
 
 # Clean Code
 
 ## Philosophy
 
-**Clean Code** is code that is easy to read, easy to change, and consistent within a project.
+Clean code is easy to read, easy to change, and consistent within a project.
 
-See [languages/](./languages/) for language-specific style guides.
+## Procedure
 
-## Implementation Guide
+1. Read the project's domain glossary and relevant ADRs. Match existing conventions; ask when a material choice remains unclear.
+2. Establish a working solution before refactoring. For review-only work, identify findings without changing code.
+3. Load the accessory for each language in scope:
+   - [JavaScript](../clean-code-javascript/SKILL.md)
+   - [TypeScript](../clean-code-typescript/SKILL.md)
+   - [Python](../clean-code-python/SKILL.md)
+   - [Godot / GDScript](../clean-code-gdscript/SKILL.md)
+   - For other languages, apply this core with project conventions.
+4. For writing or refactoring tests, also apply [Test Refactoring](../test-refactoring/SKILL.md). Its test layout and AAA comment rules specialize the production-code rules below.
+5. Apply the guidelines and review each smell. For edits, verify behavior with the project's relevant checks; report results and any checks blocked or unavailable. For reviews, report actionable findings with locations.
 
-When exploring the codebase, use the project's domain glossary so that names and interface vocabulary match the project's language, and respect ADRs in the area you're touching.
+## Structure
 
-Prefer consistency with the existing codebase over introducing new patterns. When in doubt, ask the user.
+- Prefer Public API → Private API → Helpers.
+- Give each code unit a clear, narrow responsibility.
+- Prefer guard clauses over nesting.
+- Pass dependencies as arguments rather than referencing them directly.
+- Use inheritance to enforce an interface, not merely to remove duplication.
+- Prefer deterministic functions with explicit side effects.
 
-If refactoring a test file, use [Test Refactoring Workflow](./workflows/test-refactoring.md) in addition to these guidelines.
+## Naming
 
-Do not apply clean code until you have a working solution.
+- Reveal intent rather than implementation.
+- Use verbs for behavior, nouns for data, and predicates for booleans.
+- Name collections in plural form.
+- Use full words or abbreviations defined in the domain glossary.
+- Keep type encoding out of names.
+- Prefer self-documenting code over comments.
+- Replace magic numbers with named constants.
 
-## Clean Code Guidelines
+## Review Checklist
 
-### Structural Guidelines
+Review these signals in context; they prompt judgment rather than automatic rewrites.
 
-1. Prefer code layout of Public API → Private API → Helpers
-2. Code units should have a clear and narrow responsibility
-3. Prefer guard clauses over nesting
-4. Prefer passing dependencies as arguments over direct references
-5. Use inheritance to enforce an interface; do not use it just to avoid code duplication
-6. Prefer deterministic functions with explicit side effects
-
-### Naming Guidelines
-
-1. Ensure names reveal intent, not implementation
-2. Verb-based names for behavior, nouns for data, booleans as predicates such as isReady, or canRetry
-3. Name collections in plural form
-4. Avoid abbreviations not in the domain glossary
-5. Avoid type encoding in names
-6. Prefer self-documenting code over comments
-7. Use named constants over magic numbers
-
-## Code Smells Requiring Review
-
-- [ ] Code layout does not follow Public API → Private API → Helpers
-- [ ] Function beyond 20 lines
-- [ ] Nesting beyond 3 indents
-- [ ] Comment is present
+- [ ] Layout differs from Public API → Private API → Helpers.
+- [ ] A function exceeds 20 lines.
+- [ ] Nesting exceeds 3 indents.
+- [ ] A comment is present.

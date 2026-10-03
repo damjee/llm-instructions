@@ -1,13 +1,16 @@
-# Godot / GDScript
+---
+name: clean-code-gdscript
+description: Apply Godot/GDScript clean-code conventions when refactoring, fixing, or reviewing GDScript, including node wiring and Godot file order. Use with the clean-code core.
+---
 
-Apply this on top of [SKILL.md](../SKILL.md).
+# Clean Code: Godot / GDScript
+
+Apply [Clean Code](../clean-code/SKILL.md) with the conventions below. Use its procedure and completion checks. The Godot file order below specializes the core's general layout.
 
 ## Defaults
 
 - Use static typing.
 - Prefer editor connections or explicit `connect()` calls in `_ready()`.
-- Use `@export` to wire nodes in the editor.
-- Keep node wiring explicit and easy to validate.
 - Validate exported node references with `assert()` in `_ready()`.
 
 ```gdscript
@@ -19,7 +22,7 @@ func _ready() -> void:
 
 ## Formatting
 
-- Use tabs, not spaces.
+- Indent with tabs.
 - Keep lines under 100 characters. Prefer under 80 when practical.
 - Use two blank lines between functions or classes, one inside functions for logical separation.
 - Use one statement per line.
@@ -36,24 +39,11 @@ func _ready() -> void:
 - `snake_case` for files, functions, variables, and signals
 - `_` prefix for private functions and variables
 - Signal names use past tense.
-- Function names should be verb-based and describe the action they perform.
 - Boolean-returning functions should use predicate forms like `is_`, `has_`, and `can_`.
 
-## Avoid
+## Node References
 
-- Avoid string-based node access
-- Avoid deep node hierarchies in code
-
-```gdscript
-# BAD - fragile reference
-var weapon = get_node("Player/WeaponSlot/Weapon")
-
-# BAD - fragile reference
-var weapon = $Player/WeaponSlot/Weapon
-
-# GOOD - direct reference
-@export var weapon: Weapon
-```
+- Wire direct node references through `@export`; keep dependencies shallow and explicit instead of traversing string-based paths such as `get_node("Player/WeaponSlot/Weapon")` or `$Player/WeaponSlot/Weapon`.
 
 ## Code Order
 
@@ -72,3 +62,4 @@ Follow this order in GDScript files:
 11. Built-in virtual methods in Godot order
 12. Public methods
 13. Private methods
+
