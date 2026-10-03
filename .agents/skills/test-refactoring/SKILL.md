@@ -14,9 +14,9 @@ Apply [Clean Code](../clean-code/SKILL.md) and the accessory for the language in
 ## Layout and Naming
 
 - Order files as Variables and Types → Tests → Local Helpers.
-- Name tests for behavior and explicit failure reasons; put the happy path first.
+- Name tests for the specific behavior tested; make failure reasons explicit. Put the happy path first.
 - Give distinct invalid cases separate, named tests with visible inputs and expected outcomes.
-- Name variables for what they are. Prefer `sut` for the system under test when local conventions leave the choice open.
+- Name variables for their intended role. Prefer `sut` for the system under test when local conventions leave the choice open.
 - Keep setup and assertions visible in each test; avoid opaque helpers or loops that hide case-specific behavior.
 - Separate Arrange, Act, and Assert with blank lines and one-word section comments such as `// Arrange`, using the language's comment syntax. Keep each section visually contiguous.
 
@@ -55,8 +55,8 @@ Review in this priority order:
 6. [ ] A higher-order test double is used when a simpler one suffices.
 7. [ ] AAA sections are missing, intermixed, or visually indistinct.
 8. [ ] Act contains multiple logical actions.
-9. [ ] A test name describes implementation rather than behavior.
-10. [ ] A variable name describes an action rather than its data.
+9. [ ] Test name obscures the specific behavior tested.
+10. [ ] Variable name obscures its intended role.
 
 ## Procedure
 
