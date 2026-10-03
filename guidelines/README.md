@@ -2,6 +2,8 @@
 
 If you are an LLM or automation agent, start here. Do not load every guide by default. Load only the minimum set of files needed for the current task.
 
+When using these guides with [the skills](../README.md#skills), the skills govern procedures, approval requirements, and test-specific constraints; the guides provide supporting rationale and examples.
+
 ## Default Load Order
 
 1. Load [`clean-code-standards.md`](./clean-code-standards.md) for any code implementation, refactor, review, or bug fix.

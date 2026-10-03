@@ -9,9 +9,9 @@ Apply [Clean Code](../clean-code/SKILL.md) with the conventions below. Use its p
 
 ## Conventions
 
-- Use `const` by default and `let` for reassignment; keep `var` out of new or refactored code.
+- Prefer `const` by default. Use `let` only when reassignment is real. Never use `var`.
 - Prefer clear helpers over inline cleverness.
-- Use strict equality and explicit checks, preserving valid `0`, `''`, and `false` values.
-- Prefer linear `async` / `await` over chained promises.
+- Use strict equality and explicit checks. Avoid truthiness checks when `0`, `''`, or `false` are valid values.
+- Prefer `async` / `await` over chained promises; avoid promise pyramids in `.then()`.
 - Use plain objects for simple records and classes for behavior-rich models.
 - Keep module exports small and intentional; keep internal helpers private.

@@ -34,8 +34,8 @@ func _ready() -> void:
 
 ## Naming
 
-- `PascalCase` for classes
-- `CONSTANT_CASE` for constants and enums
+- `PascalCase` for classes and enum names
+- `CONSTANT_CASE` for constants and enum members
 - `snake_case` for files, functions, variables, and signals
 - `_` prefix for private functions and variables
 - Signal names use past tense.
@@ -43,7 +43,8 @@ func _ready() -> void:
 
 ## Node References
 
-- Wire direct node references through `@export`; keep dependencies shallow and explicit instead of traversing string-based paths such as `get_node("Player/WeaponSlot/Weapon")` or `$Player/WeaponSlot/Weapon`.
+- Use `@export` to wire node references in the editor; keep node wiring explicit and easy to validate.
+- Avoid string-based node access and deep node-path traversal, such as `get_node("Player/WeaponSlot/Weapon")` or `$Player/WeaponSlot/Weapon`.
 
 ## Code Order
 

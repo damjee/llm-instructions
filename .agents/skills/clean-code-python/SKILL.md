@@ -9,7 +9,7 @@ Apply [Clean Code](../clean-code/SKILL.md) with the conventions below. Use its p
 
 ## Conventions
 
-- Prefer explicit, readable Python over dense one-liners.
+- Prefer explicit, readable Python over compact cleverness; avoid dense one-liners that hide the main path.
 - Add type hints at public boundaries and important data shapes.
 - Prefer `Path`, `@dataclass`, and standard-library tools when they fit.
 - Use `snake_case` for functions and variables, `PascalCase` for classes, and `UPPER_SNAKE_CASE` for constants.
