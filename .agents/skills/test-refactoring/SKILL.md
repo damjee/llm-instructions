@@ -17,7 +17,7 @@ description: Guidance for how user prefers test code layout, naming, and structu
 
 ### AAA Definitions
 
-**Arrange**: Should perform all test setup, but should not exercise the SUT or perform assertions. Doubling and SUT initialization should happen here. Do not hide arrangement activity behind a test helper unless the user explicitly authorizes it. Instead work to make arrangement morr straightforward and readable. Ideally sut initializarion is the first line of arrange.
+**Arrange**: Should perform all test setup. Doubling and SUT initialization should happen here, ideally as the first line. Do not hide arrangement activity behind a test helper unless the user explicitly authorizes it.
 
 **Act**: Should exercise one and only one logical action of the SUT. Ideally, should be a single line of code where the SUT makes a single method call and stores the result.
 
@@ -81,14 +81,15 @@ Helpers should be minimal, contain no logic, and be useful across minimum 3 test
 2. [ ] Comment is present other than AAA section delineators
 3. [ ] Test has excessive global variables
 4. [ ] Test has excessive helpers
-5. [ ] Conditional logic is present in the test or helpers
-6. [ ] Test uses higher-order test doubles than necessary
-7. [ ] Test does not follow AAA pattern
-8. [ ] AAA sections are not visually distinct, such as blank lines present within a section or missing between sections
-9. [ ] Arrange, Act, or Assert sections contain code belonging to another section
-10. [ ] Test has multiple logical actions in Act section
-11. [ ] Test name describes HOW, not WHAT
-12. [ ] Test variables names describe what they DO, not what they ARE
+5. [ ] Test had code outside of AAA sections
+6. [ ] Conditional logic is present in the test or helpers
+7. [ ] Test uses higher-order test doubles than necessary
+8. [ ] Test does not follow AAA pattern
+9. [ ] AAA sections are not visually distinct, such as blank lines present within a section or missing between sections
+10. [ ] Arrange, Act, or Assert sections contain code belonging to another section
+11. [ ] Test has multiple logical actions in Act section
+12. [ ] Test name describes HOW, not WHAT
+13. [ ] Test variables names describe what they DO, not what they ARE
 
 ## Procedure
 
