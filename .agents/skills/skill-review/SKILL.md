@@ -1,27 +1,43 @@
 ---
 name: skill-review
-description: Review agent skills for fidelity, high-impact wording, and executable workflows. Use when asked to review, audit, or tighten a skill or SKILL.md.
+description: Review, audit, or tighten agent skills for semantic economy and executable guidance.
 ---
 
 # Skill Review
 
-## Review Loop
+Convey more meaning with fewer, stronger words.
 
-1. Read the skill and relevant references. Recover its purpose, decisions, constraints, and voice; compare the source or history when reviewing a rewrite.
-2. Find the leverage. Look for diffuse explanations, weak labels, flattened contrasts, and repeated ideas that a leading word could carry. Generate a few candidate concepts from the domain's vocabulary. Consider verbs, metaphors, contrasts, and diagnostic labels as well as technical terms.
-3. Test the candidates. What useful judgment does each word recruit? What would it accidentally add, lose, or obscure? Choose the strongest fit and place it where it steers a decision: a trigger, heading, rule, or completion criterion. Keep the qualifier that protects a real distinction. Prefer the author's and project's language; consult a primary source when an unfamiliar term's meaning matters. A familiar label earns its place through behavioral leverage, not prestige.
-4. Make the smallest useful revision. Preserve the meaning and force of independent checks, priorities, exceptions, permissions, and output contracts. Trust inferable intent; clarify only ambiguity that changes the outcome. Keep sound wording when no candidate improves it.
-5. Challenge the revision with a normal case, a near-miss, and a relevant exception. Check what it makes the agent do, including what its new concepts imply. Repair demonstrated drift, then stop when another pass offers no concrete gain. Distinguish walkthroughs from executed tests; run available validation after requested edits.
+## Review
 
-## Review Lenses
+1. **Understand:** Read the skill and relevant references. Identify intended behavior, voice, and consequential boundaries.
+2. **Recompose:** Express weak passages from their core concepts using familiar, high-impact vocabulary.
+3. **Structure:** Distill peer elements into lists; number sequences. Keep paragraph prose outside lists.
+4. **Test:** Compare intended behavior on a normal case, near-miss, and exception. Repair consequential drift.
 
-- **Discovery:** Distinct invocation cases are easy to recognize without attracting unrelated work.
-- **Execution:** Required inputs, branches, actions, and completion criteria are usable. Give failures a next step where one is needed; do not turn principles into unnecessary recipes.
-- **Leading words:** Compact, established concepts recruit useful judgment. Strengthen bland wording as well as shortening long wording; one potent contrast may beat an exhaustive literal explanation.
-- **Economy:** Each instruction earns its place. Remove no-ops, duplication, stale guidance, and speculative rules; preserve necessary qualifications.
-- **Framing:** State the desired behavior when clearer. Keep useful code smells, negative checks, and contrasts.
-- **Hierarchy:** Use steps for sequence and a flat checklist for independent rules. Co-locate a concept's caveats; disclose conditional detail through a clear, valid pointer.
+Original phrasing reveals intent; it does not make every qualifier an obligation. Familiar concepts absorb implied applications and explanations. Preserve permissions, priorities, independent checks, exceptions, and output contracts that change decisions.
+
+## Economy
+
+- **Cut:** Filler, repetition, no-ops, stale guidance.
+- **Name:** Established concepts, domain vocabulary, strong verbs.
+- **Frame:** Desired behavior, useful code smells, diagnostic contrasts.
+- **Emphasize:** Headings for structure; bold for priority; italics for distinctions.
+- **Substitute:** Clear emoji for repeated labels when meaning survives.
+
+Verify unfamiliar terminology with primary sources. Keep descriptions short and capitalization deliberate. Retain effective passages unchanged; stop when further edits offer no concrete gain.
+
+## Execution
+
+- Distinct triggers and clear scope
+- Usable inputs, branches, actions, completion criteria, failure paths
+- Co-located rules and caveats; conditional detail behind valid pointers
+
+Use principles for judgment and steps for necessary sequence.
 
 ## Output
 
-Give a verdict and impact-ordered findings: passage → behavioral weakness → precise replacement. For a proposed leading word, briefly explain its leverage and any necessary qualifier. Report validation and uncertainty. Apply edits only when requested. If the skill is already effective, say so rather than manufacture a rewrite.
+- Impact-ordered findings: passage → weakness → replacement
+- Key word choices and consequential tradeoffs
+- Executed checks, walkthroughs, and remaining uncertainty
+
+Apply edits only when requested; run available checks afterward.
