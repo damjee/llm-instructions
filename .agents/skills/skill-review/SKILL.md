@@ -1,43 +1,25 @@
 ---
 name: skill-review
-description: Review, audit, or tighten agent skills for semantic economy and executable guidance.
+description: Review and tighten agent skills through intent-preserving reconstruction.
 ---
 
 # Skill Review
 
-Convey more meaning with fewer, stronger words.
+Convey more meaning with fewer, stronger words. Read the skill and relevant references. Try reconstruction before deciding what to retain.
 
-## Review
+## Reconstruct
 
-1. **Understand:** Read the skill and relevant references. Identify intended behavior, voice, and consequential boundaries.
-2. **Recompose:** Express weak passages from their core concepts using familiar, high-impact vocabulary.
-3. **Structure:** Distill peer elements into lists; number sequences. Keep paragraph prose outside lists.
-4. **Test:** Compare intended behavior on a normal case, near-miss, and exception. Repair consequential drift.
+Work through four concise review artifacts. Save each artifact before continuing:
 
-Original phrasing reveals intent; it does not make every qualifier an obligation. Familiar concepts absorb implied applications and explanations. Preserve permissions, priorities, independent checks, exceptions, and output contracts that change decisions.
+1. **Meaning skeleton:** Reduce the whole skill to its shortest intelligible outline of concepts, choices, relationships, and open questions. Use fragments, not a checklist of phrases to preserve. Separate choices from explanatory examples. Check the outline against the source before rewriting.
+2. **Wordbank:** Pair concepts with familiar domain terms, strong verbs, or useful contrasts. Note which meaning each candidate carries and any extra implications. Candidates are aids, not required inserts.
+3. **Draft:** Rebuild readable guidance from the outline and useful candidates. Familiar concepts can absorb their ordinary explanations. Compare with the original and retain whichever expression works better. Group peers in lists, number necessary sequences, and keep caveats beside their rules. Use meaningful headings and emphasis; keep connected reasoning in prose.
+4. **Intent audit:** Have a fresh reviewer compare draft and source before consulting the other artifacts. Record concrete omissions, additions, changed decisions, and readability problems. Correct supported defects, then recheck the affected passages. Stop when no worthwhile gain remains.
 
-## Economy
+## Preserve
 
-- **Cut:** Filler, repetition, no-ops, stale guidance.
-- **Name:** Established concepts, domain vocabulary, strong verbs.
-- **Frame:** Desired behavior, useful code smells, diagnostic contrasts.
-- **Emphasize:** Headings for structure; bold for priority; italics for distinctions.
-- **Substitute:** Clear emoji for repeated labels when meaning survives.
+Preserve the author's choices, permissions, priorities, exceptions, independent checks, and output requirements. Separate policy proposals from editorial edits. Keep triggers, inputs, references, actions, completion criteria, and failure paths usable. Exercise consequential or uncertain changes on concrete cases; distinguish walkthroughs from executed checks. Verify unfamiliar terminology with primary sources.
 
-Verify unfamiliar terminology with primary sources. Keep descriptions short and capitalization deliberate. Retain effective passages unchanged; stop when further edits offer no concrete gain.
+## Deliver
 
-## Execution
-
-- Distinct triggers and clear scope
-- Usable inputs, branches, actions, completion criteria, failure paths
-- Co-located rules and caveats; conditional detail behind valid pointers
-
-Use principles for judgment and steps for necessary sequence.
-
-## Output
-
-- Impact-ordered findings: passage → weakness → replacement
-- Key word choices and consequential tradeoffs
-- Executed checks, walkthroughs, and remaining uncertainty
-
-Apply edits only when requested; run available checks afterward.
+Present the improved skill and worthwhile changes with brief reasons. Keep the short artifacts available for inspection; they record the work, not private reasoning. Apply edits only when requested and run available checks.
