@@ -1,19 +1,39 @@
 ---
 name: clean-code
-description: Apply clean-code principles during refactoring, bug fixes, and code review. Use for clean-code or SOLID requests.
+description: Guide for applying clean-code principles. Use when writing code, refeactoring, or during code reviews. Use for clean code or SOLID requests.
 ---
 
-# Clean Code
+# Philosophy
 
 Clean code is easy to read, easy to change, and consistent within a project.
 
+## Workflows
+
 Use the project's domain vocabulary and respect ADRs. Prefer consistency with the existing codebase over introducing new patterns; when in doubt, ask the user.
 
-## Workflow
+### Writing
 
-1. **For edits, make it work, then make it clean.** Apply the guidelines and review every smell. For review-only work, identify findings without changing code.
+*Make it work, then make it clean.* Apply when no code exists.
 
-2. **Verify and report.** After edits, verify behavior with relevant project checks; report results and blocked or unavailable checks. For reviews, report actionable findings with locations.
+1. Write a working version of the code disregarding the principles of this guide
+2. Move into the refactoring workflow once the code is working
+
+### Refactoring
+
+Work in small atomic increments, iterating, and working on only on one issue or smell at a time.
+
+1. Identify an issue or code smell that needs review
+2. Verify that a fix is appropriate
+3. Apply the fix
+4. Verify the code still works.
+5. Return to 1 and identify the next issue or smell. Each edit mat surface new issues or smells so review fresh each time.
+
+### Code Review
+
+1. Review the code for conflicts with the guide
+2. Investigate any code smells and determine if they require fixes
+3. Identify which findings are most critical to address. Problems with structure are usually more critical than naming.
+4. Concisely report findings priority on actionable critical findings.
 
 ## Structure
 
@@ -36,7 +56,7 @@ Use the project's domain vocabulary and respect ADRs. Prefer consistency with th
 
 ## Code Smells Requiring Review
 
-Review every signal in context; none requires an automatic rewrite.
+Code smells indicate a problem **may** exist. You must investigate to determine if a violation exists.
 
 - [ ] Layout differs from Public API → Private API → Helpers.
 - [ ] A function exceeds 20 lines.
