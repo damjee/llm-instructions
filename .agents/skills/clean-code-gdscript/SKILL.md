@@ -5,13 +5,14 @@ description: Apply Godot/GDScript clean-code conventions when refactoring, fixin
 
 # Clean Code: Godot / GDScript
 
-Apply [Clean Code](../clean-code/SKILL.md) with the conventions below. Use its procedure and completion checks. The Godot file order below specializes the core's general layout.
+Apply [Clean Code](../clean-code/SKILL.md) with these conventions. The Godot file order below specializes the core's general layout.
 
-## Defaults
+## Types, Nodes, and Signals
 
 - Use static typing.
-- Prefer editor connections or explicit `connect()` calls in `_ready()`.
-- Validate exported node references with `assert()` in `_ready()`.
+- **Wire node references in the editor** with `@export`; validate them with `assert()` in `_ready()`.
+- Avoid string-based node access and deep node-path traversal, such as `get_node("Player/WeaponSlot/Weapon")` or `$Player/WeaponSlot/Weapon`.
+- Prefer editor signal connections or explicit `connect()` calls in `_ready()`.
 
 ```gdscript
 @export var health_bar: ProgressBar
@@ -22,33 +23,25 @@ func _ready() -> void:
 
 ## Formatting
 
-- Indent with tabs.
-- Keep lines under 100 characters. Prefer under 80 when practical.
+- Indent with tabs; use one statement per line.
+- Keep lines under 100 characters, preferably under 80 when practical.
 - Use two blank lines between functions or classes, one inside functions for logical separation.
-- Use one statement per line.
 - Use one space around operators and after commas.
-- Use trailing commas in multi-line arrays, dictionaries, and enums.
-- Prefer `and`, `or`, and `not`, over `&&`, `||`, or `!`.
+- Use trailing commas in multiline arrays, dictionaries, and enums.
+- Prefer `and`, `or`, and `not` over `&&`, `||`, and `!`.
 - Prefer double quotes unless single quotes reduce escaping.
 - Include leading and trailing zeros: `0.5`, not `.5`; `10.0`, not `10.`
 
 ## Naming
 
-- `PascalCase` for classes and enum names
-- `CONSTANT_CASE` for constants and enum members
-- `snake_case` for files, functions, variables, and signals
-- `_` prefix for private functions and variables
-- Signal names use past tense.
-- Boolean-returning functions should use predicate forms like `is_`, `has_`, and `can_`.
+- Classes and enum names: `PascalCase`
+- Constants and enum members: `CONSTANT_CASE`
+- Files, functions, variables, and signals: `snake_case`
+- Private functions and variables: `_` prefix
+- Signals: past tense
+- Boolean-returning functions should use predicates such as `is_`, `has_`, and `can_`.
 
-## Node References
-
-- Use `@export` to wire node references in the editor; keep node wiring explicit and easy to validate.
-- Avoid string-based node access and deep node-path traversal, such as `get_node("Player/WeaponSlot/Weapon")` or `$Player/WeaponSlot/Weapon`.
-
-## Code Order
-
-Follow this order in GDScript files:
+## Godot File Order
 
 1. Annotations
 2. Class declaration
@@ -63,4 +56,3 @@ Follow this order in GDScript files:
 11. Built-in virtual methods in Godot order
 12. Public methods
 13. Private methods
-

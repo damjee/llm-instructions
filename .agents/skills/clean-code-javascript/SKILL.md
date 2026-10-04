@@ -5,13 +5,13 @@ description: Apply JavaScript-specific clean-code conventions when refactoring, 
 
 # Clean Code: JavaScript
 
-Apply [Clean Code](../clean-code/SKILL.md) with the conventions below. Use its procedure and completion checks; load only accessories for languages in scope.
+Apply [Clean Code](../clean-code/SKILL.md) with these conventions.
 
 ## Conventions
 
-- Prefer `const` by default. Use `let` only when reassignment is real. Never use `var`.
+- Prefer `const`. Reserve `let` for reassignment; never use `var`.
 - Prefer clear helpers over inline cleverness.
-- Use strict equality and explicit checks. Avoid truthiness checks when `0`, `''`, or `false` are valid values.
-- Prefer `async` / `await` over chained promises; avoid promise pyramids in `.then()`.
+- Use strict equality and explicit value checks. Avoid truthiness when `0`, `''`, or `false` are valid values.
+- Prefer `async` / `await` over promise chains; avoid nested `.then()` pyramids.
 - Use plain objects for simple records and classes for behavior-rich models.
-- Keep module exports small and intentional; keep internal helpers private.
+- Keep the module's public API small and intentional; leave internal helpers unexported.
