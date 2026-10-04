@@ -5,38 +5,37 @@ description: Use when reviewing and editing agent skills, to refine them through
 
 # Philosophy
 
-Skills with fewer words and deliberately selected high impact words are easier to maintain, understand, and more efficiently preserve context space while still
-being just as if not more effective than their verbose alternatives.
+Fewer, deliberately chosen high-impact words make skills easier to understand and maintain, conserve context, and preserve or improve effectiveness.
 
 ## Procedure
 
-Work through concise review artifacts incrementally saving artifacts after each step. Do not expose the artifacts to the user and dispose of them upon skill completion.
+Keep review artifacts concise and private. Save after each step; discard on completion.
 
-### Artifacts
+### 1. Create Artifacts
 
-Begin by creating the following artifacts:
+- **Caveman Skeleton:** Make the deepest cuts possible, like a caveman, while preserving underlying intent.
+- **Wordbank:** List promising high-impact domain words, inspired by the project glossary, existing skill, and user input and feedback. Words only.
 
-- **Caveman Skeleton:** Reduce the skill text to the bare minimum as if you were a caveman. Make the deepest cuts possible while preserving underlying intent.
-- **Wordbank:** Create a list of high impact words from the domain that may be useful to include in the skill. Leverage the project glossary, the existing skill, and user input and feedback to inspire additions to the wordbank. List the words only not their definitions or reason for inclusion.
+### 2. Review
 
-### Review
+Compare the skill to the **Caveman Skeleton**. Justify every additional word by its tangible benefit. Actively fight AI's tendency to over-specify; specificity alone isn't justification.
 
-Review the skill by comparing the text to the **Caveman Skeleton**. Justify the inclusion of each additional word vs what is in the skeleton as providing tangible benefits to the skill. Specificity is not sufficient justification on its own, AI tends to over specify at the expense of increased verbosity. You must actively fight this tendency. Ask the following questions as you review:
+- [ ] Can one high-impact word convey the same meaning? Think of candidates or consult the **Wordbank**.
+- [ ] Can a simple word plus formatting or capitalization convey the same intent?
+- [ ] Can an emoji or symbol convey the same intent?
+- [ ] Can structure convey intent instead of prose?
+  - Numbered lists: sequence
+  - Bullets: key concepts
+  - Checklists: review
+  - Headers: groups
+- [ ] After edits, is the original intent intact?
 
-- Can the same meaning be conveyed in just one high impact word? Can I think of a word or find a candidate in the **Wordbank**
-- Can a simple word be substituted and convey the same intent by just adding formatting or capitalization?
-- Can an emoji or symbol represent a concept and still convey intent?
-- Can intent be conveyed through structure instead of prose such as using numbered lists for sequence, bulleted lists for key concepts, checklists to designate a review, or headers to denote grouped concepts.
-- If edits were made, was initial intent of the writing preserved post edit?
+### 3. Refine
 
-### Refine
-
-Make edits to the document based on review findings. Make atomic edits, after editing go back to review and identify the next atomic edit to make.
+Make one atomic edit from the review findings, then return to Review to choose the next.
 
 #### Key Points
-- Word selection is critical. Spend time selecting words that are straightforward and convey intent
-- Lean on structure and formatting when possible. Better structure provides more benefit than additional prose
-- Lists are meant to be concise and not vehicles for more prose
-- The less a human has to read and the more structure surfaces key details the easier a skill is to maintain
-
-
+- Word selection is critical: take time to choose straightforward words that convey intent.
+- Prefer structure and formatting over additional prose.
+- Keep lists concise, not vehicles for more prose.
+- Less reading and structure that surfaces key details ease maintenance.
