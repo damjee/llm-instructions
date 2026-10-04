@@ -16,17 +16,27 @@ Work through concise review artifacts incrementally saving artifacts after each 
 
 Begin by creating the following artifacts:
 
-Work through four concise review artifacts. Save each artifact before continuing:
+- **Caveman Skeleton:** Reduce tge skill text to the bare minimum as if you were a caveman. Make the deepest cuts possible while preserving underlying intent.
+- **Wordbank:** Create of list of high impact words from the domain that may be useful to include in the skill. Leverage the project glossary, the existing skill, and user input and feedback to inspire additions to the wordbank. List the words only not their definitions or reason for inclusion.
 
-1. **Meaning skeleton:** Reduce the whole skill to its shortest intelligible outline of concepts, choices, relationships, and open questions. Use fragments, not a checklist of phrases to preserve. Separate choices from explanatory examples. Check the outline against the source before rewriting.
-2. **Wordbank:** Pair concepts with familiar domain terms, strong verbs, or useful contrasts. Note which meaning each candidate carries and any extra implications. Candidates are aids, not required inserts.
-3. **Draft:** Rebuild readable guidance from the outline and useful candidates. Familiar concepts can absorb their ordinary explanations. Compare with the original and retain whichever expression works better. Group peers in lists, number necessary sequences, and keep caveats beside their rules. Use meaningful headings and emphasis; keep connected reasoning in prose.
-4. **Intent audit:** Have a fresh reviewer compare draft and source before consulting the other artifacts. Record concrete omissions, additions, changed decisions, and readability problems. Correct supported defects, then recheck the affected passages. Stop when no worthwhile gain remains.
+### Review
 
-## Preserve
+Review the skill by comparing the text to thr **Caveman Skeleton**. Justify the inclusion of each additional word vs what is in the skeletonas providing tangible benefits to the skill. Specificity is not sufficient justification on its own, AI tends to over specify at the expense of increased verbosity. You must actively fight this tendency. Ask the following questions as you review:
 
-Preserve the author's choices, permissions, priorities, exceptions, independent checks, and output requirements. Separate policy proposals from editorial edits. Keep triggers, inputs, references, actions, completion criteria, and failure paths usable. Exercise consequential or uncertain changes on concrete cases; distinguish walkthroughs from executed checks. Verify unfamiliar terminology with primary sources.
+- Can the same meaning be conveyed in just one high impact word? Can I think of a word or find a canidate in the **Wordbank**
+- Can a simple word be substituted and convey the same intent by just adding formatting or capitalization?
+- Can an emoji or symbol represent a concept and still convey intent?
+- Can intent by conveyed through structure instead of prose such as using numbered lists for sequence,bulleted lists for key concepts, checklists to designate a review, or headers to denote grouped concepts.
+- If edits were made, was inital intent of the writing preserved post edit?
 
-## Deliver
+### Refine
 
-Present the improved skill and worthwhile changes with brief reasons. Keep the short artifacts available for inspection; they record the work, not private reasoning. Apply edits only when requested and run available checks.
+Make edits to the document based on review findings. Make atomic edits, after editing go back to review and identify the next atomic edit to make.
+
+#### Key Points
+- Word selection is critical. Spend time selecting words that are straightforward and convey intent
+- Lean on structure and formatting when possible. Better structure provides more benefit than additional prose
+- Lists are meant to be concise and not vehicles for more prose
+- The less a human has to read and the more structue surfaces key details the easier a skill is to maintain
+
+
