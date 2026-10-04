@@ -1,11 +1,9 @@
 ---
 name: test-refactoring
-description: Guidance for how user prefers test code layout, naming, and structure. Use when writing or refactoring test code, or when the user requests "clean code" or "AAA" on a test file.
+description: Use when writing, refactoring, or reviewing tests, including requests for clean code or AAA.
 ---
 
 # Test Refactoring
-
-Apply [Clean Code](../clean-code/SKILL.md) and the accessory for the language in scope. The test-specific rules below specialize its production-code layout and comment guidance.
 
 ## Philosophy
 
@@ -95,6 +93,8 @@ Helpers should be minimal, contain no logic, and be useful across minimum 3 test
 13. [ ] Test variables names describe what they DO, not what they ARE
 
 ## Procedure
+
+For review-only work, apply the guidelines and smell checks without editing; report actionable findings with locations.
 
 1. For new tests, apply the conventions above and run the relevant tests. Report their results and any verification blocked or unavailable. If only adding new tests, finish here; use steps 2–6 when refactoring existing tests.
 2. For existing passing tests, verify the user has approved refactoring them before editing; ask if approval is missing.

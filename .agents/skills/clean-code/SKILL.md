@@ -1,6 +1,6 @@
 ---
 name: clean-code
-description: Apply core clean-code principles during refactoring, bug fixes, and code review. Use for clean-code or SOLID requests; combine with the accessory for each language in scope.
+description: Apply clean-code principles during refactoring, bug fixes, and code review. Use for clean-code or SOLID requests.
 ---
 
 # Clean Code
@@ -11,18 +11,9 @@ Use the project's domain vocabulary and respect ADRs. Prefer consistency with th
 
 ## Workflow
 
-1. **Load companion guidance** for each language in scope:
-   - [JavaScript](../clean-code-javascript/SKILL.md)
-   - [TypeScript](../clean-code-typescript/SKILL.md)
-   - [Python](../clean-code-python/SKILL.md)
-   - [Godot / GDScript](../clean-code-gdscript/SKILL.md)
-   - Other languages: use this core with project conventions.
+1. **For edits, make it work, then make it clean.** Apply the guidelines and review every smell. For review-only work, identify findings without changing code.
 
-   For writing, refactoring, or reviewing tests, also use [Test Refactoring](../test-refactoring/SKILL.md). Its layout and AAA comment rules specialize the production-code rules below. For review-only work, use its guidance and smell checks without entering its refactoring procedure.
-
-2. **For edits, make it work, then make it clean.** Apply the guidelines and review every smell. For review-only work, identify findings without changing code.
-
-3. **Verify and report.** After edits, verify behavior with relevant project checks; report results and blocked or unavailable checks. For reviews, report actionable findings with locations.
+2. **Verify and report.** After edits, verify behavior with relevant project checks; report results and blocked or unavailable checks. For reviews, report actionable findings with locations.
 
 ## Structure
 

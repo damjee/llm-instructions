@@ -1,11 +1,9 @@
 ---
 name: clean-code-javascript
-description: Apply JavaScript-specific clean-code conventions when refactoring, fixing, or reviewing JavaScript code. Use with the clean-code core.
+description: Apply JavaScript-specific clean-code conventions when refactoring, fixing, or reviewing JavaScript code.
 ---
 
 # Clean Code: JavaScript
-
-Apply [Clean Code](../clean-code/SKILL.md) with these conventions.
 
 ## Conventions
 

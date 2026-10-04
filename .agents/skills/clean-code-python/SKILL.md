@@ -1,11 +1,9 @@
 ---
 name: clean-code-python
-description: Apply Python-specific clean-code conventions when refactoring, fixing, or reviewing Python code. Use with the clean-code core.
+description: Apply Python-specific clean-code conventions when refactoring, fixing, or reviewing Python code.
 ---
 
 # Clean Code: Python
-
-Apply [Clean Code](../clean-code/SKILL.md) with these conventions.
 
 ## Conventions
 

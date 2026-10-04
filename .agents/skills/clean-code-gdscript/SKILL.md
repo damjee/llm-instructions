@@ -1,11 +1,9 @@
 ---
 name: clean-code-gdscript
-description: Apply Godot/GDScript clean-code conventions when refactoring, fixing, or reviewing GDScript, including node wiring and Godot file order. Use with the clean-code core.
+description: Apply Godot/GDScript clean-code conventions when refactoring, fixing, or reviewing GDScript, including node wiring and Godot file order.
 ---
 
 # Clean Code: Godot / GDScript
-
-Apply [Clean Code](../clean-code/SKILL.md) with these conventions. The Godot file order below specializes the core's general layout.
 
 ## Types, Nodes, and Signals
 

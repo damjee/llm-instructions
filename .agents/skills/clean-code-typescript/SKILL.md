@@ -1,11 +1,9 @@
 ---
 name: clean-code-typescript
-description: Apply TypeScript-specific clean-code conventions when refactoring, fixing, or reviewing TypeScript code. Use with the clean-code core.
+description: Apply TypeScript-specific clean-code conventions when refactoring, fixing, or reviewing TypeScript code.
 ---
 
 # Clean Code: TypeScript
-
-Apply [Clean Code](../clean-code/SKILL.md) with these conventions.
 
 ## Types and Contracts
 

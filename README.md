@@ -4,14 +4,14 @@ A collection of instruction documents for AI agents and language models.
 
 ## Skills
 
-Use [Clean Code](./.agents/skills/clean-code/SKILL.md) for shared principles and load the accessory for each language in scope:
+The LLM or harness selects independent skills by task and language:
 
+- [Clean Code](./.agents/skills/clean-code/SKILL.md)
 - [JavaScript](./.agents/skills/clean-code-javascript/SKILL.md)
 - [TypeScript](./.agents/skills/clean-code-typescript/SKILL.md)
 - [Python](./.agents/skills/clean-code-python/SKILL.md)
 - [Godot / GDScript](./.agents/skills/clean-code-gdscript/SKILL.md)
-
-For test work, also use [Test Refactoring](./.agents/skills/test-refactoring/SKILL.md), the single skill source for AAA layout and the incremental test-refactoring procedure. Install these skills together so their relative links resolve.
+- [Test Refactoring](./.agents/skills/test-refactoring/SKILL.md)
 
 ## Structure
 
