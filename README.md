@@ -10,6 +10,7 @@ The LLM or harness selects independent skills by task and language:
 - [JavaScript](./.agents/skills/clean-code-javascript/SKILL.md)
 - [TypeScript](./.agents/skills/clean-code-typescript/SKILL.md)
 - [Python](./.agents/skills/clean-code-python/SKILL.md)
+- [Rust](./.agents/skills/clean-code-rust/SKILL.md)
 - [Godot / GDScript](./.agents/skills/clean-code-gdscript/SKILL.md)
 - [Test Refactoring](./.agents/skills/test-refactoring/SKILL.md)
 
