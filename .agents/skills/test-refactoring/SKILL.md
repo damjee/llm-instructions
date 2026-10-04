@@ -96,11 +96,10 @@ Code smells indicate a problem **may** exist. You must review to determine if a 
 
 ## Procedure
 
-**Review-only**: Apply guidelines and smell checks without editing; report actionable findings with locations.
+Make atomic edits and iterate to achive the final result. Each edit may reveal new issues and smells so review fresh each time.
 
-1. **New tests**: Apply conventions, run relevant tests, and report results and blocked/unavailable verification. If only adding tests, finish here; use steps 2–6 when refactoring existing tests.
-2. **Passing tests**: Verify user approval to refactor before editing; ask if missing.
-3. Establish a passing suite baseline before refactoring. If tests fail or cannot run, report the blocker and establish a working baseline before proceeding.
-4. Resolve only the highest-priority smell, then rerun the entire suite. Fix or revert a failing change before continuing.
-5. Restart the checklist from the top after each passing refactor.
-6. When no actionable smells remain, rerun the entire suite. Resolve regressions and restart the checklist; finish with results and remaining blockers.
+1. Review test names only. Ask the following just based on test names: Do these tests test the behavior of the system? Do the tests give adequate expected shape to tbe public API? Is the happy path represented? Do fail paths test a granular failure mode? Are all nessisary failure modes covered?
+2. If gaps are found scaffold placeholder tests that address the gaps. For review only workflows, flag the gaps to the user before continuing.
+3. After all gaps are addressed with placeholders, implement tests using AAA structure.
+4. If straightforward tests are difficult to implement it may be a code smell of a deeper architecture issues that you should flag. When in doubt ask the user.
+5. Review all implemented tests, iterate as needed. For review only workflows, flag issues with tests secondary to coverage or boundry issues.
