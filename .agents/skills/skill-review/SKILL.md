@@ -1,13 +1,20 @@
 ---
 name: skill-review
-description: Review and tighten agent skills through intent-preserving reconstruction.
+description: Use when reviewing and editing agent skills,to refine them through intent-preserving reconstruction.
 ---
 
-# Skill Review
+# Philosophy
 
-Convey more meaning with fewer, stronger words. Read the skill and relevant references. Try reconstruction before deciding what to retain.
+Skills with fewer words and deliberately selected high impact words are easier to maintain, understand, and more efficiently preseve context space while still
+being just as if not more effective that thier verbose alternatives.
 
-## Reconstruct
+## Procedure
+
+Work through concise review artifacts incrementally saving artifacts after each step. Do not expose the artifacts to the user and dispose of them upon skill completion.
+
+### Artifacts
+
+Begin by creating the following artifacts:
 
 Work through four concise review artifacts. Save each artifact before continuing:
 
