@@ -1,6 +1,6 @@
 ---
 name: clean-code
-description: Guide for applying clean-code principles. Use when writing code, refeactoring, or during code reviews. Use for clean code or SOLID requests.
+description: Guide for applying clean-code principles. Use when writing code, refactoring, or during code reviews. Use for clean code or SOLID requests.
 ---
 
 # Philosophy
@@ -20,20 +20,20 @@ Use the project's domain vocabulary and respect ADRs. Prefer consistency with th
 
 ### Refactoring
 
-Work in small atomic increments, iterating, and working on only on one issue or smell at a time.
+Work in small atomic increments, iterating, and working on only one issue or smell at a time.
 
 1. Identify an issue or code smell that needs review
 2. Verify that a fix is appropriate
 3. Apply the fix
 4. Verify the code still works.
-5. Return to 1 and identify the next issue or smell. Each edit mat surface new issues or smells so review fresh each time.
+5. Return to 1 and identify the next issue or smell. Each edit may surface new issues or smells so review fresh each time.
 
 ### Code Review
 
 1. Review the code for conflicts with the guide
 2. Investigate any code smells and determine if they require fixes
 3. Identify which findings are most critical to address. Problems with structure are usually more critical than naming.
-4. Concisely report findings priority on actionable critical findings.
+4. Concisely report findings, prioritizing actionable critical findings.
 
 ## Structure
 
