@@ -1,6 +1,6 @@
 ---
 name: test-refactoring
-description: Use when writing, refactoring, or reviewing tests, including requests for clean code or AAA.
+description: Guidelines for AAA test structure. Use when writing, refactoring, or reviewing tests.
 ---
 
 # Test Refactoring
