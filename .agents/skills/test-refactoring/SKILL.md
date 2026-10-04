@@ -6,20 +6,20 @@ description: Guidelines for AAA test structure. Use when writing, refactoring, o
 # Test Refactoring
 
 ## Philosophy
+The AAA test structure produces reliably good tests. Tests shoukd test behavior through public interfaces, not implementation details. Code can change entirely; tests shouldn't.
 
-**Core principle**: Test behavior through public interfaces, not implementation details. Code can change entirely; tests shouldn't.
-
+### Definitions
 **Good tests** exercise real code paths through public APIs and read like specifications: "user can checkout with valid cart." They describe _what_ the system does, not _how_ it's implemented, so internal refactors don't break them.
 
-**Bad tests** couple to implementation: mocking internal collaborators, testing private methods, asserting call counts/order, or bypassing the public interface (e.g. querying a database directly). Warning sign: a refactor breaks tests without changing behavior.
+**Bad tests** couple to implementation. They may mock internal collaborators, test private methods, asserting call counts/order, or bypass the public interface. Warning sign: a refactor breaks tests without changing behavior.
 
 ## AAA: Arrange → Act → Assert
 
 Visually distinguish sections; prefer blank lines followed by one-word comments (e.g. `--- Arrange ---`).
 
-**Arrange**: All setup; initialize the SUT at the top, ideally on the first line with doubles. Hide arrangement in helpers only with explicit user authorization.
+**Arrange**: Section for all setup and arrangement for the test; initialize the SUT at the top, ideally on the first line. Hide arrangement in helpers only with explicit user authorization.
 
-**Act**: Exactly one logical SUT action; ideally one line calling one SUT method and storing the result.
+**Act**: Exercises the SUT with exactly one logical SUT action; ideally one line calling one SUT method and storing the result if nessisary.
 
 **Assert**: All required assertions; no other logic, setup, or SUT execution.
 
@@ -32,14 +32,14 @@ Use the project's domain glossary for names and interface vocabulary; respect ap
 ### Structure
 
 - Code Layout: Variables and Types → Tests → Local Helpers
-- Prefer happy path first, then explicit failure reasons
+- Tesg ordered to prefer happy path first, then explicit failure reasons
 - Prefer guard clauses over nesting
 - Give distinct invalid cases separate, named tests with visible inputs and expected outcomes.
 
 ### Naming
 
-- Name the system under test clearly; prefer **sut** without local conventions.
-- Tests: behavior, not implementation.
+- Name the system under test clearly; prefer **sut** wheb local conventions exists.
+- Tests behavior, not implementation.
 - Variables: what they ARE, not what they DO; intent, not implementation.
 - Behavior: verbs; data: nouns; booleans: predicates; collections: plurals.
 - Abbreviations only from the domain glossary.
@@ -48,7 +48,11 @@ Use the project's domain glossary for names and interface vocabulary; respect ap
 
 ### Test Doubles
 
-Prefer: Dummy → Stub → Fake → Spy → Mock
+When a test double is required, prefer then in this order:
+
+Dummy → Stub → Fake → Spy → Mock
+
+Always challege if double could be replaced by a more simple double (I.E. replacd a Spy with a Fake or Stub)
 
 Spy/Mock at **system boundaries** only:
 
@@ -70,15 +74,19 @@ Minimal, logic-free, and useful across:
 - Local: ≥3 tests
 - Shared: ≥3 test files
 
+Helpers should not hide test arrangement. Prefer code duplication unless local conventions or the user explicitly overrides this requirement. During review still flag the preference to not abstract test arrangement.
+
 ## Code Smells
+
+Code smells indicate a problem **may** exist. You must review to determine if a real violation exists.
 
 1. [ ] Nesting beyond 3 indents
 2. [ ] Comments other than AAA section delineators
-3. [ ] Excessive global variables
-4. [ ] Excessive helpers
+3. [ ] Excessice global variables or variables outside of test code
+4. [ ] Helper functions inside the arrange section
 5. [ ] Code outside AAA sections
 6. [ ] Conditional logic in tests or helpers
-7. [ ] Higher-order test doubles than necessary
+7. [ ] Spies or Mock test doubles in code
 8. [ ] Test does not follow AAA pattern
 9. [ ] AAA sections not visually distinct (e.g. blank lines within a section or missing between sections)
 10. [ ] Code in the wrong AAA section
