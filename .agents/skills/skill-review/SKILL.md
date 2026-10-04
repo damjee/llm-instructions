@@ -20,7 +20,7 @@ Artifacts should be concise and private. Do not expose artifacts to the user. Sa
 
 Compare the skill to the **Caveman Skeleton**. Justify every additional word by its tangible benefit. Actively fight AI's tendency to over-specify and expand verbosity; specificity alone isn't justification.
 
-- [ ] Can one high-impact word replace multiple words lwhile conveying the same meaning? Think of candidates or consult the **Wordbank**.
+- [ ] Can one high-impact word replace multiple words while conveying the same meaning? Think of candidates or consult the **Wordbank**.
 - [ ] Can a simple word plus formatting or capitalization convey the same intent?
 - [ ] Can an emoji or symbol convey the same intent?
 - [ ] Can structure convey intent instead of prose?
