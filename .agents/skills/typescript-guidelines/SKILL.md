@@ -1,9 +1,9 @@
 ---
-name: clean-code-typescript
+name: typescript-guidelines
 description: Apply TypeScript-specific clean-code conventions when refactoring, fixing, or reviewing TypeScript code.
 ---
 
-# Clean Code: TypeScript
+# TypeScript Guidelines
 
 ## Types and Contracts
 

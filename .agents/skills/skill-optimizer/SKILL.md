@@ -1,5 +1,5 @@
 ---
-name: skill-review
+name: skill-optimizer
 description: Use when reviewing and editing agent skills, to refine them through intent-preserving reconstruction.
 ---
 

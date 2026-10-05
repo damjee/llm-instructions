@@ -1,9 +1,9 @@
 ---
-name: clean-code-rust
+name: rust-guidelines
 description: Apply Rust-specific clean-code conventions when writing, refactoring, fixing, or reviewing Rust code.
 ---
 
-# Clean Code: Rust
+# Rust Guidelines
 
 ## Conventions
 

@@ -7,12 +7,12 @@ A collection of instruction documents for AI agents and language models.
 The LLM or harness selects independent skills by task and language:
 
 - [Clean Code](./.agents/skills/clean-code/SKILL.md)
-- [JavaScript](./.agents/skills/clean-code-javascript/SKILL.md)
-- [TypeScript](./.agents/skills/clean-code-typescript/SKILL.md)
-- [Python](./.agents/skills/clean-code-python/SKILL.md)
-- [Rust](./.agents/skills/clean-code-rust/SKILL.md)
-- [Godot / GDScript](./.agents/skills/clean-code-gdscript/SKILL.md)
-- [Test Refactoring](./.agents/skills/test-refactoring/SKILL.md)
+- [JavaScript Guidelines](./.agents/skills/javascript-guidelines/SKILL.md)
+- [TypeScript Guidelines](./.agents/skills/typescript-guidelines/SKILL.md)
+- [Python Guidelines](./.agents/skills/python-guidelines/SKILL.md)
+- [Rust Guidelines](./.agents/skills/rust-guidelines/SKILL.md)
+- [GDScript Guidelines](./.agents/skills/gdscript-guidelines/SKILL.md)
+- [AAA Test Design](./.agents/skills/aaa-test-design/SKILL.md)
 
 ## Structure
 

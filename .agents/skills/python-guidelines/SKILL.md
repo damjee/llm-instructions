@@ -1,9 +1,9 @@
 ---
-name: clean-code-python
+name: python-guidelines
 description: Apply Python-specific clean-code conventions when refactoring, fixing, or reviewing Python code.
 ---
 
-# Clean Code: Python
+# Python Guidelines
 
 ## Conventions
 

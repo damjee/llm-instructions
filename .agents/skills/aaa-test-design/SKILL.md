@@ -1,9 +1,9 @@
 ---
-name: test-refactoring
+name: aaa-test-design
 description: Guidelines for AAA test structure. Use when writing, refactoring, or reviewing tests.
 ---
 
-# Test Refactoring
+# AAA Test Design
 
 ## Philosophy
 The AAA test structure produces reliably good tests. Tests should test behavior through public interfaces, not implementation details. Code can change entirely; tests shouldn't.

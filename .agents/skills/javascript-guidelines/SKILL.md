@@ -1,9 +1,9 @@
 ---
-name: clean-code-javascript
+name: javascript-guidelines
 description: Apply JavaScript-specific clean-code conventions when refactoring, fixing, or reviewing JavaScript code.
 ---
 
-# Clean Code: JavaScript
+# JavaScript Guidelines
 
 ## Conventions
 

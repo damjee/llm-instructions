@@ -1,9 +1,9 @@
 ---
-name: clean-code-gdscript
+name: gdscript-guidelines
 description: Apply Godot/GDScript clean-code conventions when refactoring, fixing, or reviewing GDScript, including node wiring and Godot file order.
 ---
 
-# Clean Code: Godot / GDScript
+# GDScript Guidelines
 
 ## Types, Nodes, and Signals
 
