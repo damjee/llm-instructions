@@ -13,7 +13,7 @@ Artifacts should be concise and private. Do not expose artifacts to the user. Sa
 
 ### 1. Create Artifacts
 
-- **Caveman Skeleton:** Make a copy of thr skill with the deepest cuts possible, like a caveman, while preserving underlying intent.
+- **Caveman Skeleton:** Make a copy of the skill with the deepest cuts possible, like a caveman, while preserving underlying intent.
 - **Wordbank:** List promising high-impact domain words, Self generate words and also take inspiration from the project glossary, existing skill, and user input and feedback. Should contain words only no descriptions or reasons for inclusion.
 
 ### 2. Review
