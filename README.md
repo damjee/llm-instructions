@@ -14,6 +14,10 @@ The LLM or harness selects independent skills by task and language:
 - [GDScript Guidelines](./.agents/skills/gdscript-guidelines/SKILL.md)
 - [AAA Test Design](./.agents/skills/aaa-test-design/SKILL.md)
 
+## Agents
+
+- [AAA Test Reviewer](./.github/agents/aaa-test-reviewer.agent.md) — review and grade tests against the AAA skill.
+
 ## Structure
 
 ### [guidelines/](./guidelines/)
