@@ -16,7 +16,7 @@ The LLM or harness selects independent skills by task and language:
 
 ## Agents
 
-- [AAA Test Reviewer](./.github/agents/aaa-test-reviewer.agent.md) — review and grade tests against the AAA skill.
+- [AAA Test Reviewer](./.agents/agents/aaa-test-reviewer/agent.md) — review and grade tests against the AAA skill.
 
 ## Structure
 
