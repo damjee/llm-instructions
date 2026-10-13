@@ -6,12 +6,30 @@ description: Guidelines for AAA test structure. Use when writing, refactoring, o
 # AAA Test Design
 
 ## Philosophy
+
 The AAA test structure produces reliably good tests. Tests should test behavior through public interfaces, not implementation details. Code can change entirely; tests shouldn't.
 
 ### Definitions
+
 **Good tests** exercise real code paths through public APIs and read like specifications: "user can checkout with valid cart." They describe _what_ the system does, not _how_ it's implemented, so internal refactors don't break them.
 
 **Bad tests** couple to implementation. They may mock internal collaborators, test private methods, assert call counts/order, or bypass the public interface. Warning sign: a refactor breaks tests without changing behavior.
+
+## Structural Standards
+
+- **API legibility**: Specify public contracts directly, not incidentally through other operations. Domain scenarios should clarify the API.
+- **Explicit subject**: Identify the object, constructor, or function under test. Testing helpers does not establish production behavior.
+- **Independent action**: Count meaningful operations, not statements. Chaining or batching independent actions does not make them one behavior.
+- **Direct evidence**: Assert observable outcomes without reconstruction that hides defects. Test machinery must not become a second implementation.
+- **Responsibility boundaries**: Complex setup, execution, or observation signals API friction. Investigate responsibilities; distinguish test complexity from suspected production defects.
+
+Coverage volume cannot compensate for structural failures.
+
+## Test Responsibilities
+
+- Segregate test families into distinct modules. (I.E. unit tests vs integration tests)
+- Unit tests should specify business logic through public behavior.
+- Integration tests should focus on contracts with external systems, rather than repeat business-logic coverage.
 
 ## AAA: Arrange → Act → Assert
 
@@ -94,17 +112,11 @@ Code smells indicate a problem **may** exist. You must review to determine if a 
 12. [ ] Test name describes HOW, not WHAT
 13. [ ] Test variable names describe what they DO, not what they ARE
 
-## Procedure
+## Assessment
 
-Make atomic edits and iterate to achieve the final result. Each edit may reveal new issues and smells so review fresh each time.
+Read names, then bodies. Assess structure, happy paths, failure contracts, then conventions. Investigate smells; do not hide complexity in helpers. State coverage limits when contracts are unavailable.
 
-1. Review test names only. Ask the following just based on test names:
-   - Do these tests test the behavior of the system?
-   - Do the tests give adequate expected shape to the public API?
-   - Is the happy path represented?
-   - Do fail paths test a granular failure mode?
-   - Are all necessary failure modes covered?
-2. If gaps are found scaffold placeholder tests that address the gaps. For review only workflows, flag the gaps to the user before continuing.
-3. After all gaps are addressed with placeholders, implement tests using AAA structure.
-4. If straightforward tests are difficult to implement it may be a code smell of a deeper architecture issue that you should flag. When in doubt ask the user.
-5. Review all implemented tests, iterate as needed. For review only workflows, flag issues with tests secondary to coverage or boundary issues.
+## Usage
+
+- **Writing or refactoring**: Apply these standards within the chosen workflow. Make small authorized changes and validate them.
+- **Reviewing**: Report structural failures, coverage gaps, then local issues. Do not edit or prescribe fixes.
