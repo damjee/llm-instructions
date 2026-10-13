@@ -1,6 +1,8 @@
 /coding/
 skills-lock.json
 .agents/*
+!.agents/agents/aaa-test-reviewer/
+!.agents/agents/aaa-test-reviewer/**
 !.agents/skills/
 .agents/skills/*
 !.agents/skills/testing-and-tdd/
