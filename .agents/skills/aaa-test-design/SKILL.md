@@ -39,7 +39,7 @@ Visually distinguish sections; prefer blank lines followed by one-word comments 
 
 **Act**: Exercises the SUT with exactly one logical SUT action; ideally one line calling one SUT method and storing the result if necessary.
 
-**Assert**: All required assertions; no other logic, setup, or SUT execution.
+**Assert**: Assert captured outcomes only; no other logic, setup, or SUT execution. SUT property/getter reads count as execution, even when read-only.
 
 ## Guidelines
 
