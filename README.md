@@ -13,6 +13,7 @@ The LLM or harness selects independent skills by task and language:
 - [Rust Guidelines](./.agents/skills/rust-guidelines/SKILL.md)
 - [GDScript Guidelines](./.agents/skills/gdscript-guidelines/SKILL.md)
 - [AAA Test Design](./.agents/skills/aaa-test-design/SKILL.md)
+- [Behavioral Test Design](./.agents/skills/behavioral-test-design/SKILL.md)
 
 ## Agents
 
