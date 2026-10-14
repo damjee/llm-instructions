@@ -15,13 +15,6 @@ A **public operation** is a single callable entry point exposed by a module's in
 
 Each exposed entry point is a distinct operation. Chaining or grouping calls does not combine them into a single operation.
 
-## Test Names
-
-- Name the public operation and the distinct intended behavior concisely.
-- Include only enough detail to distinguish one contract from another.
-- Put concrete argument values, full expected outputs, and fixture details in test bodies rather than forcing them into names.
-- Reject names too vague to identify a behavior, but do not require complete input/output specifications in names.
-
 ## Review Procedure
 
 ### 1. Establish the intended specification
@@ -76,8 +69,14 @@ Specify each public operation independently through concrete inputs and expected
 
 - Every intended public operation has a recognizable test group.
 - Distinct intended successful behaviors, failure conditions, and boundaries are represented.
-- Names communicate distinguishable behavioral contracts without needing exhaustive input/output details.
 - Missing, redundant, ambiguous, or unrelated specifications are identified.
+
+**Test names**
+
+- Name the public operation and the distinct intended behavior concisely.
+- Include only enough detail to distinguish one contract from another.
+- Put concrete argument values, full expected outputs, and fixture details in test bodies rather than forcing them into names.
+- Reject names too vague to identify a behavior, but do not require complete input/output specifications in names.
 
 This pass assesses what the **names claim to specify**. It cannot prove concrete argument coverage, expected values, or assertion correctness.
 
