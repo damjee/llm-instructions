@@ -36,22 +36,19 @@ A test module should have a layout matching the form:
 2.2.1. operation 3 failure behavior A
 etc until all public operations are documented
 
-## Behavioral Coverage
+## Procedure
 
-- Inventory intended public operations from requirements. Require direct behavioral coverage for each.
-- Vary each meaningful argument while holding others constant where practical. Assert the expected difference or intended invariance.
-- Test argument interactions when one argument changes another's valid range or behavior.
-- Define expected outcomes independently of implementation results or duplicated implementation algorithms.
-- Assert promised outputs, state changes, or observable effects; success alone is insufficient when a specific result is expected.
-- Ensure plausible defects, such as ignored arguments, incorrect outcomes, and wrong boundaries, would fail at least one test.
-- Test public contracts, not internal helpers, reference algorithms, or implementation details.
-- Prefer readable representative cases over redundant tests or exhaustive matrices that obscure the specification.
+To validate a test module conforms to behavior test design do the following:
 
-## Assessment
+1. Validate layout
+2. Validate specifications
+3. Validate tests detail support specification
 
-1. Establish requirements and inventory intended public operations before consulting implementation.
-2. Read tests to reconstruct the API and its intended behavior. Record ambiguities and unspecified contracts.
-3. Map each operation to its happy, failure, and boundary cases; identify missing behavioral or argument coverage.
-4. Map each test back to a public contract; identify irrelevant, redundant, or weak tests.
-5. Inspect implementation to identify divergences from the intended contract, never to invent expected behavior.
-6. Report findings by operation with evidence and coverage limits. Do not modify code during review.
+### Validate layout
+1. Create a hidden temporary artifact copy of the test module. Dispose of the artifact on skill completion.
+2. Reduce the artifact to contain only function names
+3. Give the subagent the module requirements and temp artifact only
+
+The subagent must independently verify that the test conforms to layout requirements and correctly documents all module specifications.
+
+5. Once subagent independent review passes review the test detail and verify each test implementation supports the intended behavioral requirement as defined by the test name
