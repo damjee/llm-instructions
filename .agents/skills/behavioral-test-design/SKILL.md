@@ -15,7 +15,7 @@ A **public operation** is a single callable entry point exposed by a module's in
 
 Each exposed entry point is a distinct operation. Chaining or grouping calls does not combine them into a single operation.
 
-## Public Operation Specification
+## Layout
 
 Specify each public operation independently through concrete inputs and expected outcomes. Test every distinct expected behavior, including how meaningful input variations affect the result.
 
@@ -25,7 +25,16 @@ Organize tests in this order:
 2. **Failure paths:** Verify specified unsuccessful outcomes that do not constitute errors.
 3. **Boundary paths:** Verify input limits, invalid inputs, and expected errors. Assert error types, variants, and meaningful structured fields rather than message text, unless wording is part of the public contract.
 
-Multiple happy paths are appropriate when they establish distinct behaviors. Avoid redundant cases.
+A test module should have a layout matching the form:
+
+1.1.1. operation 1 behavior A
+1.1.2. operation 1 behavior B
+1.2.1. operarion 1 failure behavior C
+1.3.1. operation 1 boundry behavior A
+1.3.1. operation 1 boundry behavior B
+2.1.1. operation 2 behvaior A
+2.2.1. operation 3 failure behavior A
+etc until all public operations are documented
 
 ## Behavioral Coverage
 
