@@ -19,36 +19,83 @@ Each exposed entry point is a distinct operation. Chaining or grouping calls doe
 
 Specify each public operation independently through concrete inputs and expected outcomes. Test every distinct expected behavior, including how meaningful input variations affect the result.
 
-Organize tests in this order:
+Group tests by public operation. Keep each operation's tests contiguous and order them as follows:
 
 1. **Successful happy paths:** Verify each distinct successful behavior.
 2. **Failure paths:** Verify specified unsuccessful outcomes that do not constitute errors.
 3. **Boundary paths:** Verify input limits, invalid inputs, and expected errors. Assert error types, variants, and meaningful structured fields rather than message text, unless wording is part of the public contract.
 
-A test module should have a layout matching the form:
+Multiple happy paths are appropriate when they specify distinct behaviors. Omit inapplicable categories rather than inventing tests.
 
-1.1.1. operation 1 behavior A
-1.1.2. operation 1 behavior B
-1.2.1. operarion 1 failure behavior C
-1.3.1. operation 1 boundry behavior A
-1.3.1. operation 1 boundry behavior B
-2.1.1. operation 2 behvaior A
-2.2.1. operation 3 failure behavior A
-etc until all public operations are documented
+Expected layout (illustrative, not a required naming syntax):
 
-## Procedure
+```text
+operation A
+  successful behavior A
+  successful behavior B
+  failure behavior A
+  boundary behavior A
+  boundary behavior B
 
-To validate a test module conforms to behavior test design do the following:
+operation B
+  successful behavior A
+  failure behavior A
+  boundary behavior A
+```
 
-1. Validate layout
-2. Validate specifications
-3. Validate tests detail support specification
+## Test Names
 
-### Validate layout
-1. Create a hidden temporary artifact copy of the test module. Dispose of the artifact on skill completion.
-2. Reduce the artifact to contain only function names
-3. Give the subagent the module requirements and temp artifact only
+- Name the public operation and the distinct intended behavior concisely.
+- Include only enough detail to distinguish one contract from another.
+- Put concrete argument values, full expected outputs, and fixture details in test bodies rather than forcing them into names.
+- Reject names too vague to identify a behavior, but do not require complete input/output specifications in names.
 
-The subagent must independently verify that the test conforms to layout requirements and correctly documents all module specifications.
+## Review Procedure
 
-5. Once subagent independent review passes review the test detail and verify each test implementation supports the intended behavioral requirement as defined by the test name
+### 1. Establish the intended specification
+
+Identify the module's requirements, intended public operations, and expected behaviors without using implementation output to define the contract. Record unresolved requirements as ambiguities, not inferred facts.
+
+### 2. Extract the names-only view
+
+Extract test function names in their **original source order**, preserving enclosing test groups where relevant. Do not sort them. Pass only the names and grouping information, not test bodies or implementation code. No temporary file or artifact is necessary.
+
+### 3. Independently validate layout and specifications
+
+When the harness supports a fresh-context subagent, provide it **only**:
+
+- The intended module requirements and public API specification.
+- The ordered test names and their grouping.
+- The layout and behavioral specification criteria from this skill.
+
+Do not provide test implementations, production source, prior review conclusions, or unrelated parent context. If independent delegation or context isolation is unavailable, perform a names-only review and disclose that it was not an independent subagent review.
+
+The reviewer must validate:
+
+**Module layout**
+- Tests are grouped by public operation, with each operation's tests contiguous.
+- Within every operation, successful paths precede failure paths, which precede boundary paths (including errors).
+- Tests are not misplaced, interleaved across operations, or otherwise out of order.
+
+**Specification coverage**
+- Every intended public operation has a recognizable test group.
+- Distinct intended successful behaviors, failure conditions, and boundaries are represented.
+- Names communicate distinguishable behavioral contracts without needing exhaustive input/output details.
+- Missing, redundant, ambiguous, or unrelated specifications are identified.
+
+This pass assesses what the **names claim to specify**. It cannot prove concrete argument coverage, expected values, or assertion correctness.
+
+Report layout violations and specification gaps before examining test bodies. Treat this as a review gate: do not claim the specification passes while unresolved violations remain.
+
+### 4. Validate test bodies
+
+After the names-only review passes, inspect the test bodies against the intended requirements and named behaviors:
+
+- Verify that each test actually exercises its named public operation and observable contract.
+- Check concrete inputs and independently defined expected outputs or effects.
+- Vary meaningful arguments and test their expected differences or intended invariance; include relevant argument interactions.
+- Check failure and boundary conditions, including error types, variants, and structured fields.
+- Identify weak assertions, tests of implementation details, and unnecessary duplication.
+- Check whether plausible defects (such as ignored arguments or incorrect boundaries) would cause a test to fail.
+
+Distinguish gaps visible from names alone from defects demonstrated only after reading test bodies. Do not modify code during a review.
