@@ -58,7 +58,7 @@ Identify the module's requirements, intended public operations, and expected beh
 
 ### 2. Extract the names-only view
 
-Extract test function names in their **original source order**, preserving enclosing test groups where relevant. Do not sort them. Pass only the names and grouping information, not test bodies or implementation code. No temporary file or artifact is necessary.
+Extract test function names in their **original source order**, preserving enclosing test groups where relevant. Do not sort them. Pass only the names and grouping information, not test bodies or implementation code.
 
 ### 3. Independently validate layout and specifications
 
