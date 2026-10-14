@@ -15,34 +15,6 @@ A **public operation** is a single callable entry point exposed by a module's in
 
 Each exposed entry point is a distinct operation. Chaining or grouping calls does not combine them into a single operation.
 
-## Layout
-
-Specify each public operation independently through concrete inputs and expected outcomes. Test every distinct expected behavior, including how meaningful input variations affect the result.
-
-Group tests by public operation. Keep each operation's tests contiguous and order them as follows:
-
-1. **Successful happy paths:** Verify each distinct successful behavior.
-2. **Failure paths:** Verify specified unsuccessful outcomes that do not constitute errors.
-3. **Boundary paths:** Verify input limits, invalid inputs, and expected errors. Assert error types, variants, and meaningful structured fields rather than message text, unless wording is part of the public contract.
-
-Multiple happy paths are appropriate when they specify distinct behaviors. Omit inapplicable categories rather than inventing tests.
-
-Expected layout (illustrative, not a required naming syntax):
-
-```text
-operation A
-  successful behavior A
-  successful behavior B
-  failure behavior A
-  boundary behavior A
-  boundary behavior B
-
-operation B
-  successful behavior A
-  failure behavior A
-  boundary behavior A
-```
-
 ## Test Names
 
 - Name the public operation and the distinct intended behavior concisely.
@@ -73,11 +45,35 @@ If independent delegation or context isolation is unavailable, perform a names-o
 The reviewer must validate:
 
 **Module layout**
-- Tests are grouped by public operation, with each operation's tests contiguous.
-- Within every operation, successful paths precede failure paths, which precede boundary paths (including errors).
-- Tests are not misplaced, interleaved across operations, or otherwise out of order.
+
+Group tests by public operation, keeping each operation's tests contiguous. Validate this order within each group:
+
+1. **Successful happy paths:** Verify each distinct successful behavior.
+2. **Failure paths:** Verify specified unsuccessful outcomes that do not constitute errors.
+3. **Boundary paths:** Verify input limits, invalid inputs, and expected errors. Assert error types, variants, and meaningful structured fields rather than message text, unless wording is part of the public contract.
+
+Multiple happy paths are appropriate when they specify distinct behaviors. Omit inapplicable categories rather than inventing tests. Flag tests that are misplaced, interleaved across operations, or out of order.
+
+Expected layout (illustrative, not required naming syntax):
+
+```text
+operation A
+  successful behavior A
+  successful behavior B
+  failure behavior A
+  boundary behavior A
+  boundary behavior B
+
+operation B
+  successful behavior A
+  failure behavior A
+  boundary behavior A
+```
 
 **Specification coverage**
+
+Specify each public operation independently through concrete inputs and expected outcomes. Test every distinct expected behavior, including how meaningful input variations affect the result.
+
 - Every intended public operation has a recognizable test group.
 - Distinct intended successful behaviors, failure conditions, and boundaries are represented.
 - Names communicate distinguishable behavioral contracts without needing exhaustive input/output details.
