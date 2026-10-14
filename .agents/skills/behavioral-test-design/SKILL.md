@@ -54,7 +54,7 @@ operation B
 
 ### 1. Establish the intended specification
 
-Identify the module's requirements, intended public operations, and expected behaviors without using implementation output to define the contract. Record unresolved requirements as ambiguities, not inferred facts.
+Identify the module's requirements, intended public operations, and expected behaviors without using existing implementation to define the contract. Surface missing requirements before proceeding, do not infer.
 
 ### 2. Extract the names-only view
 
