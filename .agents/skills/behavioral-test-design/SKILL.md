@@ -68,7 +68,7 @@ When the harness supports a fresh-context subagent, provide it **only**:
 - The ordered test names and their grouping.
 - The layout and behavioral specification criteria from this skill.
 
-Do not provide test implementations, production source, prior review conclusions, or unrelated parent context. If independent delegation or context isolation is unavailable, perform a names-only review and disclose that it was not an independent subagent review.
+If independent delegation or context isolation is unavailable, perform a names-only review and disclose that it was not an independent subagent review.
 
 The reviewer must validate:
 
